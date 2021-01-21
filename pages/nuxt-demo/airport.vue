@@ -7,11 +7,12 @@
             <p>From €1.78 per day!</p>
             <button class="ml-4 text-white text-opacity-50">Change airport</button>
           </div>
-          <form action="" class="w-1/3 flex flex-col mx-auto">
+          <form action="/schiphol-parking/search/" class="w-1/3 flex flex-col mx-auto">
+            <input type="hidden" name="parkosfastsearchtest">
             <div class="flex mb-4">
               <div class="icon w-16 flex items-center justify-center bg-white border-r">{ }</div>
               <input type="date" name="arrival" id="" class="p-3 w-full">
-              <select name="" id="" class="px-4 border-l">
+              <select name="arrivalTime" id="" class="px-4 border-l">
                 <option v-for="time in times" :key="`arrival-time-${time}`" :value="time" :selected="time === '12:00'">{{ time }}</option>
               </select>
             </div>
@@ -19,7 +20,7 @@
             <div class="flex mb-4">
               <div class="icon w-16 flex items-center justify-center bg-white border-r">{ }</div>
               <input type="date" name="departure" id="" class="p-3 w-full">
-              <select name="" id="" class="px-4 border-l">
+              <select name="depatureTime" id="" class="px-4 border-l">
                 <option v-for="time in times" :key="`depature-time-${time}`" :value="time" :selected="time === '12:00'">{{ time }}</option>
               </select>
             </div>
