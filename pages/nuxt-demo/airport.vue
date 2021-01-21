@@ -1,53 +1,77 @@
 <template>
   <div>
-    <section id="search" class="py-24 bg-blue-500"> 
-      <div class="container mx-auto">
-          <div class="flex justify-center flex-wrap text-white mb-8">
-            <h1 class="w-full text-5xl font-semibold text-center">Schiphol Parking</h1>
-            <p>From €1.78 per day!</p>
-            <button class="ml-4 text-white text-opacity-50">Change airport</button>
-          </div>
-          <form action="/schiphol-parking/search/" class="w-1/3 flex flex-col mx-auto">
-            <input type="hidden" name="parkosfastsearchtest">
-            <div class="flex mb-4">
-              <div class="icon w-16 flex items-center justify-center bg-white border-r">{ }</div>
-              <input type="date" name="arrival" id="" class="p-3 w-full">
-              <select name="arrivalTime" id="" class="px-4 border-l">
-                <option v-for="time in times" :key="`arrival-time-${time}`" :value="time" :selected="time === '12:00'">{{ time }}</option>
-              </select>
-            </div>
-            
-            <div class="flex mb-4">
-              <div class="icon w-16 flex items-center justify-center bg-white border-r">{ }</div>
-              <input type="date" name="departure" id="" class="p-3 w-full">
-              <select name="depatureTime" id="" class="px-4 border-l">
-                <option v-for="time in times" :key="`depature-time-${time}`" :value="time" :selected="time === '12:00'">{{ time }}</option>
-              </select>
-            </div>
+    <p class="py-24 text-3xl text-gray-700 text-center font-heading">We help you compare <span class="text-blue-900">parking prices</span> at <span class="text-blue-900">Schiphol Airport</span>.</p>
 
-            <button type="submit" class="bg-orange-500 text-white p-3">Search parking</button>
-          </form>
+    <section id="usps" class="bg-gray-200 border-t border-b border-gray-500 py-24">
+      <div class="container mx-auto text-center">
+        <p class="text-3xl text-blue-900 font-heading mb-8">What makes Parkos unique?</p>
+        <section class="w-3/5 mx-auto grid grid-cols-3">
+          <article class="flex flex-col items-center justify-start">
+            <span class="material-icons text-5xl text-blue-500 mb-4">assignment_turned_in</span>
+            <p>All parking lots are carefully <strong>inspected</strong></p>
+          </article>
+          <article class="flex flex-col items-center justify-start">
+            <span class="material-icons text-5xl text-blue-500 mb-4">local_offer</span>
+            <p>The best <strong>deals</strong></p>
+          </article>
+          <article class="flex flex-col items-center justify-start">
+            <span class="material-icons text-5xl text-blue-500 mb-4">history</span>
+            <p><strong>Free</strong> cancellation up until 24 hours before departure</p>
+          </article>
+        </section>
       </div>
     </section>
-    <section id="reviews" class="py-24">
+    <section id="reviews" class="py-24 overflow-hidden">
       <div class="container mx-auto mb-16">
         <div class="w-3/5">
-          <h2 class="text-3xl font-semibold mb-10">Customers rate our car parking providers with an average of 9.1</h2>
-          <p class="text-lg">Customers who have booked a parking space through us, rate these with an average of 9.1/10 based on 70 reviews.</p>
+          <h2 class="text-3xl mb-10 font-heading">Customers rate our car parking providers with an average of 9.1</h2>
+          <p class="text-base">Customers who have booked a parking space through us, rate these with an average of 9.1/10 based on 70 reviews.</p>
         </div>
       </div>
-      <section class="grid grid-cols-4 gap-8 p-8">
-        <article v-for="i in 4" :key="`review-${i}`" class="p-4 border">
-          <div class="flex justify-between items-center mb-4">
+      <section class="grid grid-cols-4 gap-20" style="margin-left: -2rem; margin-right: -2px">
+        <article v-for="i in 4" :key="`review-${i}`" class="px-4 py-3 border border-gray-500 rounded" :class="{ 'opacity-50': i === 1 || i === 4}">
+          <div class="flex justify-between items-center mb-1">
             <div>
-              <p class="text-sm font-semibold text-gray-800">Parkos Customer #{{ i }}</p>
+              <p class="text-sm font-semibold text-gray-700">Parkos Customer #{{ i }}</p>
               <p class="font-semibold">{{ date }}</p>
             </div>
-            <p class="text-4xl font-semibold border-b-4 border-blue-500">10</p>
+            <p class="text-3xl font-semibold border-b-4 border-blue-500 font-heading leading-tight">10</p>
           </div>
-          <p class="w-full">{{ reviews[i - 1] }}</p>
+          <p class="w-full"><span class="material-icons text-3xl text-blue-500 relative" style="top: 0.5rem;">format_quote</span>{{ reviews[i - 1] }}</p>
         </article>
       </section>
+    </section>
+    <section id="usps" class="bg-gray-200 border-t border-b border-gray-500 py-24">
+      <div class="container mx-auto text-center">
+      { topblock content }
+      </div>
+    </section>
+    <section id="parkings" class="py-24">
+      <div class="container mx-auto mb-16">
+        <h2 class="text-3xl text-blue-900 font-heading mb-24">Parking providers at Schiphol Airport</h2>
+
+        <section class="grid grid-cols-4 gap-x-8 gap-y-16">
+          <article v-for="i in 21" :key="`airport-offers-${i}`" class="border border-gray-500 rounded">
+            <div class="flex items-center justify-center p-12">
+              <img src="https://assets.parkos.com/assets/img/parkings/logos/247parkeren.png" :alt="`Parking #${i}`">
+            </div>
+            <p class="flex flex-col text-center p-4 border-t border-gray-500">
+              <strong>Parking #{{ i }}</strong>
+              <span>from €28.95 a week</span>
+            </p>
+          </article>
+        </section>
+      </div>
+    </section>
+    <section id="map" class="bg-gray-200 border-t border-b border-gray-500 py-24">
+      <div class="container mx-auto">
+        <h2 class="text-3xl text-blue-900 font-heading mb-4">Schiphol airport parking map</h2>
+        <p>For more information about the parking provider in question press on the "P" icon. <a href="https://eu.parkos.com/schiphol-parking/travel-directions/" class="text-blue-700">Plan your route to Schiphol Airport</a></p>
+
+        <div class="flex items-center w-full bg-gray-500 justify-center" style="height: 25rem;">
+          { Google Maps }
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -56,24 +80,18 @@
 import Vue from "vue";
 
 export default Vue.extend({
+  head: {
+    title: "Long stay parking at Schiphol? 100% lowest price guarantee",
+    meta: [
+      { property: 'og:title', content: 'Long stay parking at Schiphol? 100% lowest price guarantee' },
+      { name: 'description', content: 'Long stay parking at Schiphol? ✓ 500.000 Customers went before you ✓ Nowhere cheaper ✓ FREE cancellation ✓ Find the #1 DEAL for long stay parking at Schiphol.' },
+      { property: 'og:description', content: 'Long stay parking at Schiphol? ✓ 500.000 Customers went before you ✓ Nowhere cheaper ✓ FREE cancellation ✓ Find the #1 DEAL for long stay parking at Schiphol.' },
+      { property: 'og:image', content: 'https://assets.parkos.com/assets/img/locations/schiphol-airport.jpg' },
+      { property: 'og:url', content: 'https://eu.parkos.com/schiphol-parking/' },
+    ]
+  },
+
   computed: {
-    times() {
-      const interval = 15; //minutes interval
-      let times = []; // time array
-      let time = 0; // start time
-
-      //loop to increment the time and push results in array
-      for (let i = 0; time < 24 * 60; i++) {
-        times[i] =
-          ("0" + Math.floor(time / 60)).slice(-2) +
-          ":" +
-          ("0" + (time % 60)).slice(-2);
-        time = time + interval;
-      }
-
-      return times;
-    },
-
     date() {
       return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
     },
