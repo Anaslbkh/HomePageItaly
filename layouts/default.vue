@@ -1,6 +1,20 @@
 <template>
   <div>
-    <Nuxt />
+    <header class="container mx-auto flex justify-between h-16 items-center">
+      <a href="#">
+        { logo }
+      </a>
+      <nav>
+        <button>Airports</button>
+        <a href="#">Customer Service</a>
+        <a href="#">Sign In</a>
+        <a href="#">About Us</a>
+        <button>EN</button>
+      </nav>
+    </header>
+    <main>
+      <Nuxt />
+    </main>
   </div>
 </template>
 
