@@ -44,22 +44,6 @@ export default {
         max: 1000,
         maxAge: 1000 * 60 * 60
       }
-    ],
-    [
-      'nuxt-perfect-cache',
-      {
-        disable: false,
-        appendHost: true,
-        ignoreConnectionErrors: false, // it's better to be true in production
-        prefix: 'r-',
-        url: 'redis://' + (process.env.REDIS_HOST || '127.0.0.1') + ':6379',
-        getCacheData(route, context) {
-          if (route !== '/nuxt-demo/airport') {
-            return false
-          }
-          return { key: 'airport', expire: 60 } // 1m
-        }
-      }
     ]
   ],
 

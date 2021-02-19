@@ -13,8 +13,7 @@
     "@nuxt/typescript-runtime": "^2.0.1",
     "@nuxtjs/component-cache": "^1.1.6",
     "core-js": "^3.8.2",
-    "nuxt": "^2.14.12",
-    "nuxt-perfect-cache": "^1.0.8"
+    "nuxt": "^2.14.12"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.12",
