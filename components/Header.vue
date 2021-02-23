@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-blue-500 gradient" :class="{ skew: navOpen }">
+  <header class="bg-blue-500 gradient" :class="{ 'skew -mt-8 pt-8': navOpen }">
     <section :class="{ unskew: navOpen }">
       <div class="container mx-auto flex justify-between h-16 items-center">
         <a href="#">
@@ -170,15 +170,5 @@ export default Vue.extend({
 .gradient {
   background-image: url(https://assets.parkos.com/assets/images/pattern.ba250c.png),
     linear-gradient(0deg, rgba(35, 176, 253, 0.4), rgba(9, 131, 240, 0.4));
-}
-.skew {
-  transform: skew(0deg, -1deg);
-  margin-top: -50px;
-  padding-top: 50px;
-  backface-visibility: hidden;
-}
-.unskew {
-  transform: skew(0deg, 1deg);
-  backface-visibility: hidden;
 }
 </style>

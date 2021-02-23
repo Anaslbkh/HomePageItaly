@@ -21,11 +21,29 @@
         </section>
       </div>
     </section>
-    <section id="reviews" class="py-24 overflow-hidden">
+    <div id="support" class="pt-24 pb-16">
+      <div class="container flex justify-between mx-auto pb-24 border-b border-gray-500">
+        <div class="w-1/2">
+          <h2 class="text-3xl mb-10 font-heading">How can we help you?</h2>
+          <p class="text-base mb-4">Our experts are here to assist you with comparing parking locations and are happy to answer any questions you may have.</p>
+          <a
+            href="#support"
+            class="inline-block bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700"
+          >
+            Please contact us
+          </a>
+        </div>
+        <div>
+          <figure>
+            <img src="https://assets.parkos.com/assets/img/home-customerservice.jpg" alt="Customer Service Team">
+          </figure>
+        </div>
+      </div>
+    </div>
+    <section id="reviews" class="pt-10 pb-24 overflow-hidden">
       <div class="container mx-auto mb-16">
         <div class="w-3/5">
-          <h2 class="text-3xl mb-10 font-heading">Customers rate our car parking providers with an average of 9.1</h2>
-          <p class="text-base">Customers who have booked a parking space through us, rate these with an average of 9.1/10 based on 70 reviews.</p>
+          <ReviewSummary />
         </div>
       </div>
       <section class="grid grid-cols-4 gap-20" style="margin-left: -2rem; margin-right: -2px">
@@ -51,15 +69,7 @@
         <h2 class="text-3xl text-blue-900 font-heading mb-24">Parking providers at Schiphol Airport</h2>
 
         <section class="grid grid-cols-4 gap-x-8 gap-y-16">
-          <article v-for="i in 21" :key="`airport-offers-${i}`" class="border border-gray-500 rounded">
-            <div class="flex items-center justify-center p-12">
-              <img src="https://assets.parkos.com/assets/img/parkings/logos/247parkeren.png" :alt="`Parking #${i}`">
-            </div>
-            <p class="flex flex-col text-center p-4 border-t border-gray-500">
-              <strong>Parking #{{ i }}</strong>
-              <span>from €28.95 a week</span>
-            </p>
-          </article>
+          <Parking v-for="parking in parkings" :key="parking.slug" :parking="parking" />
         </section>
       </div>
     </section>
@@ -78,6 +88,10 @@
 
 <script lang="ts">
 import Vue from "vue";
+import reviews from '../../stubs/reviews.js';
+import parkings from '../../stubs/parkings.js';
+
+import ReviewSummary from '../../components/review/Summary.vue';
 
 export default Vue.extend({
   head: {
@@ -89,6 +103,30 @@ export default Vue.extend({
       { property: 'og:image', content: 'https://assets.parkos.com/assets/img/locations/schiphol-airport.jpg' },
       { property: 'og:url', content: 'https://eu.parkos.com/schiphol-parking/' },
     ]
+  },
+
+  components: {
+    ReviewSummary,
+  },
+
+  data() {
+    return {
+      reviews,
+      parkings: parkings.data
+    }
+  },
+
+  provide: {
+    reviews,
+  },
+  
+  asyncData({ $axios, params }) {
+    console.log(params);
+  },
+
+  async fetch(context) {
+    //const reviews = await this.$axios.$get('reviews');
+    console.log(context, reviews);
   },
 
   computed: {

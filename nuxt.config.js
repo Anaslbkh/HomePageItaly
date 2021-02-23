@@ -60,10 +60,29 @@ export default {
           return { key: 'airport', expire: 60 } // 1m
         }
       }
-    ]
+    ],
+    // https://go.nuxtjs.dev/axios
+    '@nuxtjs/axios'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
+  // Available options: https://axios.nuxtjs.org/options
+  axios: {
+    baseURL: 'https://parkos.nl.test/api/v1/',
+  },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL
+    }
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+    }
+  },
 }
