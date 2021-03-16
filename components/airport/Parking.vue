@@ -15,14 +15,14 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-import { Parking } from '../../interfaces/Parking'
+import { Parking } from '../../types/Parking'
 
 export default Vue.extend({
     props: {
         parking: {
             type: Object,
             required: true,
-        } as PropOptions<Parking.RootObject>
+        } as PropOptions<Parking>
     }
 })
 </script>

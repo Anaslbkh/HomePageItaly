@@ -43,20 +43,11 @@
     <section id="reviews" class="pt-10 pb-24 overflow-hidden">
       <div class="container mx-auto mb-16">
         <div class="w-3/5">
-          <ReviewSummary />
+          <ReviewSummary :meta="reviewsMeta" />
         </div>
       </div>
       <section class="grid grid-cols-4 gap-20" style="margin-left: -2rem; margin-right: -2px">
-        <article v-for="i in 4" :key="`review-${i}`" class="px-4 py-3 border border-gray-500 rounded" :class="{ 'opacity-50': i === 1 || i === 4}">
-          <div class="flex justify-between items-center mb-1">
-            <div>
-              <p class="text-sm font-semibold text-gray-700">Parkos Customer #{{ i }}</p>
-              <p class="font-semibold">{{ date }}</p>
-            </div>
-            <p class="text-3xl font-semibold border-b-4 border-blue-500 font-heading leading-tight">10</p>
-          </div>
-          <p class="w-full"><span class="material-icons text-3xl text-blue-500 relative" style="top: 0.5rem;">format_quote</span>{{ reviews[i - 1] }}</p>
-        </article>
+        <Review v-for="review in reviews" :key="`review-${review.id}`" :review="review" />
       </section>
     </section>
     <section id="usps" class="bg-gray-200 border-t border-b border-gray-500 py-24">
@@ -78,9 +69,7 @@
         <h2 class="text-3xl text-blue-900 font-heading mb-4">Schiphol airport parking map</h2>
         <p>For more information about the parking provider in question press on the "P" icon. <a href="https://eu.parkos.com/schiphol-parking/travel-directions/" class="text-blue-700">Plan your route to Schiphol Airport</a></p>
 
-        <div class="flex items-center w-full bg-gray-500 justify-center" style="height: 25rem;">
-          { Google Maps }
-        </div>
+        <Map />
       </div>
     </section>
   </div>
@@ -88,11 +77,15 @@
 
 <script lang="ts">
 import Vue from "vue";
-import reviews from '../../stubs/reviews.js';
-import parkings from '../../stubs/parkings.js';
+import Map from '../../components/airport/Map.vue';
 
-import ReviewSummary from '../../components/review/Summary.vue';
+import ReviewSummary from '../../components/reviews/Summary.vue';
+import Review from '../../components/reviews/Review.vue';
+import { Parking as ParkingType } from "../../types/Parking";
+import { Review as ReviewType } from "../../types/Review";
+import { Airport as AirportType } from '../../types/Airport';
 
+const locale = 'nl-NL';
 export default Vue.extend({
   head: {
     title: "Long stay parking at Schiphol? 100% lowest price guarantee",
@@ -107,41 +100,36 @@ export default Vue.extend({
 
   components: {
     ReviewSummary,
+    Review,
+    Map,
   },
 
   data() {
     return {
-      reviews,
-      parkings: parkings.data
+      parkings: [] as Array<ParkingType>,
+      reviews: [] as Array<ReviewType>,
+      reviewsMeta: {},
+      airports: [] as Array<AirportType>
+    };
+  },
+
+  async asyncData({params, $axios}) {
+    const parkings = (await $axios.$get('parkings', { params })).data;
+    const reviews = await $axios.$get('reviews', { params });
+    const airports = (await $axios.$get('airports')).data;
+    
+    return {
+      parkings,
+      reviews: reviews.data[locale],
+      reviewsMeta: reviews.meta,
+      airports,
     }
-  },
-
-  provide: {
-    reviews,
-  },
-  
-  asyncData({ $axios, params }) {
-    console.log(params);
-  },
-
-  async fetch(context) {
-    //const reviews = await this.$axios.$get('reviews');
-    console.log(context, reviews);
   },
 
   computed: {
     date() {
       return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
     },
-
-    reviews() {
-      return [
-        "Easy to reach and shuttle ready for dropping off and picking up within 5 minutes. Excellent! I'm going to use it again!...",
-        "Uitstekende service. Punctueel en vriendelijk.",
-        "Just perfect . Car on place when i back i dnt nwed wait perfect also when i leave car everything perfect 0 minute for wait that s super perfect im ...",
-        "I did not have any problems with the parking or the car. The team was very friendly and easy to contact. I missed the plane on the first day so they a..."
-      ]
-    }
   }
 });
 </script>

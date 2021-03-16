@@ -26,6 +26,7 @@ module.exports = {
             'heading': ['"Bree Serif"', 'serif'],
         },
         boxShadow: {
+            dropdown: '0 6px 12px rgb(0 0 0 / 18%)',
             button: 'inset 0 -2px 0 0 rgba(0, 0, 0, 0.2)',
             input: 'inset 0 3px 0 0 hsla(0,0%,82.4%,.4)'
         }
