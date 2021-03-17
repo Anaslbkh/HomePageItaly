@@ -42,9 +42,9 @@
           <ul>
             <li><b>About Parkos</b></li>
             <li>
-              <a href="https://parkos.com/frequently-asked-questions/"
-                >Frequently Asked Questions</a
-              >
+              <a href="https://parkos.com/frequently-asked-questions/">
+                Frequently Asked Questions
+              </a>
             </li>
             <li>
               <a href="https://eu.parkos.com/partners.html">Become a partner</a>
@@ -67,12 +67,14 @@
               src="https://assets.parkos.com/assets/img/static/parkos-employees-en-eu.png"
               alt="Parkos Employees"
               loading="lazy"
-            />
+            >
           </figure>
         </article>
       </section>
       <section class="flex justify-center items-center flex-wrap">
-        <p class="w-full text-center font-bold my-8">Book safely and pay securely</p>
+        <p class="w-full text-center font-bold my-8">
+          Book safely and pay securely
+        </p>
 
         <ul class="flex">
           <li class="mx-2">
@@ -81,7 +83,7 @@
               loading="lazy"
               height="50px"
               alt="Visa"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -89,7 +91,7 @@
               height="50px"
               loading="lazy"
               alt="Mastercard"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -97,7 +99,7 @@
               height="50px"
               loading="lazy"
               alt="American Express"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -105,7 +107,7 @@
               height="50px"
               loading="lazy"
               alt="PayPal"
-            />
+            >
           </li>
         </ul>
       </section>

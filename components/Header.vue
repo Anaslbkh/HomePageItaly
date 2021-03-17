@@ -8,12 +8,12 @@
         <nav class="text-white">
           <ul class="inline-flex">
             <Dropdown>
-              <template v-slot:button>
+              <template #button>
                 <span class="material-icons mr-1 text-xl" aria-hidden="true">flight_takeoff</span>
                 Airports
                 <span class="material-icons" aria-hidden="true">arrow_drop_down</span>
               </template>
-              <template v-slot:content>
+              <template #content>
                 <ul class="text-black text-base py-2">
                   <li v-for="airport in airports" :key="airport.slug">
                     <a :href="airport.slug" class="block px-4 py-2 whitespace-nowrap hover:bg-gray-200">{{ airport.name }}</a>
@@ -41,7 +41,7 @@
             </li>
             <li>
               <button class="inline-flex items-end px-3">
-                <span class="material-icons mr-1 text-xl">flag</span> 
+                <span class="material-icons mr-1 text-xl">flag</span>
                 EN
                 <span class="material-icons">arrow_drop_down</span>
               </button>
@@ -52,7 +52,6 @@
 
       <section id="search">
         <div class="container mx-auto">
-
           <SearchForm />
 
           <section class="grid grid-cols-3 text-white border-t py-8">
@@ -75,74 +74,74 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Logo from "./Logo.vue";
-import Dropdown from './header/Dropdown.vue';
-import SearchForm from '../components/search/index.vue';
+import Vue from 'vue'
+import SearchForm from '../components/search/index.vue'
+import Logo from './Logo.vue'
+import Dropdown from './header/Dropdown.vue'
 
 export default Vue.extend({
   components: {
     Logo,
     Dropdown,
-    SearchForm,
+    SearchForm
   },
 
-  data() {
+  data () {
     return {
-      navOpen: true,
-    };
+      navOpen: true
+    }
   },
 
   computed: {
-    airports() {
+    airports () {
       return [{
-        "id": 1,
-        "object": "airport",
-        "name": "Schiphol Airport",
-        "slug": "schiphol-airport",
-        "logo": "URL",
-        "from_price": 24,
-        "address": {
-          "street": "Vertrekpassage",
-          "zip_code": "1118AV",
-          "city": "Schiphol",
-          "latitude": 52.31016,
-          "longitude": 4.76961
+        id: 1,
+        object: 'airport',
+        name: 'Schiphol Airport',
+        slug: 'schiphol-airport',
+        logo: 'URL',
+        from_price: 24,
+        address: {
+          street: 'Vertrekpassage',
+          zip_code: '1118AV',
+          city: 'Schiphol',
+          latitude: 52.31016,
+          longitude: 4.76961
         },
-        "country": {
-          "id": 1,
-          "code": "nl-NL"
+        country: {
+          id: 1,
+          code: 'nl-NL'
         },
-        "opening_times": {
-          "from": "0:00",
-          "till": "24:00"
+        opening_times: {
+          from: '0:00',
+          till: '24:00'
         }
       }, {
-        "id": 3,
-        "object": "airport",
-        "name": "Rotterdam The Hague Airport",
-        "slug": "rotterdam-airport",
-        "logo": "URL",
-        "from_price": 24,
-        "address": {
-          "street": "Rotterdam Airportplein 60",
-          "zip_code": "3045AP",
-          "city": "Rotterdam",
-          "latitude": 51.95601,
-          "longitude": 4.44036
+        id: 3,
+        object: 'airport',
+        name: 'Rotterdam The Hague Airport',
+        slug: 'rotterdam-airport',
+        logo: 'URL',
+        from_price: 24,
+        address: {
+          street: 'Rotterdam Airportplein 60',
+          zip_code: '3045AP',
+          city: 'Rotterdam',
+          latitude: 51.95601,
+          longitude: 4.44036
         },
-        "country": {
-          "id": 1,
-          "code": "nl-NL"
+        country: {
+          id: 1,
+          code: 'nl-NL'
         },
-        "opening_times": {
-          "from": "0:00",
-          "till": "24:00"
+        opening_times: {
+          from: '0:00',
+          till: '24:00'
         }
-      }];
+      }]
     }
-  },
-});
+  }
+})
 </script>
 
 <style>

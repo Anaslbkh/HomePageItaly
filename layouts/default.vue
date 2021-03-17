@@ -19,7 +19,7 @@ export default Vue.extend({
   components: {
     Header,
     Footer,
-    LegalFooter,
+    LegalFooter
   }
 })
 </script>
