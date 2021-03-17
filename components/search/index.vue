@@ -130,7 +130,7 @@ export default Vue.extend({
   components: {
     Info
   },
-  data (): {
+  data(): {
         formData: SearchParameters,
         showAirportSelector: boolean,
         airports: AirportType[]
@@ -148,16 +148,16 @@ export default Vue.extend({
     }
   },
 
-  async fetch () {
+  async fetch() {
     this.airports = (await this.$axios.$get('airports')).data
   },
 
   computed: {
-    title () {
+    title(): string {
       return this.formData.airport ? 'Airport name' : 'Find the cheapest and safest airport parking lots'
     },
 
-    times () {
+    times() {
       const interval = 15 // minutes interval
       const times = [] // time array
       let time = 0 // start time
@@ -175,7 +175,7 @@ export default Vue.extend({
     }
   },
 
-  mounted () {
+  mounted() {
     this.$fetch()
 
     if (Object.prototype.hasOwnProperty.call(this.$route.params, 'airport')) {

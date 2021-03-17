@@ -1,21 +1,6 @@
-export type Address = {
-    street: string;
-    zip_code: string;
-    city: string;
-    latitude: number;
-    longitude: number;
-}
-
-export interface Country {
-    id: number;
-    code: string;
-}
-
-export interface OpeningTimes {
-    from: string;
-    till: string;
-}
-
+import { Address } from './Address'
+import { Country } from './Country'
+import { OpeningTimes } from './OpeningTimes'
 export interface Airport {
     id: number;
     object: string;
@@ -24,6 +9,6 @@ export interface Airport {
     logo: string;
     from_price: number;
     address: Address;
-    country: Country;
+    country: Pick<Country, 'id' | 'code' | 'name'>;
     opening_times: OpeningTimes;
 }

@@ -34,7 +34,7 @@ export default Vue.extend({
       default: 24
     }
   },
-  data (): {
+  data(): {
         open: boolean
         } {
     return {

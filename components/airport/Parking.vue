@@ -2,13 +2,13 @@
   <article class="border border-gray-500 rounded">
     <div class="flex items-center justify-center p-12">
       <img
-        src="https://assets.parkos.com/assets/img/parkings/logos/247parkeren.png"
+        :src="parking.logo"
         :alt="parking.name"
       >
     </div>
     <p class="flex flex-col text-center p-4 border-t border-gray-500">
       <strong>{{ parking.name }}</strong>
-      <span>from { missing } a week</span>
+      <span>from {{ parking.from_price | price }} a week</span>
     </p>
   </article>
 </template>
@@ -23,6 +23,15 @@ export default Vue.extend({
       type: Object,
       required: true
     } as PropOptions<Parking>
+  },
+
+  filters: {
+    price(value: number): string {
+      return new Intl.NumberFormat('nl', {
+        style: 'currency',
+        currency: 'EUR',
+      }).format(value);
+    }
   }
 })
 </script>

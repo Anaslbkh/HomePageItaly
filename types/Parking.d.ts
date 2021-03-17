@@ -1,27 +1,15 @@
-export type Address = {
-    street: string;
-    zip_code: string;
-    city: string;
-    latitude: number;
-    longitude: number;
-}
-
-export type Country = {
-    id: number;
-    code: string;
-}
-
-export type OpeningTimes = {
-    from: string;
-    till: string;
-}
+import { Address } from './Address'
+import { Country } from './Country'
+import { OpeningTimes } from './OpeningTimes' 
 
 export type Parking = {
     id: number;
     object: string;
     name: string;
     slug: string;
+    logo?: string;
+    from_price?: number; // Sometimes from_price is not available
     address: Address;
-    country: Country;
+    country: Pick<Country, 'id' | 'code' | 'name'>;
     opening_times: OpeningTimes;
 }
