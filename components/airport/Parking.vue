@@ -4,7 +4,7 @@
       <img
         src="https://assets.parkos.com/assets/img/parkings/logos/247parkeren.png"
         :alt="parking.name"
-      />
+      >
     </div>
     <p class="flex flex-col text-center p-4 border-t border-gray-500">
       <strong>{{ parking.name }}</strong>
@@ -18,11 +18,11 @@ import Vue, { PropOptions } from 'vue'
 import { Parking } from '../../types/Parking'
 
 export default Vue.extend({
-    props: {
-        parking: {
-            type: Object,
-            required: true,
-        } as PropOptions<Parking>
-    }
+  props: {
+    parking: {
+      type: Object,
+      required: true
+    } as PropOptions<Parking>
+  }
 })
 </script>
