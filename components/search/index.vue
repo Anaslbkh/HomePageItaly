@@ -30,9 +30,12 @@
             name="airport"
             class="w-full p-3 border-l shadow-input rounded-r border border-gray-500"
           >
-            <option>
-              test
-            </option>
+            <option disabled selected>Where do you want to park?</option>
+            <optgroup v-for="(airports, country) in availableAirports" :key="country" :label="country">
+              <option v-for="airport in airports" :key="airport.slug" :value="airport.slug">
+                {{ airport.name }}
+              </option>
+            </optgroup>
           </select>
         </div>
       </transition>
@@ -114,6 +117,7 @@
 <script lang="ts">
 
 import Vue from 'vue'
+import { groupBy } from 'lodash.groupby';
 import { Airport as AirportType } from '../../types/Airport'
 import Info from '../Info.vue'
 
@@ -149,7 +153,15 @@ export default Vue.extend({
   },
 
   async fetch() {
-    this.airports = (await this.$axios.$get('airports')).data
+    const defaultParams: {
+      lang: string;
+    } = {
+      lang: 'nl',
+    };
+
+    console.log(this.$route.params)
+    const airports = (await this.$axios.$get('airports', { params: defaultParams })).data
+    this.airports = airports
   },
 
   computed: {
@@ -172,6 +184,23 @@ export default Vue.extend({
       }
 
       return times
+    },
+
+    availableAirports() {
+      let obj: object = {}
+
+      this.airports.forEach( (airport: AirportType) => {
+        if ( !obj.hasOwnProperty(airport.country.name)) {
+          obj[airport.country.name] = []
+        }
+        
+        obj[airport.country.name].push({
+          name: airport.name,
+          slug: airport.slug
+        })
+      })
+
+      return obj;
     }
   },
 

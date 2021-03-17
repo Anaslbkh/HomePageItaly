@@ -101,43 +101,61 @@ import { Airport as AirportType } from '@/types/Airport'
 const lang = 'nl'
 export default Vue.extend({
 
+  layout: 'search',
+
   components: {
     ReviewSummary,
     Review,
     Map,
   },
 
-  async asyncData({ params, $axios }) {
+  async asyncData(context) {
+
+    console.log(context.app.data)
     const defaultParams = {
       lang,
     }
-    const airports = (await $axios.$get('airports', { params: defaultParams })).data
+    // const currentAirport = Array.prototype.find.call(this.airports, (airport: AirportType) => airport.slug === params.airport)
+    // const parkings = (await $axios.$get('parkings', { params: Object.assign({ 
+    //   airport: currentAirport.id
+    // }, defaultParams) })).data
+    // const reviews = await $axios.$get('reviews', { 
+    //   params: {
+    //     airport: currentAirport.id,
+    //     limit: 4,
+    //   }
+    // })
 
-    const currentAirport = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === params.airport)
-    const parkings = (await $axios.$get('parkings', { params: Object.assign({ 
-      airport: currentAirport.id
-    }, defaultParams) })).data
-    const reviews = await $axios.$get('reviews', { 
-      params: {
-        airport: currentAirport.id,
-        limit: 4,
-      }
-    })
+    // return {
+    //   parkings,
+    //   reviews: reviews.data[lang],
+    //   //reviewsMeta: reviews.meta,
+    // }
+  },
 
+  provide(): {
+    parkings: ParkingType[]
+  } {
     return {
-      parkings,
-      reviews: reviews.data[lang],
-      //reviewsMeta: reviews.meta,
-      airports
+      parkings: this.parkings
     }
   },
 
-  data() {
+  inject: [
+    'airports'
+  ],
+
+  data(): {
+    parkings: Array<ParkingType>,
+    reviews: Array<ReviewType>,
+    reviewsMeta: object,
+    airports: Array<AirportType>
+  } {
     return {
-      parkings: [] as Array<ParkingType>,
-      reviews: [] as Array<ReviewType>,
+      parkings: [],
+      reviews: [],
       reviewsMeta: {},
-      airports: [] as Array<AirportType>
+      airports: [],
     }
   },
 

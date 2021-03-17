@@ -1,9 +1,11 @@
 runtime: custom
 env: flex
-service: nuxt-demo
+service: mpl
 
 manual_scaling:
   instances: 1
 
 env_variables:
   NODE_ENV: production
+  API_BASE_URL: ""
+  GOOGLE_MAPS_API_KEY: ""
