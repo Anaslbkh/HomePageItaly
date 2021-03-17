@@ -153,7 +153,7 @@ export default Vue.extend({
   },
 
   computed: {
-    title () {
+    title (): string {
       return this.formData.airport ? 'Airport name' : 'Find the cheapest and safest airport parking lots'
     },
 
