@@ -5,19 +5,24 @@
 </template>
 
 <script lang="ts">
-import { Client } from '@googlemaps/google-maps-services-js'
+import { Loader } from '@googlemaps/js-api-loader'
 import Vue from 'vue'
 
-const client = new Client({})
+if (process.client) {
+  const loader = new Loader({
+    apiKey: process.env.GOOGLE_MAPS_API_KEY || '',
+    version: '3.44'
+  })
 
-client.elevation({
-  params: {
-    locations: [{ lat: 52.31016, lng: 4.76961 }],
-    key: 'AIzaSyCI3AGvFFcfOMQpNNrbakwy29Go7f5tOXk'
-  }
-}).then((r) => {
-  console.log(r)
-})
+  loader.load().then(() => {
+    /* global google */
+    return new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      center: { lat: -34.397, lng: 150.644 },
+      zoom: 8
+    })
+  })
+}
+
 export default Vue.extend({
   computed: {
     coordinates () {
