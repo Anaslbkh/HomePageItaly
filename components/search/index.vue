@@ -30,7 +30,9 @@
             name="airport"
             class="w-full p-3 border-l shadow-input rounded-r border border-gray-500"
           >
-            <option disabled selected>Where do you want to park?</option>
+            <option disabled selected>
+              Where do you want to park?
+            </option>
             <optgroup v-for="(airports, country) in availableAirports" :key="country" :label="country">
               <option v-for="airport in airports" :key="airport.slug" :value="airport.slug">
                 {{ airport.name }}
@@ -115,30 +117,28 @@
 </template>
 
 <script lang="ts">
-
 import Vue from 'vue'
-import { groupBy } from 'lodash.groupby';
 import { Airport as AirportType } from '../../types/Airport'
 import Info from '../Info.vue'
 
 type SearchParameters = {
-    airport: string|undefined;
-    arrival: string|undefined;
-    departure: string|undefined;
-    arrivalTime?: string;
-    departureTime?: string;
+  airport: string|undefined;
+  arrival: string|undefined;
+  departure: string|undefined;
+  arrivalTime?: string;
+  departureTime?: string;
 }
 
 export default Vue.extend({
-
   components: {
     Info
   },
+
   data(): {
-        formData: SearchParameters,
-        showAirportSelector: boolean,
-        airports: AirportType[]
-        } {
+    formData: SearchParameters,
+    showAirportSelector: boolean,
+    airports: AirportType[]
+    } {
     return {
       formData: {
         airport: undefined,
@@ -156,10 +156,9 @@ export default Vue.extend({
     const defaultParams: {
       lang: string;
     } = {
-      lang: 'nl',
-    };
+      lang: 'nl'
+    }
 
-    console.log(this.$route.params)
     const airports = (await this.$axios.$get('airports', { params: defaultParams })).data
     this.airports = airports
   },
@@ -187,20 +186,20 @@ export default Vue.extend({
     },
 
     availableAirports() {
-      let obj: object = {}
+      const obj: object = {}
 
-      this.airports.forEach( (airport: AirportType) => {
-        if ( !obj.hasOwnProperty(airport.country.name)) {
+      this.airports.forEach((airport: AirportType) => {
+        if (!Object.prototype.hasOwnProperty.call(obj, airport.country.name)) {
           obj[airport.country.name] = []
         }
-        
+
         obj[airport.country.name].push({
           name: airport.name,
           slug: airport.slug
         })
       })
 
-      return obj;
+      return obj
     }
   },
 

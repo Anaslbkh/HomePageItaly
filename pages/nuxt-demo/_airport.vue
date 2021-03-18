@@ -90,9 +90,9 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import ReviewSummary from '@/components/reviews/Summary.vue'
+// import ReviewSummary from '@/components/reviews/Summary.vue'
 import Review from '@/components/reviews/Review.vue'
-import Map from '@/components/airport/Map.vue';
+import Map from '@/components/airport/Map.vue'
 
 import { Parking as ParkingType } from '@/types/Parking'
 import { Review as ReviewType } from '@/types/Review'
@@ -101,27 +101,29 @@ import { Airport as AirportType } from '@/types/Airport'
 const lang = 'nl'
 export default Vue.extend({
 
-  layout: 'search',
-
   components: {
-    ReviewSummary,
+    // ReviewSummary,
     Review,
-    Map,
+    Map
   },
 
-  async asyncData({$axios, params}) {
+  layout: 'search',
+
+  async asyncData({ $axios, params }) {
     const defaultParams = {
-      lang,
+      lang
     }
     const airports = (await $axios.$get('airports', { params: defaultParams })).data
     const currentAirport = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === params.airport)
-    const parkings = (await $axios.$get('parkings', { params: Object.assign({ 
-      airport: currentAirport.id
-    }, defaultParams) })).data
-    const reviews = await $axios.$get('reviews', { 
+    const parkings = (await $axios.$get('parkings', {
+      params: Object.assign({
+        airport: currentAirport.id
+      }, defaultParams)
+    })).data
+    const reviews = await $axios.$get('reviews', {
       params: {
         airport: currentAirport.id,
-        limit: 4,
+        limit: 4
       }
     })
 
@@ -129,8 +131,8 @@ export default Vue.extend({
       airports,
       currentAirport,
       parkings,
-      reviews: reviews.data[lang],
-      //reviewsMeta: reviews.meta,
+      reviews: reviews.data[lang]
+      // reviewsMeta: reviews.meta,
     }
   },
 
@@ -140,7 +142,7 @@ export default Vue.extend({
     reviewsMeta: object,
     airports: Array<AirportType>,
     currentAirport: AirportType,
-  } {
+    } {
     return {
       parkings: [],
       reviews: [],

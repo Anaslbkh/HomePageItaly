@@ -18,20 +18,20 @@ import Vue, { PropOptions } from 'vue'
 import { Parking } from '../../types/Parking'
 
 export default Vue.extend({
+  filters: {
+    price(value: number): string {
+      return new Intl.NumberFormat('nl', {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(value)
+    }
+  },
+
   props: {
     parking: {
       type: Object,
       required: true
     } as PropOptions<Parking>
-  },
-
-  filters: {
-    price(value: number): string {
-      return new Intl.NumberFormat('nl', {
-        style: 'currency',
-        currency: 'EUR',
-      }).format(value);
-    }
   }
 })
 </script>
