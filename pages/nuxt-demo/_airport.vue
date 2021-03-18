@@ -81,7 +81,7 @@
         </h2>
         <p>For more information about the parking provider in question press on the "P" icon. <a href="https://eu.parkos.com/schiphol-parking/travel-directions/" class="text-blue-700">Plan your route to Schiphol Airport</a></p>
 
-        <Map />
+        <Map :parkings="parkings" :current="currentAirport" />
       </div>
     </section>
   </div>
@@ -109,53 +109,44 @@ export default Vue.extend({
     Map,
   },
 
-  async asyncData(context) {
-
-    console.log(context.app.data)
+  async asyncData({$axios, params}) {
     const defaultParams = {
       lang,
     }
-    // const currentAirport = Array.prototype.find.call(this.airports, (airport: AirportType) => airport.slug === params.airport)
-    // const parkings = (await $axios.$get('parkings', { params: Object.assign({ 
-    //   airport: currentAirport.id
-    // }, defaultParams) })).data
-    // const reviews = await $axios.$get('reviews', { 
-    //   params: {
-    //     airport: currentAirport.id,
-    //     limit: 4,
-    //   }
-    // })
+    const airports = (await $axios.$get('airports', { params: defaultParams })).data
+    const currentAirport = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === params.airport)
+    const parkings = (await $axios.$get('parkings', { params: Object.assign({ 
+      airport: currentAirport.id
+    }, defaultParams) })).data
+    const reviews = await $axios.$get('reviews', { 
+      params: {
+        airport: currentAirport.id,
+        limit: 4,
+      }
+    })
 
-    // return {
-    //   parkings,
-    //   reviews: reviews.data[lang],
-    //   //reviewsMeta: reviews.meta,
-    // }
-  },
-
-  provide(): {
-    parkings: ParkingType[]
-  } {
     return {
-      parkings: this.parkings
+      airports,
+      currentAirport,
+      parkings,
+      reviews: reviews.data[lang],
+      //reviewsMeta: reviews.meta,
     }
   },
-
-  inject: [
-    'airports'
-  ],
 
   data(): {
     parkings: Array<ParkingType>,
     reviews: Array<ReviewType>,
     reviewsMeta: object,
-    airports: Array<AirportType>
+    airports: Array<AirportType>,
+    currentAirport: AirportType,
   } {
     return {
       parkings: [],
       reviews: [],
       reviewsMeta: {},
       airports: [],
+      currentAirport: {} as AirportType
     }
   },
 
