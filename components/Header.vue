@@ -86,14 +86,14 @@ export default Vue.extend({
     SearchForm
   },
 
-  data () {
+  data() {
     return {
       navOpen: true
     }
   },
 
   computed: {
-    airports () {
+    airports() {
       return [{
         id: 1,
         object: 'airport',

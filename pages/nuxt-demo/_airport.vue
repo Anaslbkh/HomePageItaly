@@ -48,10 +48,10 @@
         </div>
       </div>
     </div>
-    <section id="reviews" class="pt-10 pb-24 overflow-hidden">
+    <section v-if="reviews" id="reviews" class="pt-10 pb-24 overflow-hidden">
       <div class="container mx-auto mb-16">
         <div class="w-3/5">
-          <ReviewSummary :meta="reviewsMeta" />
+          <!-- <ReviewSummary :meta="reviewsMeta" /> -->
         </div>
       </div>
       <section class="grid grid-cols-4 gap-20" style="margin-left: -2rem; margin-right: -2px">
@@ -81,7 +81,7 @@
         </h2>
         <p>For more information about the parking provider in question press on the "P" icon. <a href="https://eu.parkos.com/schiphol-parking/travel-directions/" class="text-blue-700">Plan your route to Schiphol Airport</a></p>
 
-        <Map />
+        <Map :parkings="parkings" :current="currentAirport" />
       </div>
     </section>
   </div>
@@ -89,44 +89,69 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Map from '../../components/airport/Map.vue'
 
-import ReviewSummary from '../../components/reviews/Summary.vue'
-import Review from '../../components/reviews/Review.vue'
-import { Parking as ParkingType } from '../../types/Parking'
-import { Review as ReviewType } from '../../types/Review'
-import { Airport as AirportType } from '../../types/Airport'
+// import ReviewSummary from '@/components/reviews/Summary.vue'
+import Review from '@/components/reviews/Review.vue'
+import Map from '@/components/airport/Map.vue'
 
-const locale = 'nl-NL'
+import { Parking as ParkingType } from '@/types/Parking'
+import { Review as ReviewType } from '@/types/Review'
+import { Airport as AirportType } from '@/types/Airport'
+
+const lang = 'nl'
 export default Vue.extend({
 
   components: {
-    ReviewSummary,
+    // ReviewSummary,
     Review,
     Map
   },
 
-  async asyncData ({ params, $axios }) {
-    const parkings = (await $axios.$get('parkings', { params })).data
-    const reviews = await $axios.$get('reviews', { params })
-    const airports = (await $axios.$get('airports')).data
+  layout: 'search',
+
+  async asyncData({ $axios, params }) {
+    const defaultParams = {
+      lang
+    }
+    const airports = (await $axios.$get('airports', { params: defaultParams })).data
+    const currentAirport = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === params.airport)
+    const parkings = (await $axios.$get('parkings', {
+      params: Object.assign({
+        airport: currentAirport.id
+      }, defaultParams)
+    })).data
+    const reviews = await $axios.$get('reviews', {
+      params: {
+        airport: currentAirport.id,
+        limit: 4
+      }
+    })
 
     return {
+      airports,
+      currentAirport,
       parkings,
-      reviews: reviews.data[locale],
-      reviewsMeta: reviews.meta,
-      airports
+      reviews: reviews.data[lang]
+      // reviewsMeta: reviews.meta,
     }
   },
 
-  data () {
+  data(): {
+    parkings: Array<ParkingType>,
+    reviews: Array<ReviewType>,
+    reviewsMeta: object,
+    airports: Array<AirportType>,
+    currentAirport: AirportType,
+    } {
     return {
-      parkings: [] as Array<ParkingType>,
-      reviews: [] as Array<ReviewType>,
+      parkings: [],
+      reviews: [],
       reviewsMeta: {},
-      airports: [] as Array<AirportType>
+      airports: [],
+      currentAirport: {} as AirportType
     }
   },
+
   head: {
     title: 'Long stay parking at Schiphol? 100% lowest price guarantee',
     meta: [
@@ -139,7 +164,7 @@ export default Vue.extend({
   },
 
   computed: {
-    date () {
+    date() {
       return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
     }
   }

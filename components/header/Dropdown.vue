@@ -12,14 +12,14 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-  data () {
+  data() {
     return {
       isExpanded: false
     }
   },
 
   methods: {
-    toggle (_event: MouseEvent, state: boolean|undefined = undefined) {
+    toggle(_event: MouseEvent, state: boolean|undefined = undefined) {
       this.isExpanded = state ?? !this.isExpanded
     }
   }

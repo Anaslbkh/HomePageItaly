@@ -7,4 +7,5 @@ manual_scaling:
 
 env_variables:
   NODE_ENV: production
+  API_BASE_URL: ""
   GOOGLE_MAPS_API_KEY: ""

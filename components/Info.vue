@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="flex items-center relative">
     <button type="button" aria-haspopup="true" :aria-expanded="open.toString()" @click="open = !open">
       <svg
         fill="#288BE4"
@@ -34,7 +34,7 @@ export default Vue.extend({
       default: 24
     }
   },
-  data (): {
+  data(): {
         open: boolean
         } {
     return {
@@ -46,6 +46,7 @@ export default Vue.extend({
 
 <style>
 .tooltip {
-    transform: translateX(-50%);
+  transform: translateX(-50%);
+  top: 2rem;
 }
 </style>

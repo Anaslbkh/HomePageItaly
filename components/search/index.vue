@@ -30,9 +30,14 @@
             name="airport"
             class="w-full p-3 border-l shadow-input rounded-r border border-gray-500"
           >
-            <option>
-              test
+            <option disabled selected>
+              Where do you want to park?
             </option>
+            <optgroup v-for="(airports, country) in availableAirports" :key="country" :label="country">
+              <option v-for="airport in airports" :key="airport.slug" :value="airport.slug">
+                {{ airport.name }}
+              </option>
+            </optgroup>
           </select>
         </div>
       </transition>
@@ -112,29 +117,28 @@
 </template>
 
 <script lang="ts">
-
 import Vue from 'vue'
 import { Airport as AirportType } from '../../types/Airport'
 import Info from '../Info.vue'
 
 type SearchParameters = {
-    airport: string|undefined;
-    arrival: string|undefined;
-    departure: string|undefined;
-    arrivalTime?: string;
-    departureTime?: string;
+  airport: string|undefined;
+  arrival: string|undefined;
+  departure: string|undefined;
+  arrivalTime?: string;
+  departureTime?: string;
 }
 
 export default Vue.extend({
-
   components: {
     Info
   },
-  data (): {
-        formData: SearchParameters,
-        showAirportSelector: boolean,
-        airports: AirportType[]
-        } {
+
+  data(): {
+    formData: SearchParameters,
+    showAirportSelector: boolean,
+    airports: AirportType[]
+    } {
     return {
       formData: {
         airport: undefined,
@@ -148,16 +152,23 @@ export default Vue.extend({
     }
   },
 
-  async fetch () {
-    this.airports = (await this.$axios.$get('airports')).data
+  async fetch() {
+    const defaultParams: {
+      lang: string;
+    } = {
+      lang: 'nl'
+    }
+
+    const airports = (await this.$axios.$get('airports', { params: defaultParams })).data
+    this.airports = airports
   },
 
   computed: {
-    title (): string {
+    title(): string {
       return this.formData.airport ? 'Airport name' : 'Find the cheapest and safest airport parking lots'
     },
 
-    times () {
+    times() {
       const interval = 15 // minutes interval
       const times = [] // time array
       let time = 0 // start time
@@ -172,10 +183,27 @@ export default Vue.extend({
       }
 
       return times
+    },
+
+    availableAirports() {
+      const obj: object = {}
+
+      this.airports.forEach((airport: AirportType) => {
+        if (!Object.prototype.hasOwnProperty.call(obj, airport.country.name)) {
+          obj[airport.country.name] = []
+        }
+
+        obj[airport.country.name].push({
+          name: airport.name,
+          slug: airport.slug
+        })
+      })
+
+      return obj
     }
   },
 
-  mounted () {
+  mounted() {
     this.$fetch()
 
     if (Object.prototype.hasOwnProperty.call(this.$route.params, 'airport')) {
