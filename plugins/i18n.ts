@@ -16,7 +16,7 @@ declare module '@nuxt/types' {
   }
 }
 
-const i18nPlugin: Plugin = async ({$axios}, inject) => {
+const i18nPlugin: Plugin = async ({$axios, app}, inject) => {
   const languages: Array<LanguageType> = (await $axios.$get('languages')).data;
   const hostname: string = 'parkos.it';
 
@@ -27,7 +27,7 @@ const i18nPlugin: Plugin = async ({$axios}, inject) => {
     [key: string]: string;
   }
 
-  inject('i18n', (key: string, replace: ReplacerObject = {}): string => {
+  const i18n: Function = (key: string, replace: ReplacerObject = {}): string => {
     let translation = key.split('.').reduce( (t: any, i: any) => t[i] || null, translations)
 
     for (var placeholder of Object.keys(replace)) {
@@ -35,7 +35,10 @@ const i18nPlugin: Plugin = async ({$axios}, inject) => {
     }
 
     return translation;
-  })
+  }
+
+  app.i18n = i18n
+  inject('i18n', i18n)
 }
 
 export default i18nPlugin;

@@ -61,7 +61,7 @@
       </section>
       <section class="flex justify-center items-center flex-wrap">
         <p class="w-full text-center font-bold my-8">
-          {{ $i18n('templates.trusted-payment') }}
+          Prenota e paga in maniera sicura
         </p>
 
         <ul class="flex flex-wrap justify-center">

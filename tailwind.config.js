@@ -28,8 +28,13 @@ module.exports = {
           200: '#f3f3f3',
           300: '#eee',
           500: '#d2d2d2',
+          600: '#848f96',
           700: '#828282'
         }
+      },
+      transformOrigin: {
+        navTop: '10% 10%',
+        navBottom: '10% 90%',
       }
     },
     fontFamily: {

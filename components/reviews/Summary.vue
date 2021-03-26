@@ -27,7 +27,7 @@
         <p class="text-3xl mb-10 font-heading">
           {{ $i18n('templates.customer-parking-reviews-title', {
             airportName: $currentAirport.name,
-            reviewsScoreAvg: meta.score | score
+            reviewsScoreAvg: meta.score
           }) }}
         </p>
         <p class="text-base" v-html="$i18n('templates.customer-parking-reviews-intro-schema', {
@@ -35,7 +35,7 @@
             'price-per-day-raw': $currentAirport.from_price,
             'price-per-day': $currentAirport.from_price,
             reviewPageUrl: '#',
-            reviewsScoreAvg: meta.score | score,
+            reviewsScoreAvg: meta.score,
             reviewsTotal: meta.count
           })">
         </p>
@@ -50,9 +50,6 @@
  */
 import Vue from "vue";
 export default Vue.extend({
-  filters: {
-    score: (value: number): string => value.toFixed(1),
-  },
 
   props: {
     meta: {

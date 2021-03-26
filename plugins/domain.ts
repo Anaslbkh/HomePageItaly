@@ -31,7 +31,7 @@ declare module '@nuxt/types' {
 }
 
 // @ts-ignore
-const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params }, inject) => {
+const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params, req, route }, inject) => {
   const languages: Array<LanguageType> = (await $axios.$get('languages')).data;
   inject('languages', languages)
 
@@ -41,7 +41,16 @@ const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params }, inject) => 
 
   if (!isDev && currentLanguage.gtm_key) $gtm.init(currentLanguage.gtm_key);
 
-  if (params.airport) {
+  let airportSlug: string;
+  if (isDev) {
+    airportSlug = params.airport;
+  } else {
+    airportSlug = route.path.split('/').filter(Boolean).pop()!;
+  }
+
+  if (airportSlug && airportSlug !== 'client') {
+    console.log(`Airport: ${airportSlug}`);
+
     const airports: Array<AirportType> = (await $axios.$get('airports', {
       params: {
         lang: currentLanguage.lang,
@@ -49,17 +58,16 @@ const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params }, inject) => 
       }
     })).data;
     inject('airports', airports)
-
-    const currentAirport: AirportType = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === params.airport)
+  
+    const currentAirport: AirportType = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === airportSlug)
     inject('currentAirport', currentAirport)
-
+  
     const currentAirportContent: AirportContentType = (await $axios.$get(`airports/${currentAirport.id}/content`, {
       params: {
         lang: currentLanguage.lang
       }
     }))
     inject('currentAirportContent', currentAirportContent)
-
   }
 }
 

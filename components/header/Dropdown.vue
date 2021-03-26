@@ -1,9 +1,9 @@
 <template>
-  <div class="inline-block relative">
-    <button class="flex w-full sm:inline-flex items-end px-3" aria-haspopup="true" :aria-expanded="isExpanded.toString()" @click="toggle">
+  <div class="inline-block relative border-white border-opacity-20 sm:border-b-0">
+    <button class="flex w-full sm:inline-flex items-end px-3 py-6 sm:py-0" aria-haspopup="true" :aria-expanded="isExpanded.toString()" @click="toggle">
       <slot name="button" />
     </button>
-    <div role="menu" v-bind="{ 'hidden': !isExpanded }" class="static sm:absolute sm:bg-white text-white sm:text-black right-0 min-w-min shadow-dropdown border-1 border-black border-opacity-20 rounded-b overflow-hidden z-10">
+    <div role="menu" v-bind="{ 'hidden': !isExpanded }" class="static sm:absolute sm:bg-white text-gray-600 sm:text-black right-0 min-w-min shadow-dropdown border-1 border-black border-opacity-20 rounded-b overflow-hidden z-10 pl-7 sm:pl-0">
       <slot name="content" />
     </div>
   </div>

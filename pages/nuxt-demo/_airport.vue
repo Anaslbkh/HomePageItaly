@@ -4,7 +4,7 @@
       <p class="py-24 text-3xl text-blue-900 sm:text-center font-heading" v-html="$i18n('location.count-customers-merchants-airports-location', {
           'customers': 500000,
           'merchants': parkings.length,
-          'airport': $currentAirport.name
+          'airport': $currentAirport ? $currentAirport.name : ''
         })">
       </p>
     </div>
@@ -158,15 +158,10 @@ export default Vue.extend({
       params: defaultParams
     })
 
-    // const content = (await $axios.$get(`airport/${$currentAirport.id}/content`, {
-    //   params: defaultParams
-    // }))
-
     return {
       parkings,
       reviews: reviews.data[$currentLanguage.lang],
       reviewsMeta: reviews.meta.reviews,
-      //content,
       faq: faq.data[$currentLanguage.lang]
     }
   },
@@ -184,6 +179,8 @@ export default Vue.extend({
   },
 
   head() {
+    if(typeof this.$currentAirportContent === 'undefined') return {}
+
     return {
       title: this.$currentAirportContent.meta.title,
       meta: [
