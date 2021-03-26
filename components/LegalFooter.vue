@@ -2,14 +2,20 @@
   <section class="bg-blue-900 relative z-20 text-white -mt-6">
     <div class="container mx-auto py-12">
       <div class="flex justify-center mb-12">
-        { socials }
+        <ul class="flex">
+          <li v-for="(link, social) in $currentLanguage.socials" :key="social">
+            <a :href="link" target="_blank" rel="noopener nofollow" :aria-label="social" class="w-12 h-12 mx-3 flex items-center justify-center border border-white rounded hover:border-gray-700">
+              <img :src="`/footer/socials/${social}.svg`" :alt="`Logo: ${social}`" class="w-9 h-9">
+            </a>
+          </li>
+        </ul>
       </div>
-      <div class="flex justify-center">
+      <div class="flex justify-center leading-loose flex-col sm:flex-row">
         <p class="mx-4 font-bold">
           &copy; Parkos
         </p>
-        <a href="#" class="mx-4">General Terms & Conditions</a>
-        <a href="#" class="mx-4">Privacy Policy</a>
+        <a href="/termini-e-condizioni.html" class="mx-4">Termini e condizioni</a>
+        <a href="/privacy-policy.html" class="mx-4">Privacy Policy</a>
       </div>
     </div>
   </section>

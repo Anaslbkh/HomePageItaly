@@ -1,18 +1,23 @@
 <template>
   <div>
     <div class="flex justify-center flex-wrap text-white mb-8">
-      <h1 class="w-full text-6xl text-center font-heading mb-4">
-        {{ title }}
+      <h1 v-if="$currentAirportContent" class="w-full text-6xl text-center font-heading mb-4">
+        {{ $currentAirportContent.title }}
       </h1>
-      <p>From €1.78 per day!</p>
+      <h1 v-else class="w-full text-6xl text-center font-heading mb-4">
+        {{ $i18n('general.compare-parking') }}
+      </h1>
+      <p>{{ $i18n('templates.from-x-euro-day', {
+        amount: pricePerDay
+      }) }} </p>
       <button class="ml-4 text-white text-opacity-50" @click="showAirportSelector = !showAirportSelector">
-        Change airport
+        {{ $i18n('general.change-airport') }}
       </button>
     </div>
 
     <form
       action="/schiphol-parking/search/"
-      class="w-1/4 flex flex-col mx-auto mb-12"
+      class="max-w-full sm:max-w-sm flex flex-col mx-auto mb-12"
     >
       <input type="hidden" name="parkosfastsearchtest">
       <transition name="slide">
@@ -28,10 +33,10 @@
             id=""
             v-model="formData.airport"
             name="airport"
-            class="w-full p-3 border-l shadow-input rounded-r border border-gray-500"
+            class="w-full p-3 py-4 border-l shadow-input rounded-r border border-gray-500 text-sm"
           >
             <option disabled selected>
-              Where do you want to park?
+              {{ $i18n('general.where-to-park')}}
             </option>
             <optgroup v-for="(airports, country) in availableAirports" :key="country" :label="country">
               <option v-for="airport in airports" :key="airport.slug" :value="airport.slug">
@@ -50,7 +55,7 @@
           </svg>
         </div>
         <input
-          id=""
+          id="arrival"
           type="date"
           name="arrival"
           class="p-3 w-full shadow-input border border-r-0 border-gray-500"
@@ -70,7 +75,7 @@
           </option>
         </select>
         <div class="px-2 flex items-center justify-center bg-white shadow-input rounded-r border-r border-b border-t border-gray-500">
-          <Info>Minimum of 2,5 hours in advance of departure.</Info>
+          <Info>{{ $i18n('search.arrival-time-explanation-general') }}</Info>
         </div>
       </div>
 
@@ -83,7 +88,7 @@
           </svg>
         </div>
         <input
-          id=""
+          id="departure"
           type="date"
           name="departure"
           class="p-3 w-full shadow-input border border-r-0 border-gray-500"
@@ -102,7 +107,7 @@
           </option>
         </select>
         <div class="px-2 flex items-center justify-center bg-white shadow-input rounded-r border-r border-b border-t border-gray-500">
-          <Info>Expected return time of your flight</Info>
+          <Info>{{ $i18n('search.departure-time-explanation-general') }}</Info>
         </div>
       </div>
 
@@ -110,7 +115,7 @@
         type="submit"
         class="bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700"
       >
-        Search parking
+        {{ $i18n('home.search-parkingplace') }}
       </button>
     </form>
   </div>
@@ -137,7 +142,6 @@ export default Vue.extend({
   data(): {
     formData: SearchParameters,
     showAirportSelector: boolean,
-    airports: AirportType[]
     } {
     return {
       formData: {
@@ -148,27 +152,11 @@ export default Vue.extend({
         departureTime: '12:00'
       },
       showAirportSelector: true,
-      airports: []
     }
-  },
-
-  async fetch() {
-    const defaultParams: {
-      lang: string;
-    } = {
-      lang: 'nl'
-    }
-
-    const airports = (await this.$axios.$get('airports', { params: defaultParams })).data
-    this.airports = airports
   },
 
   computed: {
-    title(): string {
-      return this.formData.airport ? 'Airport name' : 'Find the cheapest and safest airport parking lots'
-    },
-
-    times() {
+    times(): Array<string> {
       const interval = 15 // minutes interval
       const times = [] // time array
       let time = 0 // start time
@@ -186,9 +174,9 @@ export default Vue.extend({
     },
 
     availableAirports() {
-      const obj: object = {}
+      const obj: any = {};
 
-      this.airports.forEach((airport: AirportType) => {
+      this.$airports.forEach((airport: AirportType) => {
         if (!Object.prototype.hasOwnProperty.call(obj, airport.country.name)) {
           obj[airport.country.name] = []
         }
@@ -200,16 +188,21 @@ export default Vue.extend({
       })
 
       return obj
+    },
+
+    pricePerDay(): string {
+      return new Intl.NumberFormat(this.$currentLanguage.lang, {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(this.$currentAirport.from_price / 8)
     }
   },
 
   mounted() {
-    this.$fetch()
-
     if (Object.prototype.hasOwnProperty.call(this.$route.params, 'airport')) {
       this.formData.airport = this.$route.params.airport
       this.showAirportSelector = false
     }
-  }
+  },
 })
 </script>

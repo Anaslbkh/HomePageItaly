@@ -1,11 +1,8 @@
 <template>
   <div>
-    <Header />
     <main>
       <Nuxt />
     </main>
-    <Footer />
-    <LegalFooter />
   </div>
 </template>
 

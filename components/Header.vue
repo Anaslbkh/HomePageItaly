@@ -5,18 +5,19 @@
         <a href="#">
           <Logo />
         </a>
-        <nav class="text-white">
+        <nav class="text-white bg-blue-900 sm:bg-transparent absolute sm:static top-0 left-0 bottom-0 right-0 h-screen sm:h-auto z-10">
+          <button></button>
           <ul class="inline-flex">
             <Dropdown>
               <template #button>
                 <span class="material-icons mr-1 text-xl" aria-hidden="true">flight_takeoff</span>
-                Airports
+                {{ $i18n('general.airports') }}
                 <span class="material-icons" aria-hidden="true">arrow_drop_down</span>
               </template>
               <template #content>
                 <ul class="text-black text-base py-2">
-                  <li v-for="airport in airports" :key="airport.slug">
-                    <a :href="airport.slug" class="block px-4 py-2 whitespace-nowrap hover:bg-gray-200">{{ airport.name }}</a>
+                  <li v-for="airport in $airports" :key="airport.slug">
+                    <a :href="airport.slug" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.name }}</a>
                   </li>
                 </ul>
               </template>
@@ -24,28 +25,35 @@
             <li>
               <a href="#" class="inline-flex items-end px-3">
                 <span class="material-icons mr-1 text-xl" aria-hidden="true">question_answer</span>
-                Customer Service
+                {{ $i18n('customer.customer-service') }}
               </a>
             </li>
             <li>
               <a href="#" class="inline-flex items-end px-3">
                 <span class="material-icons mr-1 text-xl">person</span>
-                Sign In
+                {{ $i18n('templates.header-login') }}
               </a>
             </li>
             <li>
-              <a href="#" class="inline-flex items-end px-3">
+              <a href="https://parkos.it/chi-siamo.html" class="inline-flex items-end px-3">
                 <span class="material-icons mr-1 text-xl">language</span>
-                About Us
+                Chi siamo
               </a>
             </li>
-            <li>
-              <button class="inline-flex items-end px-3">
+            <Dropdown>
+              <template #button>
                 <span class="material-icons mr-1 text-xl">flag</span>
-                EN
+                {{ $currentLanguage.lang }}
                 <span class="material-icons">arrow_drop_down</span>
-              </button>
-            </li>
+              </template>
+              <template #content>
+                <ul class="text-black text-base py-2">
+                  <li v-for="language in $languages" :key="`lang-${language.id}`" v-bind="{ 'hidden': language.id === $currentLanguage.id }">
+                    <a :href="language.domain" class="block px-4 py-1 whitespace-nowrap hover:bg-gray-200">{{ language.native_name }}</a>
+                  </li>
+                </ul>
+              </template>
+            </Dropdown>
           </ul>
         </nav>
       </div>
@@ -54,17 +62,10 @@
         <div class="container mx-auto">
           <SearchForm />
 
-          <section class="grid grid-cols-3 text-white border-t py-8">
-            <article class="flex align-items justify-center">
-              <span class="material-icons mr-1 text-lg">check</span> Best deals
-            </article>
-            <article class="flex align-items justify-center">
-              <span class="material-icons mr-1 text-lg">check</span> 500,000
-              customers worldwide
-            </article>
-            <article class="flex align-items justify-center">
-              <span class="material-icons mr-1 text-lg">check</span>
-              Cancel/change reservation for free
+          <section class="grid grid-cols-1 sm:grid-cols-3 text-white border-t py-8">
+            <article v-for="i in 3" :key="`header-usp-${i}`" class="flex items-center justify-center">
+              <img src="/icons/check.svg" class="h-4 mr-1" aria-hidden="true">
+              <span>{{ $i18n(`templates.header-usp-${i}`)}}</span>
             </article>
           </section>
         </div>
@@ -86,67 +87,19 @@ export default Vue.extend({
     SearchForm
   },
 
-  data() {
+  data(): {
+    navOpen: boolean,
+  } {
     return {
-      navOpen: true
+      navOpen: true,
     }
   },
-
-  computed: {
-    airports() {
-      return [{
-        id: 1,
-        object: 'airport',
-        name: 'Schiphol Airport',
-        slug: 'schiphol-airport',
-        logo: 'URL',
-        from_price: 24,
-        address: {
-          street: 'Vertrekpassage',
-          zip_code: '1118AV',
-          city: 'Schiphol',
-          latitude: 52.31016,
-          longitude: 4.76961
-        },
-        country: {
-          id: 1,
-          code: 'nl-NL'
-        },
-        opening_times: {
-          from: '0:00',
-          till: '24:00'
-        }
-      }, {
-        id: 3,
-        object: 'airport',
-        name: 'Rotterdam The Hague Airport',
-        slug: 'rotterdam-airport',
-        logo: 'URL',
-        from_price: 24,
-        address: {
-          street: 'Rotterdam Airportplein 60',
-          zip_code: '3045AP',
-          city: 'Rotterdam',
-          latitude: 51.95601,
-          longitude: 4.44036
-        },
-        country: {
-          id: 1,
-          code: 'nl-NL'
-        },
-        opening_times: {
-          from: '0:00',
-          till: '24:00'
-        }
-      }]
-    }
-  }
 })
 </script>
 
 <style>
 .gradient {
-  background-image: url(https://assets.parkos.com/assets/images/pattern.ba250c.png),
+  background-image: url(https://assets.parkos.com/assets/images/pattern.png),
     linear-gradient(0deg, rgba(35, 176, 253, 0.4), rgba(9, 131, 240, 0.4));
 }
 </style>

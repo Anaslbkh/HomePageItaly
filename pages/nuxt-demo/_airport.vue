@@ -1,138 +1,173 @@
 <template>
   <div>
-    <p class="py-24 text-3xl text-gray-700 text-center font-heading">
-      We help you compare <span class="text-blue-900">parking prices</span> at <span class="text-blue-900">Schiphol Airport</span>.
-    </p>
+    <div class="container mx-auto">
+      <p class="py-24 text-3xl text-blue-900 sm:text-center font-heading" v-html="$i18n('location.count-customers-merchants-airports-location', {
+          'customers': 500000,
+          'merchants': parkings.length,
+          'airport': $currentAirport.name
+        })">
+      </p>
+    </div>
 
-    <section id="usps" class="bg-gray-200 border-t border-b border-gray-500 py-24">
+    <section id="usps" class="bg-gray-200 border-t border-b border-gray-500 py-12 sm:py-24">
       <div class="container mx-auto text-center">
-        <p class="text-3xl text-blue-900 font-heading mb-8">
-          What makes Parkos unique?
+        <p class="text-3xl text-blue-900 font-heading mb-14">
+          {{ $i18n('templates.parkos-usps') }}
         </p>
-        <section class="w-3/5 mx-auto grid grid-cols-3">
-          <article class="flex flex-col items-center justify-start">
-            <span class="material-icons text-5xl text-blue-500 mb-4">assignment_turned_in</span>
-            <p>All parking lots are carefully <strong>inspected</strong></p>
+        <section class="w-full sm:w-3/5 mx-auto grid grid-cols-1 sm:grid-cols-3 gap-12">
+          <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
+            <img src="/usps/checklist.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-1')"></p>
           </article>
-          <article class="flex flex-col items-center justify-start">
-            <span class="material-icons text-5xl text-blue-500 mb-4">local_offer</span>
-            <p>The best <strong>deals</strong></p>
+          <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
+            <img src="/usps/offer.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-3')"></p>
           </article>
-          <article class="flex flex-col items-center justify-start">
-            <span class="material-icons text-5xl text-blue-500 mb-4">history</span>
-            <p><strong>Free</strong> cancellation up until 24 hours before departure</p>
+          <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
+            <img src="/usps/history.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-4')"></p>
           </article>
         </section>
       </div>
     </section>
     <div id="support" class="pt-24 pb-16">
-      <div class="container flex justify-between mx-auto pb-24 border-b border-gray-500">
-        <div class="w-1/2">
+      <div class="container flex justify-between mx-auto pb-24">
+        <div class="sm:w-1/2">
           <h2 class="text-3xl mb-10 font-heading">
-            How can we help you?
+            {{ $i18n('customer.we-support') }}
           </h2>
           <p class="text-base mb-4">
-            Our experts are here to assist you with comparing parking locations and are happy to answer any questions you may have.
+            {{ $i18n('customer.our-experts-description') }}
           </p>
           <a
             href="#support"
             class="inline-block bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700"
           >
-            Please contact us
+            {{ $i18n('customer.contact-us') }}
           </a>
         </div>
-        <div>
+        <div class="hidden sm:block">
           <figure>
             <img src="https://assets.parkos.com/assets/img/home-customerservice.jpg" alt="Customer Service Team">
           </figure>
         </div>
       </div>
     </div>
+    <div class="container mx-auto">
+      <div class="border-b border-gray-500"></div>
+    </div>
     <section v-if="reviews" id="reviews" class="pt-10 pb-24 overflow-hidden">
       <div class="container mx-auto mb-16">
-        <div class="w-3/5">
-          <!-- <ReviewSummary :meta="reviewsMeta" /> -->
+        <div class="w-full lg:w-3/5">
+          <ReviewSummary :meta="reviewsMeta" />
         </div>
       </div>
-      <section class="grid grid-cols-4 gap-20" style="margin-left: -2rem; margin-right: -2px">
-        <Review v-for="review in reviews" :key="`review-${review.id}`" :review="review" />
+
+      <section class="relative mb-16">
+        <div class="container mx-auto">
+          <Review :review="reviews[0]" style="width: calc(50% - 470px); left: -150px" class="absolute top-0 hidden xl:block opacity-50" />
+          <section class="grid grid-cols-1 gap-8 sm:grid-cols-2">
+            <Review :review="reviews[1]" />
+            <Review :review="reviews[2]" />
+          </section>
+          <Review :review="reviews[3]" style="width: calc(50% - 470px); right: -150px" class="absolute top-0 hidden xl:block opacity-50" />
+        </div>
       </section>
     </section>
     <section id="usps" class="bg-gray-200 border-t border-b border-gray-500 py-24">
-      <div class="container mx-auto text-center">
-        { topblock content }
+      <div class="container mx-auto" v-html="$currentAirportContent.content">
+        
       </div>
     </section>
     <section id="parkings" class="py-24">
       <div class="container mx-auto mb-16">
         <h2 class="text-3xl text-blue-900 font-heading mb-24">
-          Parking providers at Schiphol Airport
+          {{ $i18n('templates.merchants-at-airport', {
+            location: $currentAirport.name
+          })}}
         </h2>
 
-        <section class="grid grid-cols-4 gap-x-8 gap-y-16">
+        <section class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-x-8 gap-y-16">
           <Parking v-for="parking in parkings" :key="parking.slug" :parking="parking" />
         </section>
       </div>
     </section>
+
+    <Faq :items="faq" />
+
     <section id="map" class="bg-gray-200 border-t border-b border-gray-500 py-24">
       <div class="container mx-auto">
         <h2 class="text-3xl text-blue-900 font-heading mb-4">
-          Schiphol airport parking map
+          {{ $i18n('templates.map-parkinglots', { location: $currentAirport.name }) }}
         </h2>
-        <p>For more information about the parking provider in question press on the "P" icon. <a href="https://eu.parkos.com/schiphol-parking/travel-directions/" class="text-blue-700">Plan your route to Schiphol Airport</a></p>
+        <p>{{ $i18n('templates.more-info-marker') }} <a :href="`${$route.path}/${$i18n('additional.map-slug')}`" class="text-blue-700 hover:text-blue-900 hover:underline">{{ $i18n('reservation.directions-to', {
+          location: $currentAirport.name
+        }) }}</a></p>
 
-        <Map :parkings="parkings" :current="currentAirport" />
+        <Map :parkings="parkings" />
       </div>
     </section>
   </div>
 </template>
 
 <script lang="ts">
+/**
+ * @TODO:
+ * - Add route planner link
+ */
 import Vue from 'vue'
 
-// import ReviewSummary from '@/components/reviews/Summary.vue'
+import ReviewSummary from '@/components/reviews/Summary.vue'
 import Review from '@/components/reviews/Review.vue'
 import Map from '@/components/airport/Map.vue'
+import Faq from '@/components/airport/Faq.vue'
 
 import { Parking as ParkingType } from '@/types/Parking'
 import { Review as ReviewType } from '@/types/Review'
-import { Airport as AirportType } from '@/types/Airport'
 
 const lang = 'nl'
 export default Vue.extend({
 
   components: {
-    // ReviewSummary,
+    ReviewSummary,
     Review,
-    Map
+    Map,
+    Faq
   },
 
   layout: 'search',
 
-  async asyncData({ $axios, params }) {
+  async asyncData({ $axios, $currentAirport, $currentLanguage }) {
     const defaultParams = {
-      lang
+      lang: $currentLanguage.lang,
     }
-    const airports = (await $axios.$get('airports', { params: defaultParams })).data
-    const currentAirport = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === params.airport)
     const parkings = (await $axios.$get('parkings', {
       params: Object.assign({
-        airport: currentAirport.id
+        airport: $currentAirport.id
       }, defaultParams)
     })).data
+
     const reviews = await $axios.$get('reviews', {
       params: {
-        airport: currentAirport.id,
+        airport: $currentAirport.id,
         limit: 4
       }
     })
 
+    const faq = await $axios.$get(`airports/${$currentAirport.id}/faq`, {
+      params: defaultParams
+    })
+
+    // const content = (await $axios.$get(`airport/${$currentAirport.id}/content`, {
+    //   params: defaultParams
+    // }))
+
     return {
-      airports,
-      currentAirport,
       parkings,
-      reviews: reviews.data[lang]
-      // reviewsMeta: reviews.meta,
+      reviews: reviews.data[$currentLanguage.lang],
+      reviewsMeta: reviews.meta.reviews,
+      //content,
+      faq: faq.data[$currentLanguage.lang]
     }
   },
 
@@ -140,33 +175,50 @@ export default Vue.extend({
     parkings: Array<ParkingType>,
     reviews: Array<ReviewType>,
     reviewsMeta: object,
-    airports: Array<AirportType>,
-    currentAirport: AirportType,
-    } {
+  } {
     return {
       parkings: [],
       reviews: [],
       reviewsMeta: {},
-      airports: [],
-      currentAirport: {} as AirportType
     }
   },
 
-  head: {
-    title: 'Long stay parking at Schiphol? 100% lowest price guarantee',
-    meta: [
-      { property: 'og:title', content: 'Long stay parking at Schiphol? 100% lowest price guarantee' },
-      { name: 'description', content: 'Long stay parking at Schiphol? ✓ 500.000 Customers went before you ✓ Nowhere cheaper ✓ FREE cancellation ✓ Find the #1 DEAL for long stay parking at Schiphol.' },
-      { property: 'og:description', content: 'Long stay parking at Schiphol? ✓ 500.000 Customers went before you ✓ Nowhere cheaper ✓ FREE cancellation ✓ Find the #1 DEAL for long stay parking at Schiphol.' },
-      { property: 'og:image', content: 'https://assets.parkos.com/assets/img/locations/schiphol-airport.jpg' },
-      { property: 'og:url', content: 'https://eu.parkos.com/schiphol-parking/' }
-    ]
+  head() {
+    return {
+      title: this.$currentAirportContent.meta.title,
+      meta: [
+        { property: 'og:title', content: this.$currentAirportContent.meta.title },
+        { name: 'description', content: this.$currentAirportContent.meta.description },
+        { property: 'og:description', content: this.$currentAirportContent.meta.description },
+        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:title', content: this.$currentAirportContent.meta.title },
+        { name: 'twitter:site', content: this.$currentLanguage.socials.twitter ? `@${this.$currentLanguage.socials.twitter.split('/').pop()}` : '' },
+        { name: 'twitter:creator', content: this.$currentLanguage.socials.twitter ? `@${this.$currentLanguage.socials.twitter.split('/').pop()}` : '' },
+        { name: 'twitter:description', content: this.$currentAirportContent.meta.description },
+        { name: 'twitter:image', content: `https://assets.parkos.com/assets/img/locations/${this.$currentAirport.devtitle}.jpg` },
+        { property: 'og:type', content: 'place' },
+        { property: 'og:locale', content: 'it' },
+        { property: 'place:location:latitude', content: String(this.$currentAirport.address.latitude) },
+        { property: 'place:location:longitude', content: String(this.$currentAirport.address.longitude) },
+        { property: 'og:image', content: `https://assets.parkos.com/assets/img/locations/${this.$currentAirport.devtitle}.jpg` },
+        { property: 'og:url', content: 'https://eu.parkos.com/schiphol-parking/' }
+      ],
+      link: [
+        { rel: 'canonical', href: this.$route.fullPath }
+      ]
+    }
   },
 
   computed: {
     date() {
       return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
-    }
+    },
   }
 })
 </script>
+
+<style>
+.grey-text {
+  @apply text-gray-700;
+}
+</style>

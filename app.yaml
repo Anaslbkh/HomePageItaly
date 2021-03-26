@@ -7,5 +7,5 @@ manual_scaling:
 
 env_variables:
   NODE_ENV: production
-  API_BASE_URL: ""
-  GOOGLE_MAPS_API_KEY: ""
+  API_BASE_URL: "https://parkos-mpl-api-dot-parkos-staging.ew.r.appspot.com/api/v1/"
+  GOOGLE_MAPS_API_KEY: "AIzaSyCI3AGvFFcfOMQpNNrbakwy29Go7f5tOXk"

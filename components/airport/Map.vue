@@ -6,12 +6,8 @@
 /* global google */
 import { Loader } from '@googlemaps/js-api-loader'
 import Vue, { PropOptions } from 'vue'
-import * as Marker from '@/assets/airport/maps/marker.svg'
 import { Address as AddressType } from '~/types/Address'
-import { Airport as AirportType } from '~/types/Airport'
 import { Parking as ParkingType } from '~/types/Parking'
-
-type LatLng = Pick<AddressType, 'latitude' | 'longitude'>;
 
 export default Vue.extend({
   props: {
@@ -19,24 +15,20 @@ export default Vue.extend({
       type: Array,
       required: true
     } as PropOptions<Array<ParkingType>>,
-    current: {
-      type: Object,
-      required: true
-    } as PropOptions<AirportType>
   },
 
   computed: {
-    coordinates() {
-      return Array.prototype.map.call(this.parkings, (parking: ParkingType): LatLng => {
-        const { latitude, longitude } = parking.address
-        return { latitude, longitude }
-      })
-    }
+    coordinates(): Array<any> {
+      return Array.prototype.map.call(this.parkings, (parking: ParkingType) => ({
+          latitude: parking.address.latitude,
+          longitude: parking.address.longitude,
+      }) as Pick<AddressType, 'latitude' | 'longitude'>)
+    },
   },
 
   mounted(): void {
-    const { latitude, longitude } = this.current.address
-    const coordinatesList: Array<LatLng> = this.coordinates
+    const { latitude, longitude } = this.$currentAirport.address
+    const coordinatesList: Array<Pick<AddressType, 'latitude' | 'longitude'>> = this.coordinates
     const loader = new Loader({
       apiKey: process.env.GOOGLE_MAPS_API_KEY || '',
       version: '3.44'
@@ -49,12 +41,15 @@ export default Vue.extend({
         zoom: 12
       })
 
-      coordinatesList.forEach(({ latitude, longitude }: { latitude: number, longitude: number }) => {
+      const icon = require('~/assets/airport/maps/marker.svg')
+
+      coordinatesList.forEach(({ latitude, longitude }: Pick<AddressType, 'latitude' | 'longitude'>) => {
         const marker = new google.maps.Marker({
-          icon: Marker,
+          icon,
           position: new google.maps.LatLng(latitude, longitude),
           map
         })
+        // @ts-ignore
         bounds.extend(marker.getPosition())
       })
 

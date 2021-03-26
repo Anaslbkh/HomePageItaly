@@ -5,17 +5,19 @@ export default {
   head: {
     title: 'Parkos',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'it'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { name: 'theme-color', content: '#0983F0' },
+      { 'http-equiv': 'content-language', content: 'it' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com/' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bree+Serif&family=Roboto:wght@400;700&display=swap&family=Material+Icons' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bree+Serif&family=Roboto:wght@400;700&display=swap&family=Material+Icons' },
+      { rel: 'manifest', href: '/manifest.json'}
     ]
   },
 
@@ -25,7 +27,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/axios'
+    '@/plugins/axios',
+    '@/plugins/domain.ts',
+    '@/plugins/i18n.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -37,7 +41,8 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/gtm',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -49,7 +54,9 @@ export default {
     //     maxAge: 1000 * 60 * 60
     //   }
     // ],
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+
+    '@nuxtjs/gtm',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

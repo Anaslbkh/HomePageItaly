@@ -8,7 +8,7 @@
     </div>
     <p class="flex flex-col text-center p-4 border-t border-gray-500">
       <strong>{{ parking.name }}</strong>
-      <span>from {{ parking.from_price | price }} a week</span>
+      <span>{{ $i18n('templates.from-x-euro-week', { amount: price }) }}</span>
     </p>
   </article>
 </template>
@@ -18,20 +18,23 @@ import Vue, { PropOptions } from 'vue'
 import { Parking } from '../../types/Parking'
 
 export default Vue.extend({
-  filters: {
-    price(value: number): string {
-      return new Intl.NumberFormat('nl', {
-        style: 'currency',
-        currency: 'EUR'
-      }).format(value)
-    }
-  },
 
   props: {
     parking: {
       type: Object,
       required: true
     } as PropOptions<Parking>
+  },
+
+  computed: {
+    price(): string {
+      if (! this.parking.from_price) return ''
+
+      return new Intl.NumberFormat(this.$currentLanguage.lang, {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(this.parking.from_price)
+    }
   }
 })
 </script>

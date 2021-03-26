@@ -15,43 +15,12 @@ import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import LegalFooter from '@/components/LegalFooter.vue'
 
-import { Airport as AirportType } from '@/types/Airport'
-
 export default Vue.extend({
   components: {
     Header,
     Footer,
     LegalFooter
   },
-
-  provide(): {
-    airports: AirportType[]
-    } {
-    return {
-      airports: this.airports
-    }
-  },
-
-  data(): {
-    lang: string,
-    airports: Array<AirportType>
-    } {
-    return {
-      lang: 'nl',
-      airports: [] as Array<AirportType>
-    }
-  },
-
-  async fetch() {
-    const defaultParams: {
-      lang: string;
-    } = {
-      lang: this.lang
-    }
-
-    const airports = (await this.$axios.$get('airports', { params: defaultParams })).data
-    this.airports = airports
-  }
 })
 </script>
 

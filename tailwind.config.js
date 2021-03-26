@@ -1,5 +1,15 @@
 module.exports = {
   theme: {
+    screens: {
+      sm: '770px',
+      md: '990px',
+      lg: '1190px',
+      xl: '1190px',
+      '2xl': '1190px',
+    },
+    container: {
+      padding: '25px',
+    },
     extend: {
       colors: {
         primary: {
@@ -16,6 +26,7 @@ module.exports = {
         },
         gray: {
           200: '#f3f3f3',
+          300: '#eee',
           500: '#d2d2d2',
           700: '#828282'
         }
@@ -28,6 +39,7 @@ module.exports = {
     boxShadow: {
       dropdown: '0 6px 12px rgb(0 0 0 / 18%)',
       button: 'inset 0 -2px 0 0 rgba(0, 0, 0, 0.2)',
+      buttonhover: 'inset 0 -2px 0 0 #828282',
       input: 'inset 0 3px 0 0 hsla(0,0%,82.4%,.4)'
     }
   },
