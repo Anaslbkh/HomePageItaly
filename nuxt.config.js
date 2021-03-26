@@ -74,6 +74,8 @@ export default {
     '@nuxtjs/axios',
 
     '@nuxtjs/gtm',
+
+    '@nuxtjs/sentry',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -96,6 +98,11 @@ export default {
       baseURL: process.env.API_BASE_URL
     }
   },
+
+  sentry: {
+    dsn: process.env.SENTRY_DSN
+  },
+
   server: {
     port: 3000,
     host: '127.0.0.1',
