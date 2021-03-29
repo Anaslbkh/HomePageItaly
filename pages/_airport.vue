@@ -16,15 +16,15 @@
         </p>
         <section class="w-full sm:w-3/5 mx-auto grid grid-cols-1 sm:grid-cols-3 gap-12">
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/usps/checklist.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img src="/static/usps/checklist.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-1')"></p>
           </article>
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/usps/offer.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img src="/static/usps/offer.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-3')"></p>
           </article>
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/usps/history.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img src="/static/usps/history.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-4')"></p>
           </article>
         </section>
@@ -76,7 +76,7 @@
     </section>
     <section id="usps" class="bg-gray-200 border-t border-b border-gray-500 py-24">
       <div class="container mx-auto" v-html="$currentAirportContent.content">
-        
+
       </div>
     </section>
     <section id="parkings" class="py-24">
@@ -117,13 +117,13 @@
  */
 import Vue from 'vue'
 
-import ReviewSummary from '@/components/reviews/Summary.vue'
-import Review from '@/components/reviews/Review.vue'
-import Map from '@/components/airport/Map.vue'
-import Faq from '@/components/airport/Faq.vue'
+import ReviewSummary from '~/components/reviews/Summary.vue'
+import Review from '~/components/reviews/Review.vue'
+import Map from '~/components/airport/Map.vue'
+import Faq from '~/components/airport/Faq.vue'
 
-import { Parking as ParkingType } from '@/types/Parking'
-import { Review as ReviewType } from '@/types/Review'
+import { Parking as ParkingType } from '~/types/Parking'
+import { Review as ReviewType } from '~/types/Review'
 
 const lang = 'nl'
 export default Vue.extend({
