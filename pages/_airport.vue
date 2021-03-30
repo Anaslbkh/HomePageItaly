@@ -2,7 +2,7 @@
   <div>
     <div class="container mx-auto">
       <p class="py-24 text-3xl text-blue-900 sm:text-center font-heading" v-html="$i18n('location.count-customers-merchants-airports-location', {
-          'customers': 500000,
+          'customers': '500.000',
           'merchants': parkings.length,
           'airport': $currentAirport ? $currentAirport.name : ''
         })">
@@ -16,15 +16,15 @@
         </p>
         <section class="w-full sm:w-3/5 mx-auto grid grid-cols-1 sm:grid-cols-3 gap-12">
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/static/usps/checklist.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img src="/usps/checklist.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-1')"></p>
           </article>
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/static/usps/offer.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img src="/usps/offer.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-3')"></p>
           </article>
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/static/usps/history.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img src="/usps/history.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-4')"></p>
           </article>
         </section>
@@ -40,7 +40,8 @@
             {{ $i18n('customer.our-experts-description') }}
           </p>
           <a
-            href="#support"
+            href="https://parkos.zendesk.com/hc/it"
+            rel="nofollow"
             class="inline-block bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700"
           >
             {{ $i18n('customer.contact-us') }}
@@ -150,6 +151,7 @@ export default Vue.extend({
     const reviews = await $axios.$get('reviews', {
       params: {
         airport: $currentAirport.id,
+        lang: $currentLanguage.lang,
         limit: 4
       }
     })
@@ -201,7 +203,7 @@ export default Vue.extend({
         { property: 'og:url', content: 'https://eu.parkos.com/schiphol-parking/' }
       ],
       link: [
-        { rel: 'canonical', href: this.$route.fullPath }
+        { rel: 'canonical', href: this.$route.path }
       ]
     }
   },
