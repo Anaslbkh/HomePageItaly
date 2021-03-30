@@ -1,16 +1,18 @@
 <template>
-  <article class="border border-gray-500 rounded">
-    <div class="flex items-center justify-center p-12">
-      <img
-        :src="parking.logo"
-        :alt="parking.name"
-      >
-    </div>
-    <p class="flex flex-col text-center p-4 border-t border-gray-500">
-      <strong>{{ parking.name }}</strong>
-      <span>{{ $i18n('templates.from-x-euro-week', { amount: price }) }}</span>
-    </p>
-  </article>
+  <a :href="`https://parkos.it/parcheggio-linate/${parking.slug}.html`">
+    <article class="bg-white border border-gray-500 rounded">
+      <div class="flex items-center justify-center p-12">
+        <img
+          :src="parking.logo"
+          :alt="parking.name"
+        >
+      </div>
+      <p class="flex flex-col text-center p-4 border-t border-gray-500">
+        <strong>{{ parking.name }}</strong>
+        <span>{{ $i18n('templates.from-x-euro-week', { amount: price }) }}</span>
+      </p>
+    </article>
+  </a>
 </template>
 
 <script lang="ts">
