@@ -200,10 +200,10 @@ export default Vue.extend({
         { property: 'place:location:latitude', content: String(this.$currentAirport.address.latitude) },
         { property: 'place:location:longitude', content: String(this.$currentAirport.address.longitude) },
         { property: 'og:image', content: `https://assets.parkos.com/assets/img/locations/${this.$currentAirport.devtitle}.jpg` },
-        { property: 'og:url', content: 'https://eu.parkos.com/schiphol-parking/' }
+        { property: 'og:url', content: 'https://parkos.it'+this.$route.path } // @TODO get dynamic hostname server side
       ],
       link: [
-        { rel: 'canonical', href: this.$route.path }
+        { rel: 'canonical', href: 'https://parkos.it'+this.$route.path } // @TODO get dynamic hostname server side
       ]
     }
   },
