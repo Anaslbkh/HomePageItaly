@@ -2,7 +2,7 @@
   <header class="bg-blue-500 gradient" :class="{ 'skew -mt-8 pt-8': navOpen }">
     <section :class="{ unskew: navOpen }">
       <div class="container mx-auto flex justify-between h-16 items-center">
-        <a href="#">
+        <a href="/" @click="$router.go({path:'/', force: true})">
           <Logo />
         </a>
         <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50" aria-controls="#navigation" @click="toggleMenu">
