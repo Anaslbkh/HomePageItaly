@@ -69,7 +69,7 @@
 
           <section class="grid grid-cols-1 sm:grid-cols-3 text-white border-t py-8">
             <article v-for="i in 3" :key="`header-usp-${i}`" class="flex items-center justify-center">
-              <img src="/icons/check.svg" class="h-4 mr-1" aria-hidden="true">
+              <img src="/icons/check.svg" class="h-4 mr-1" aria-hidden="true" alt="check">
               <span>{{ $i18n(`templates.header-usp-${i}`)}}</span>
             </article>
           </section>

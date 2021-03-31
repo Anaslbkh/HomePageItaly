@@ -16,15 +16,30 @@
         </p>
         <section class="w-full sm:w-3/5 mx-auto grid grid-cols-1 sm:grid-cols-3 gap-12">
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/usps/checklist.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img
+              src="/usps/checklist.svg"
+              alt="personally inspected parkings"
+              class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5"
+              aria-hidden="true"
+            >
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-1')"></p>
           </article>
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/usps/offer.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img
+              src="/usps/offer.svg"
+              alt="lowest price"
+              class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5"
+              aria-hidden="true"
+            >
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-3')"></p>
           </article>
           <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img src="/usps/history.svg" alt="" class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5" aria-hidden="true">
+            <img
+              src="/usps/history.svg"
+              alt="free cancellation"
+              class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5"
+              aria-hidden="true"
+            >
             <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-4')"></p>
           </article>
         </section>
