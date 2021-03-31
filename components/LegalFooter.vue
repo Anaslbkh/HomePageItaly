@@ -3,11 +3,11 @@
     <div class="container mx-auto py-12">
       <div class="flex justify-center mb-12">
         <ul class="flex">
-          <!-- <li v-for="(link, social) in $currentLanguage.socials" :key="social">
+          <li v-for="(link, social) in $currentLanguage.socials" :key="social">
             <a :href="link" target="_blank" rel="noopener nofollow" :aria-label="social" class="w-12 h-12 mx-3 flex items-center justify-center border border-white rounded hover:border-gray-700">
               <img :src="`/footer/socials/${social}.svg`" :alt="`Logo: ${social}`" class="w-9 h-9">
             </a>
-          </li> -->
+          </li>
         </ul>
       </div>
       <div class="flex justify-center leading-loose flex-col sm:flex-row">
