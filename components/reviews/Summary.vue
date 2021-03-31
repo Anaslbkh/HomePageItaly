@@ -35,7 +35,7 @@
             'price-per-day-raw': $currentAirport.from_price,
             'price-per-day': $currentAirport.from_price,
             reviewPageUrl: '#',
-            reviewsScoreAvg: meta.score,
+            reviewsScoreAvg: meta.score.toFixed(1),
             reviewsTotal: meta.count
           })">
         </p>
