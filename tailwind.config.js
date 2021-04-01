@@ -61,6 +61,18 @@ module.exports = {
       // TypeScript
       'plugins/**/*.ts',
       'nuxt.config.ts'
-    ]
+    ],
+    options: {
+      safelist: {
+        standard: [
+          // (responsive) margin and padding utils
+          /[p|m][t|r|b|l|x|y]?-([0-9]+(\.[0-9])?|px|auto)$/,
+          // font size utilities
+          /^text-([0-9]?[xsgl].?$|base)$/,
+          // sizing utilities
+          '/[h|w]-/',
+        ],
+      }
+    }
   }
 }
