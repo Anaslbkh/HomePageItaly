@@ -9,7 +9,9 @@
       </div>
       <p class="flex flex-col text-center p-4 border-t border-gray-500">
         <strong>{{ parking.name }}</strong>
-        <span>{{ $i18n('templates.from-x-euro-week', { amount: price }) }}</span>
+        <span v-if="this.parking.from_price">
+          {{ $i18n('templates.from-x-euro-week', { amount: price }) }}
+        </span>
       </p>
     </article>
   </a>
