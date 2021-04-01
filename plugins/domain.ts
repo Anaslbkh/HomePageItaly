@@ -1,5 +1,6 @@
 import { Plugin } from '@nuxt/types'
 import { Airport as AirportType } from '~/types/Airport';
+import { AirportDetails as AirportDetailsType } from '~/types/AirportDetails'
 import { AirportContent as AirportContentType } from '~/types/AirportContent'
 import { Language as LanguageType } from '~/types/Language';
 
@@ -9,6 +10,7 @@ declare module 'vue/types/vue' {
     $languages: Array<LanguageType>,
     $currentLanguage: LanguageType,
     $currentAirport: AirportType,
+    $currentAirportDetails: AirportDetailsType,
     $currentAirportContent: AirportContentType,
   }
 }
@@ -19,6 +21,7 @@ declare module '@nuxt/types' {
     $languages: Array<LanguageType>,
     $currentLanguage: LanguageType,
     $currentAirport: AirportType,
+    $currentAirportDetails: AirportDetailsType,
     $currentAirportContent: AirportContentType,
   }
   interface Context {
@@ -26,6 +29,7 @@ declare module '@nuxt/types' {
     $languages: Array<LanguageType>,
     $currentLanguage: LanguageType,
     $currentAirport: AirportType,
+    $currentAirportDetails: AirportDetailsType,
     $currentAirportContent: AirportContentType,
   }
 }
@@ -58,15 +62,16 @@ const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params, req, route },
       }
     })).data;
     inject('airports', airports)
-  
+
     const currentAirport: AirportType = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === airportSlug)
     inject('currentAirport', currentAirport)
-  
-    const currentAirportContent: AirportContentType = (await $axios.$get(`airports/${currentAirport.id}/content`, {
-      params: {
-        lang: currentLanguage.lang
-      }
-    }))
+
+    const currentAirportDetails: AirportDetailsType = (await $axios.$get(`airports/${currentAirport.id}/details`))
+
+    inject('currentAirportDetails', currentAirportDetails)
+
+    // @ts-ignore @todo fix type or move to components
+    const currentAirportContent: AirportContentType = currentAirportDetails.content[currentLanguage.lang]
     inject('currentAirportContent', currentAirportContent)
   }
 }

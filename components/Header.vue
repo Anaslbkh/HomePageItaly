@@ -53,8 +53,16 @@
               </template>
               <template #content>
                 <ul class="py-2">
-                  <li v-for="language in $languages" :key="`lang-${language.id}`" v-bind="{ 'hidden': language.id === $currentLanguage.id }">
-                    <a :href="language.domain" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ language.native_name }}</a>
+                  <li
+                    v-for="(content, lang) in $currentAirportDetails.content"
+                    :key="`lang-${lang}`"
+                    v-bind="{ 'hidden': lang === $currentLanguage.lang }"
+                  >
+                    <a
+                      :href="content.url"
+                      class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">
+                        {{ $languages.find(language => language.lang === lang).native_name }}
+                    </a>
                   </li>
                 </ul>
               </template>
