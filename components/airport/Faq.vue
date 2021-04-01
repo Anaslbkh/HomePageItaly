@@ -11,9 +11,10 @@
           :key="`q-${item.slug}`"
           role="presentation"
         >
-          <a
+          <button
+            type="button"
             role="tab"
-            :href="`#${item.slug}`"
+            :data-target="`#${item.slug}`"
             :id="`question-${index}`"
             class="inline-block border border-b-0 py-3 px-4 mr-2 rounded-t max-w-sm whitespace-normal"
             :class="{
@@ -24,7 +25,7 @@
             @click="select"
           >
             {{ item.title }}
-          </a>
+          </button>
         </li>
       </ul>
 
@@ -96,7 +97,11 @@ export default Vue.extend({
   methods: {
     select($event: MouseEvent) {
       // @ts-ignore
-      const target: string = $event.target.hash!.slice(1);
+      const target: string = $event.target.getAttribute('data-target')!.slice(1);
+
+      // @ts-ignore
+      $event.target.blur();
+
       this.active = target;
     },
   },
