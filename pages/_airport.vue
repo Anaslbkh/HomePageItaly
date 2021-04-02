@@ -10,41 +10,9 @@
     </div>
 
     <section id="usps" class="bg-gray-200 border-t border-b border-gray-500 py-12 sm:py-24">
-      <div class="container mx-auto text-center">
-        <p class="text-3xl text-blue-900 font-heading mb-14">
-          {{ $i18n('templates.parkos-usps') }}
-        </p>
-        <section class="w-full sm:w-3/5 mx-auto grid grid-cols-1 sm:grid-cols-3 gap-12">
-          <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img
-              src="/usps/checklist.svg"
-              alt="personally inspected parkings"
-              class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5"
-              aria-hidden="true"
-            >
-            <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-1')"></p>
-          </article>
-          <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img
-              src="/usps/offer.svg"
-              alt="lowest price"
-              class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5"
-              aria-hidden="true"
-            >
-            <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-3')"></p>
-          </article>
-          <article class="flex flex-row sm:flex-col items-center justify-start mb-4">
-            <img
-              src="/usps/history.svg"
-              alt="free cancellation"
-              class="w-10 h-10 mr-8 sm:mr-0 sm:mb-5"
-              aria-hidden="true"
-            >
-            <p class="text-left sm:text-center" v-html="$i18n('templates.parkos-usp-4')"></p>
-          </article>
-        </section>
-      </div>
+      <Usps></Usps>
     </section>
+
     <div id="support" class="pt-24 pb-16">
       <div class="container flex justify-between mx-auto pb-24">
         <div class="sm:w-1/2">
@@ -140,11 +108,13 @@ import Faq from '~/components/airport/Faq.vue'
 
 import { Parking as ParkingType } from '~/types/Parking'
 import { Review as ReviewType } from '~/types/Review'
+import Usps from '~/components/airport/Usps.vue'
 
 const lang = 'nl'
 export default Vue.extend({
 
   components: {
+    Usps,
     ReviewSummary,
     Review,
     Map,

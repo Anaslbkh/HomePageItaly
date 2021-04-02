@@ -1,11 +1,11 @@
 <template>
-  <header class="bg-blue-500 gradient" :class="{ 'skew -mt-8 pt-8': navOpen }">
+  <header class="bg-blue-500 gradient" :class="{ 'skew -mt-8 pt-8': navOpen, 'fixed z-50': navShown }">
     <section :class="{ unskew: navOpen }">
       <div class="container mx-auto flex justify-between h-16 items-center">
         <a href="/">
           <Logo />
         </a>
-        <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50" aria-controls="#navigation" @click="toggleMenu">
+        <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50 focus:outline-none" aria-controls="#navigation" @click="toggleMenu">
           <span class="sr-only">Toggle navigation</span>
           <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all origin-navTop" :class="{ 'transform  rotate-45': navShown }"></span>
           <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1" :class="{ 'opacity-0': navShown }"></span>
@@ -77,7 +77,7 @@
 
           <section class="grid grid-cols-1 sm:grid-cols-3 text-white border-t py-8">
             <article v-for="i in 3" :key="`header-usp-${i}`" class="flex items-center justify-center">
-              <img src="/icons/check.svg" class="h-4 mr-1" aria-hidden="true" alt="check">
+              <img src="https://assets.parkos.com/assets/images/checkmark.svg" class="h-4 mr-1" aria-hidden="true" alt="check">
               <span>{{ $i18n(`templates.header-usp-${i}`)}}</span>
             </article>
           </section>

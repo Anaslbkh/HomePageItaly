@@ -10,7 +10,7 @@
       <p>{{ $i18n('templates.from-x-euro-day', {
         amount: pricePerDay
       }) }} </p>
-      <button class="ml-4 text-white text-opacity-50" @click="showAirportSelector = !showAirportSelector">
+      <button class="ml-4 text-white text-opacity-50 focus:outline-none" @click="showAirportSelector = !showAirportSelector">
         {{ $i18n('general.change-airport') }}
       </button>
     </div>
@@ -25,9 +25,7 @@
           <div
             class="icon px-4 flex items-center justify-center bg-white shadow-input rounded-l border border-r-0 border-gray-500"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 60 60">
-              <path fill="#091F2F" fill-rule="nonzero" d="M30 28.45c2.067 0 3.829-.727 5.285-2.182 1.457-1.456 2.185-3.216 2.185-5.282s-.728-3.826-2.185-5.282C33.83 14.25 32.067 13.521 30 13.521s-3.829.728-5.285 2.183c-1.457 1.456-2.185 3.216-2.185 5.282s.728 3.826 2.185 5.282C26.17 27.723 27.933 28.45 30 28.45zM30 0c5.826 0 10.782 2.042 14.87 6.127C48.955 10.21 51 15.164 51 20.986c0 2.91-.728 6.244-2.185 10a61.632 61.632 0 0 1-5.285 10.563 209.912 209.912 0 0 1-6.13 9.226c-2.02 2.863-3.736 5.14-5.145 6.83L30 60a507.618 507.618 0 0 0-2.255-2.606c-.94-1.08-2.63-3.24-5.074-6.479-2.443-3.239-4.58-6.384-6.413-9.436-1.832-3.052-3.5-6.502-5.003-10.352C9.752 27.277 9 23.897 9 20.986c0-5.822 2.044-10.775 6.13-14.86C19.219 2.043 24.175 0 30 0z" />
-            </svg>
+            <icon-pin></icon-pin>
           </div>
           <select
             id=""
@@ -158,6 +156,7 @@ import Vue from 'vue'
 import { Airport as AirportType } from '../../types/Airport'
 import IconInfo from '~/components/icons/IconInfo.vue'
 import IconCalendar from '~/components/icons/IconCalendar.vue'
+import IconPin from '~/components/icons/IconPin.vue'
 
 type SearchParameters = {
   airport: string|undefined;
@@ -176,6 +175,7 @@ type DatePickerParameters = {
 
 export default Vue.extend({
   components: {
+    IconPin,
     IconCalendar,
     IconInfo
   },
@@ -193,7 +193,7 @@ export default Vue.extend({
         arrivalTime: '12:00',
         departureTime: '12:00'
       },
-      showAirportSelector: true,
+      showAirportSelector: false,
       datePickerParameters: {
         startDate: new Date(),
         showOnSelectOnly: true,
