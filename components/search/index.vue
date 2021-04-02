@@ -74,7 +74,7 @@
           ></DatePicker>
         </div>
 
-        <div class="flex w-2/5 relative">
+        <div class="flex w-2/5 relative right-0.5">
           <select
             v-model="formData.arrivalTime"
             name="arrivalTime"
@@ -115,14 +115,14 @@
             :open-date="datePickerParameters.startDate"
             :disabled-dates="datePickerParameters.disableDates"
             :show-on-select-only="datePickerParameters.showOnSelectOnly"
-            :pre-selected-date="(new Date()).setDate(datePickerParameters.startDate.getDate() + 7)"
+            :pre-selected-date="preSelectedDateDeparture"
             input-class="p-3 w-full shadow-input border border-r-0 border-gray-500 focus:outline-none text-gray-800 text-sm"
             :value="formData.departure"
             @selected="onDateSelected($event, 'departure')"
           ></DatePicker>
         </div>
 
-        <div class="flex w-2/5 relative">
+        <div class="flex w-2/5 relative right-0.5">
           <select
             v-model="formData.departureTime"
             name="arrivalTime"
@@ -206,6 +206,13 @@ export default Vue.extend({
   },
 
   computed: {
+    preSelectedDateDeparture(): Date {
+      const date = new Date()
+      date.setDate(this.datePickerParameters.startDate.getDate() + 7)
+
+      return date
+    },
+
     times(): Array<string> {
       const interval = 15 // minutes interval
       const times = [] // time array
@@ -253,8 +260,9 @@ export default Vue.extend({
       this.formData[inputKey] = value
 
       const reverseInputKey = inputKey === 'arrival' ? 'departure' : 'arrival'
-      const reverseValue = this.formData[reverseInputKey]
-      if (reverseValue) {
+      let reverseValue = this.formData[reverseInputKey]
+      if (inputKey === 'arrival') {
+        reverseValue = reverseValue || this.preSelectedDateDeparture
         if (inputKey === 'arrival' && value > reverseValue) {
           this.$set(this.formData, reverseInputKey, (new Date(value).setDate(value.getDate() + 7)))
         }
