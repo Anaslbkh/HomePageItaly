@@ -46,68 +46,98 @@
           </select>
         </div>
       </transition>
+
       <div class="flex mb-4">
-        <div
-          class="icon px-4 flex items-center justify-center bg-white shadow-input rounded-l border border-r-0 border-gray-500"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 60 60">
-            <path fill="#091F2F" fill-rule="nonzero" d="M50.953 54.085v-33.1H9.047v33.1h41.906zm0-48.17c1.594 0 3 .61 4.219 1.831C56.39 8.967 57 10.376 57 11.972v42.113c0 1.596-.61 2.98-1.828 4.154C53.953 59.413 52.547 60 50.953 60H9.047c-1.688 0-3.117-.587-4.29-1.76C3.587 57.065 3 55.68 3 54.084V11.972c0-1.596.586-3.005 1.758-4.226 1.172-1.22 2.601-1.83 4.289-1.83H12V0h6.047v5.915h23.906V0H48v5.915h2.953zM24 27.042v8.85h-9.047v-8.85H24z" />
-          </svg>
-        </div>
-        <input
-          id="arrival"
-          type="date"
-          name="arrival"
-          class="p-3 w-full shadow-input border border-r-0 border-gray-500"
-        >
-        <select
-          v-model="formData.arrivalTime"
-          name="arrivalTime"
-          class="px-4 shadow-input border-l border-b border-t border-gray-500 appearance-none"
-        >
-          <option
-            v-for="time in times"
-            :key="`arrival-time-${time}`"
-            :value="time"
-            :selected="time === '12:00'"
+        <div class="flex w-3/5">
+          <div
+            @click="$refs.arrivalDatePicker.showCalendar()"
+            class="icon px-4 flex items-center justify-center bg-white shadow-input rounded-l border border-r-0 border-gray-500"
           >
-            {{ time }}
-          </option>
-        </select>
-        <div class="px-2 flex items-center justify-center bg-white shadow-input rounded-r border-r border-b border-t border-gray-500">
-          <Info>{{ $i18n('search.arrival-time-explanation-general') }}</Info>
+            <icon-calendar></icon-calendar>
+          </div>
+
+          <DatePicker
+            ref="arrivalDatePicker"
+            class="focus:outline-none"
+            ref-name="arrivalDatePickerInput"
+            :placeholder="$i18n('templates.date-from')"
+            :lang="$currentLanguage.lang"
+            :full-month-name="datePickerParameters.fullMonthName"
+            :open-date="datePickerParameters.startDate"
+            :format="datePickerParameters.inputFormat"
+            :disabled-dates="datePickerParameters.disableDates"
+            :show-on-select-only="datePickerParameters.showOnSelectOnly"
+            :value="formData.arrival"
+            input-class="p-3 w-full shadow-input border border-r-0 border-gray-500 focus:outline-none text-gray-800 text-sm"
+            @selected="onDateSelected($event, 'arrival')"
+          ></DatePicker>
+        </div>
+
+        <div class="flex w-2/5 relative">
+          <select
+            v-model="formData.arrivalTime"
+            name="arrivalTime"
+            class="px-4 table-cell w-full shadow-input border-l border-b border-t border-gray-500 bg-white focus:outline-none appearance-none text-gray-800 text-sm"
+          >
+            <option
+              v-for="time in times"
+              :key="`arrival-time-${time}`"
+              :value="time"
+              :selected="time === formData.arrivalTime"
+            >
+              {{ time }}
+            </option>
+          </select>
+          <div class="absolute right-2 top-2.5">
+            <icon-info>{{ $i18n('search.arrival-time-explanation-general') }}</icon-info>
+          </div>
         </div>
       </div>
 
       <div class="flex mb-4">
-        <div
-          class="icon px-4 flex items-center justify-center bg-white shadow-input rounded-l border border-r-0 border-gray-500"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 60 60">
-            <path fill="#091F2F" fill-rule="nonzero" d="M50.953 54.085v-33.1H9.047v33.1h41.906zm0-48.17c1.594 0 3 .61 4.219 1.831C56.39 8.967 57 10.376 57 11.972v42.113c0 1.596-.61 2.98-1.828 4.154C53.953 59.413 52.547 60 50.953 60H9.047c-1.688 0-3.117-.587-4.29-1.76C3.587 57.065 3 55.68 3 54.084V11.972c0-1.596.586-3.005 1.758-4.226 1.172-1.22 2.601-1.83 4.289-1.83H12V0h6.047v5.915h23.906V0H48v5.915h2.953zM45 39.153v8.805h-9v-8.805h9z" />
-          </svg>
-        </div>
-        <input
-          id="departure"
-          type="date"
-          name="departure"
-          class="p-3 w-full shadow-input border border-r-0 border-gray-500"
-        >
-        <select
-          v-model="formData.departureTime"
-          name="depatureTime"
-          class="px-4 shadow-input border-l border-b border-t border-gray-500 appearance-none"
-        >
-          <option
-            v-for="time in times"
-            :key="`depature-time-${time}`"
-            :value="time"
+        <div class="flex w-3/5">
+          <div
+            @click="$refs.departureDatePicker.showCalendar()"
+            class="icon px-4 flex items-center justify-center bg-white shadow-input rounded-l border border-r-0 border-gray-500"
           >
-            {{ time }}
-          </option>
-        </select>
-        <div class="px-2 flex items-center justify-center bg-white shadow-input rounded-r border-r border-b border-t border-gray-500">
-          <Info>{{ $i18n('search.departure-time-explanation-general') }}</Info>
+            <icon-calendar></icon-calendar>
+          </div>
+
+          <DatePicker
+            ref="departureDatePicker"
+            class="focus:outline-none"
+            ref-name="departureDatePickerInput"
+            :placeholder="$i18n('templates.date-until')"
+            :lang="$currentLanguage.lang"
+            :full-month-name="datePickerParameters.fullMonthName"
+            :open-date="datePickerParameters.startDate"
+            :format="datePickerParameters.inputFormat"
+            :disabled-dates="datePickerParameters.disableDates"
+            :show-on-select-only="datePickerParameters.showOnSelectOnly"
+            input-class="p-3 w-full shadow-input border border-r-0 border-gray-500 focus:outline-none text-gray-800 text-sm"
+            :value="formData.departure"
+            @selected="onDateSelected($event, 'departure')"
+          ></DatePicker>
+        </div>
+
+        <div class="flex w-2/5 relative">
+          <select
+            v-model="formData.departureTime"
+            name="arrivalTime"
+            class="px-4 table-cell w-full shadow-input border-l border-b border-t border-gray-500 bg-white focus:outline-none appearance-none text-gray-800 text-sm"
+          >
+            <option
+              v-for="time in times"
+              :key="`departure-time-${time}`"
+              :value="time"
+              :selected="time === formData.departureTime"
+            >
+              {{ time }}
+            </option>
+          </select>
+          <div class="absolute right-2 top-2.5">
+            <icon-info>{{ $i18n('search.arrival-time-explanation-general') }}</icon-info>
+          </div>
         </div>
       </div>
 
@@ -124,24 +154,36 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Airport as AirportType } from '../../types/Airport'
-import Info from '../Info.vue'
+import IconInfo from '~/components/icons/IconInfo.vue'
+import IconCalendar from '~/components/icons/IconCalendar.vue'
 
 type SearchParameters = {
   airport: string|undefined;
-  arrival: string|undefined;
-  departure: string|undefined;
+  arrival: string|Date|undefined;
+  departure: string|Date|undefined;
   arrivalTime?: string;
   departureTime?: string;
 }
 
+type DatePickerParameters = {
+  startDate: Date,
+  showOnSelectOnly: boolean,
+  fullMonthName: boolean,
+  disableDates: boolean,
+  inputFormat: string,
+  outputFormat: string,
+}
+
 export default Vue.extend({
   components: {
-    Info
+    IconCalendar,
+    IconInfo
   },
 
   data(): {
     formData: SearchParameters,
     showAirportSelector: boolean,
+    datePickerParameters: DatePickerParameters,
     } {
     return {
       formData: {
@@ -152,6 +194,16 @@ export default Vue.extend({
         departureTime: '12:00'
       },
       showAirportSelector: true,
+      datePickerParameters: {
+        startDate: new Date(),
+        showOnSelectOnly: true,
+        fullMonthName: true,
+        disableDates: {
+          to: (new Date()).setDate((new Date()).getDate() - 1)
+        },
+        inputFormat: 'D. dd/MM/yyyy',
+        outputFormat: 'yyyy-MM-dd'
+      }
     }
   },
 
@@ -195,6 +247,23 @@ export default Vue.extend({
         style: 'currency',
         currency: 'EUR'
       }).format(this.$currentAirport.from_price / 8)
+    }
+  },
+
+  methods: {
+    onDateSelected(value, inputKey) {
+      this.formData[inputKey] = value
+
+      const reverseInputKey = inputKey === 'arrival' ? 'departure' : 'arrival'
+      if (this.formData[reverseInputKey] !== undefined) {
+        if (inputKey === 'arrival' && value > this.formData[reverseInputKey]) {
+          this.$set(this.formData, reverseInputKey, (new Date(value).setDate(value.getDate() + 7)))
+        }
+      }
+
+      if (inputKey === 'departure' && (!this.formData[reverseInputKey] || value < this.formData[reverseInputKey])) {
+        this.$set(this.formData, reverseInputKey, value)
+      }
     }
   },
 

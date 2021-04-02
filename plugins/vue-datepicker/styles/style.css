@@ -1,0 +1,353 @@
+.rtl {
+  direction: rtl;
+}
+.vdp-datepicker {
+  position: relative;
+  text-align: left;
+}
+.vdp-datepicker * {
+  box-sizing: border-box;
+}
+.vdp-datepicker__calendar {
+  position: absolute;
+  z-index: 100;
+  background: #fff;
+  width: 300px;
+  border: 1px solid #ccc;
+}
+.vdp-datepicker__calendar header {
+  display: block;
+  line-height: 40px;
+}
+.vdp-datepicker__calendar header span {
+  display: inline-block;
+  text-align: center;
+  width: 71.42857142857143%;
+  float: left;
+}
+.vdp-datepicker__calendar header .prev,
+.vdp-datepicker__calendar header .next {
+  width: 14.285714285714286%;
+  float: left;
+  text-indent: -10000px;
+  position: relative;
+}
+.vdp-datepicker__calendar header .prev:after,
+.vdp-datepicker__calendar header .next:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  border: 6px solid transparent;
+}
+.vdp-datepicker__calendar header .prev:after {
+  border-right: 10px solid #000;
+  margin-left: -5px;
+}
+.vdp-datepicker__calendar header .prev.disabled:after {
+  border-right: 10px solid #ddd;
+}
+.vdp-datepicker__calendar header .next:after {
+  border-left: 10px solid #000;
+  margin-left: 5px;
+}
+.vdp-datepicker__calendar header .next.disabled:after {
+  border-left: 10px solid #ddd;
+}
+.vdp-datepicker__calendar header .prev:not(.disabled),
+.vdp-datepicker__calendar header .next:not(.disabled),
+.vdp-datepicker__calendar header .up:not(.disabled) {
+  cursor: pointer;
+}
+.vdp-datepicker__calendar header .prev:not(.disabled):hover,
+.vdp-datepicker__calendar header .next:not(.disabled):hover,
+.vdp-datepicker__calendar header .up:not(.disabled):hover {
+  background: #eee;
+}
+.vdp-datepicker__calendar .disabled {
+  color: #ddd;
+  cursor: default;
+}
+.vdp-datepicker__calendar .flex-rtl {
+  display: flex;
+  width: inherit;
+  flex-wrap: wrap;
+}
+.vdp-datepicker__calendar .cell {
+  display: inline-block;
+  padding: 0 5px;
+  width: 14.285714285714286%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+}
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year {
+  cursor: pointer;
+}
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
+.vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+  border: 1px solid #4bd;
+}
+.vdp-datepicker__calendar .cell.selected {
+  background: #4bd;
+}
+.vdp-datepicker__calendar .cell.selected:hover {
+  background: #4bd;
+}
+.vdp-datepicker__calendar .cell.selected.highlighted {
+  background: #4bd;
+}
+.vdp-datepicker__calendar .cell.highlighted {
+  background: #cae5ed;
+}
+.vdp-datepicker__calendar .cell.highlighted.disabled {
+  color: #a3a3a3;
+}
+.vdp-datepicker__calendar .cell.grey {
+  color: #888;
+}
+.vdp-datepicker__calendar .cell.grey:hover {
+  background: inherit;
+}
+.vdp-datepicker__calendar .cell.day-header {
+  font-size: 75%;
+  white-space: nowrap;
+  cursor: inherit;
+}
+.vdp-datepicker__calendar .cell.day-header:hover {
+  background: inherit;
+}
+.vdp-datepicker__calendar .month,
+.vdp-datepicker__calendar .year {
+  width: 33.333%;
+}
+.vdp-datepicker__clear-button,
+.vdp-datepicker__calendar-button {
+  cursor: pointer;
+  font-style: normal;
+}
+.vdp-datepicker__clear-button.disabled,
+.vdp-datepicker__calendar-button.disabled {
+  color: #999;
+  cursor: default;
+}
+
+
+/************************ Custom styles ************************/
+
+.vdp-datepicker__calendar {
+  box-shadow: 0 5px 15px -5px rgb(0 0 0 / 51%);
+  background: #fff;
+  border: 1px solid;
+  border-color: #ccc #ccc #bbb;
+  color: #333;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  padding: 2px 8px 8px 8px;
+  position: absolute;
+  z-index: 9999;
+  box-sizing: border-box;
+  width: 243px;
+}
+
+.vdp-datepicker__calendar header {
+  line-height: 30px;
+}
+
+.vdp-datepicker__calendar header .next,
+.vdp-datepicker__calendar header .prev {
+  opacity: .5;
+}
+
+.vdp-datepicker__calendar header .next:after,
+.vdp-datepicker__calendar header .prev:after {
+  border: 7px solid transparent;
+}
+
+.vdp-datepicker__calendar header .next:after {
+  border-left: 7px solid #000;
+  margin-left: 10px;
+}
+
+.vdp-datepicker__calendar header .prev:after {
+  border-right: 7px solid #000;
+  margin-left: -10px;
+}
+
+.vdp-datepicker .day__select_today {
+  cursor: pointer;
+  height: 30px;
+  width: 10%;
+  opacity: .5;
+}
+
+.vdp-datepicker__calendar header .next:hover,
+.vdp-datepicker__calendar header .prev:hover,
+.vdp-datepicker .day__select_today:hover {
+  background: none !important;
+  opacity: 1;
+}
+
+.vdp-datepicker .day__month_btn {
+  width: 60%;
+  text-align: right;
+  font-weight: bold;
+}
+
+.vdp-datepicker .day__month_btn span {
+  cursor: pointer;
+  padding: 5px 3px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  background-color: #fff;
+  float: none;
+  text-align: right;
+  width: 80px;
+}
+
+.vdp-datepicker .day__month_btn span:nth-child(2) {
+  width: 40px;
+  text-align: center;
+}
+
+.vdp-datepicker .day__month_btn span:hover {
+  text-decoration: underline;
+}
+
+.vdp-datepicker__calendar .cell.day {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #666;
+  font-size: 12px;
+  text-align: right;
+  padding: 0;
+  border-collapse: collapse;
+  cursor: pointer;
+  height: 33px;
+  line-height: 30px;
+  padding-right: 5px;
+}
+
+.vdp-datepicker__calendar .cell.day-header {
+  border: 1px solid #ddd;
+  padding: 0;
+  font-weight: 700;
+  text-align: center;
+  color: #999;
+  cursor: default;
+  background: #f1f1f1;
+  height: 33px;
+  line-height: 30px;
+}
+
+.vdp-datepicker__calendar .cell.day-header:hover {
+  background: #f1f1f1;
+}
+
+.vdp-datepicker__calendar .cell.day.today {
+  color: #3af;
+}
+
+.vdp-datepicker__calendar .cell.day.selected {
+  background: #3af;
+  box-shadow: inset 0 1px 3px 0 #178fe5;
+  color: #fff;
+  font-weight: 700;
+}
+
+.vdp-datepicker__calendar .cell.day:hover {
+  border: 1px solid #ddd !important;
+}
+
+.vdp-datepicker__calendar .cell.day:not(.disabled):hover,
+.vdp-datepicker__calendar .cell.day:not(.disabled).selected:hover {
+  color: #fff;
+  background: #ff8000;
+  box-shadow: none;
+}
+
+.vdp-datepicker__calendar .cell.day.grey {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #666;
+  opacity: .2;
+}
+
+.vdp-datepicker__calendar .cell.disabled:not(.grey) {
+  opacity: .5;
+}
+
+.vdp-datepicker__calendar .cell.day.disabled:hover {
+  background: #f5f5f5;
+}
+
+
+/*** Year/months selector ***/
+.vdp-datepicker__calendar.month-selector,
+.vdp-datepicker__calendar.year-selector {
+  width: 85px;
+  max-height: 200px;
+  overflow-y: scroll;
+  margin-top: 33px;
+  right: 50px;
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 0;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  box-shadow: none;
+}
+
+.vdp-datepicker__calendar.year-selector {
+  right: 3px;
+  width: 48px;
+}
+
+.vdp-datepicker__calendar.month-selector::-webkit-scrollbar,
+.vdp-datepicker__calendar.year-selector::-webkit-scrollbar {
+  width: 7px;
+}
+
+.vdp-datepicker__calendar.month-selector::-webkit-scrollbar-thumb,
+.vdp-datepicker__calendar.year-selector::-webkit-scrollbar-thumb {
+  background: #ccc!important;
+  height: 20px;
+  border-radius: 3px;
+}
+
+.vdp-datepicker__calendar.month-selector .cell.month,
+.vdp-datepicker__calendar.year-selector .cell.year {
+  width: 100%;
+  display: block;
+}
+
+.vdp-datepicker__calendar .cell.month,
+.vdp-datepicker__calendar .cell.year {
+  border: none !important;
+  height: 25px;
+  line-height: 25px;
+  text-align: right;
+}
+
+.vdp-datepicker__calendar .cell.month.selected,
+.vdp-datepicker__calendar .cell.year.selected {
+  background: #3af;
+  box-shadow: inset 0 1px 3px 0 #178fe5;
+  color: #fff;
+  font-weight: 700;
+}
+
+.vdp-datepicker__calendar .cell.month:hover,
+.vdp-datepicker__calendar .cell.year:hover {
+  border: none !important;
+  box-shadow: none;
+  color: #fff;
+  background: #ff8000;
+}

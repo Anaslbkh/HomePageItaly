@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center relative">
-    <button type="button" aria-haspopup="true" :aria-expanded="open.toString()" @click="open = !open">
+    <button type="button" aria-haspopup="true" :aria-expanded="open.toString()" @click="open = !open" class="focus:outline-none">
       <svg
         fill="#288BE4"
         :width="size"
