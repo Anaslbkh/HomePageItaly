@@ -198,6 +198,14 @@ export default Vue.extend({
   head() {
     if(typeof this.$currentAirportContent === 'undefined') return {}
 
+    const links = [{ rel: 'canonical', href: 'https://parkos.it'+this.$route.path }] // @TODO get dynamic hostname server side
+
+    // add alternate language links
+    Object.entries(this.$currentAirportDetails.content).forEach(([lang, content]) => {
+      // @ts-ignore @todo fix types
+      links.push({ rel: 'alternate', hreflang: lang, href: String(content.url) })
+    })
+
     return {
       title: this.$currentAirportContent.meta.title,
       meta: [
@@ -217,9 +225,13 @@ export default Vue.extend({
         { property: 'og:image', content: `https://assets.parkos.com/assets/img/locations/${this.$currentAirport.devtitle}.jpg` },
         { property: 'og:url', content: 'https://parkos.it'+this.$route.path } // @TODO get dynamic hostname server side
       ],
-      link: [
-        { rel: 'canonical', href: 'https://parkos.it'+this.$route.path } // @TODO get dynamic hostname server side
-      ]
+      link: links
+      // link: [
+        // { rel: 'canonical', href: 'https://parkos.it'+this.$route.path }, // @TODO get dynamic hostname server side
+        // ...(this.alternateLinks) => {
+        //   return []
+        // }
+      // ],
     }
   },
 
@@ -227,6 +239,13 @@ export default Vue.extend({
     date() {
       return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
     },
+    alternateLinks() {
+      return [
+        { en: 'https://eu.parkos.com/parking-linate-airport/' },
+        { fr: 'https://parkos.fr/parking-linate/' },
+        { it: 'https://parkos.it/parcheggio-linate/' },
+      ]
+    }
   }
 })
 </script>
