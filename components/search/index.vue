@@ -169,7 +169,7 @@ type DatePickerParameters = {
   startDate: Date,
   showOnSelectOnly: boolean,
   fullMonthName: boolean,
-  disableDates: boolean,
+  disableDates: Object,
   inputFormat: string,
   outputFormat: string,
 }
@@ -226,7 +226,7 @@ export default Vue.extend({
     },
 
     availableAirports() {
-      const obj: any = {};
+      const obj: any = {}
 
       this.$airports.forEach((airport: AirportType) => {
         if (!Object.prototype.hasOwnProperty.call(obj, airport.country.name)) {
@@ -251,17 +251,18 @@ export default Vue.extend({
   },
 
   methods: {
-    onDateSelected(value, inputKey) {
+    onDateSelected(value: Date, inputKey: 'arrival' | 'departure') {
       this.formData[inputKey] = value
 
       const reverseInputKey = inputKey === 'arrival' ? 'departure' : 'arrival'
-      if (this.formData[reverseInputKey] !== undefined) {
-        if (inputKey === 'arrival' && value > this.formData[reverseInputKey]) {
+      const reverseValue = this.formData[reverseInputKey]
+      if (reverseValue) {
+        if (inputKey === 'arrival' && value > reverseValue) {
           this.$set(this.formData, reverseInputKey, (new Date(value).setDate(value.getDate() + 7)))
         }
       }
 
-      if (inputKey === 'departure' && (!this.formData[reverseInputKey] || value < this.formData[reverseInputKey])) {
+      if (inputKey === 'departure' && (!reverseValue || value < reverseValue)) {
         this.$set(this.formData, reverseInputKey, value)
       }
     }
