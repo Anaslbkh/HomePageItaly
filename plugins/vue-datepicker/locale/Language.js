@@ -1,9 +1,10 @@
 export default class Language {
-  constructor (language, months, monthsAbbr, days) {
+  constructor (language, months, monthsAbbr, days, dateFormat) {
     this.language = language
     this.months = months
     this.monthsAbbr = monthsAbbr
     this.days = days
+    this.dateFormat = dateFormat || 'D. dd/MM/yyyy'
     this.rtl = false
     this.ymd = false
     this.yearSuffix = ''
@@ -52,6 +53,12 @@ export default class Language {
     }
     this._days = days
   }
+
+  get dateFormat () {
+    return this._dateFormat
+  }
+
+  set dateFormat (format) {
+    this._dateFormat = format
+  }
 }
-// eslint-disable-next-line
-;

@@ -9,11 +9,11 @@
         </i>
       </span>
     </span>
+    <input :name="name" :value="outputFormattedValue" type="hidden">
     <!-- Input -->
     <input
       :type="inline ? 'hidden' : 'text'"
       :class="computedInputClass"
-      :name="name"
       :ref="refName"
       :id="id"
       :value="formattedValue"
@@ -40,11 +40,15 @@
 </template>
 <script>
 import { makeDateUtils } from '../utils/DateUtils'
+import Index from '~/components/search'
 export default {
+  components: { Index },
   props: {
     selectedDate: Date,
+    preSelectedDate: [Number, Date],
     resetTypedDate: [Date],
     format: [String, Function],
+    outputFormat: [String, Function],
     translation: Object,
     inline: Boolean,
     id: String,
@@ -82,7 +86,21 @@ export default {
       }
       return typeof this.format === 'function'
         ? this.format(this.selectedDate)
-        : this.utils.formatDate(new Date(this.selectedDate), this.format, this.translation)
+        : this.utils.formatDate(new Date(this.selectedDate), this.format || this.translation.dateFormat, this.translation)
+    },
+
+    outputFormattedValue () {
+      const date = this.selectedDate || this.preSelectedDate
+      if (!date) {
+        return null
+      }
+
+      if (this.typedDate) {
+        return this.typedDate
+      }
+      return typeof this.outputFormat === 'function'
+        ? this.outputFormat(date)
+        : this.utils.formatDate(new Date(date), this.outputFormat, this.translation)
     },
 
     computedInputClass () {

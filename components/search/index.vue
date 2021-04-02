@@ -60,13 +60,14 @@
             ref="arrivalDatePicker"
             class="focus:outline-none"
             ref-name="arrivalDatePickerInput"
+            name="arrival"
             :placeholder="$i18n('templates.date-from')"
             :lang="$currentLanguage.lang"
             :full-month-name="datePickerParameters.fullMonthName"
             :open-date="datePickerParameters.startDate"
-            :format="datePickerParameters.inputFormat"
             :disabled-dates="datePickerParameters.disableDates"
             :show-on-select-only="datePickerParameters.showOnSelectOnly"
+            :pre-selected-date="datePickerParameters.startDate"
             :value="formData.arrival"
             input-class="p-3 w-full shadow-input border border-r-0 border-gray-500 focus:outline-none text-gray-800 text-sm"
             @selected="onDateSelected($event, 'arrival')"
@@ -107,13 +108,14 @@
             ref="departureDatePicker"
             class="focus:outline-none"
             ref-name="departureDatePickerInput"
+            name="departure"
             :placeholder="$i18n('templates.date-until')"
             :lang="$currentLanguage.lang"
             :full-month-name="datePickerParameters.fullMonthName"
             :open-date="datePickerParameters.startDate"
-            :format="datePickerParameters.inputFormat"
             :disabled-dates="datePickerParameters.disableDates"
             :show-on-select-only="datePickerParameters.showOnSelectOnly"
+            :pre-selected-date="(new Date()).setDate(datePickerParameters.startDate.getDate() + 7)"
             input-class="p-3 w-full shadow-input border border-r-0 border-gray-500 focus:outline-none text-gray-800 text-sm"
             :value="formData.departure"
             @selected="onDateSelected($event, 'departure')"
@@ -170,8 +172,6 @@ type DatePickerParameters = {
   showOnSelectOnly: boolean,
   fullMonthName: boolean,
   disableDates: Object,
-  inputFormat: string,
-  outputFormat: string,
 }
 
 export default Vue.extend({
@@ -200,9 +200,7 @@ export default Vue.extend({
         fullMonthName: true,
         disableDates: {
           to: (new Date()).setDate((new Date()).getDate() - 1)
-        },
-        inputFormat: 'D. dd/MM/yyyy',
-        outputFormat: 'yyyy-MM-dd'
+        }
       }
     }
   },

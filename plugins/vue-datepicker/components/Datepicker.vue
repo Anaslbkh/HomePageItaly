@@ -4,8 +4,10 @@
       :id="id"
       ref="datepickerBox"
       :selected-date="selectedDateValue"
+      :pre-selected-date="preSelectedDate"
       :reset-typed-date="resetTypedDate"
       :format="format"
+      :output-format="outputFormat"
       :translation="translation"
       :inline="inline"
       :name="name"
@@ -101,7 +103,6 @@
   </div>
 </template>
 <script>
-import * as languages from '../locale'
 import utils, { makeDateUtils } from '../utils/DateUtils'
 import DateInput from './DateInput.vue'
 import PickerDay from './PickerDay.vue'
@@ -128,7 +129,11 @@ export default {
     id: String,
     format: {
       type: [String, Function],
-      default: 'dd MMM yyyy'
+      default: null
+    },
+    outputFormat: {
+      type: [String, Function],
+      default: 'yyyy-MM-dd'
     },
     lang: {
       type: String,
@@ -139,6 +144,9 @@ export default {
     //   default: () => en
     // },
     openDate: {
+      validator: val => utils.validateDateInput(val)
+    },
+    preSelectedDate: {
       validator: val => utils.validateDateInput(val)
     },
     dayCellContent: Function,
@@ -220,9 +228,8 @@ export default {
     },
 
     translation() {
-      return languages[this.lang]
+      return this.lang ? require('../locale/translations/' + this.lang).default : {}
     },
-
     calendarStyle() {
       return {
         position: this.isInline ? 'static' : undefined

@@ -27,7 +27,7 @@
 }
 .vdp-datepicker__calendar header .prev,
 .vdp-datepicker__calendar header .next {
-  width: 14.285714285714286%;
+  width: 15%;
   float: left;
   text-indent: -10000px;
   position: relative;
@@ -208,11 +208,11 @@
   background-color: #fff;
   float: none;
   text-align: right;
-  width: 80px;
+  width: 65%;
 }
 
 .vdp-datepicker .day__month_btn span:nth-child(2) {
-  width: 40px;
+  width: 30%;
   text-align: center;
 }
 
