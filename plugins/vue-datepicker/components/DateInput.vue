@@ -17,7 +17,6 @@
       :ref="refName"
       :id="id"
       :value="formattedValue"
-      :open-date="openDate"
       :placeholder="placeholder"
       :clear-button="clearButton"
       :disabled="disabled"
@@ -54,7 +53,6 @@ export default {
     id: String,
     name: String,
     refName: String,
-    openDate: Date,
     placeholder: String,
     inputClass: [String, Object, Array],
     clearButton: Boolean,

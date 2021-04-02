@@ -157,11 +157,16 @@
 
 .vdp-datepicker__calendar header {
   line-height: 30px;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  flex-wrap: nowrap;
 }
 
 .vdp-datepicker__calendar header .next,
 .vdp-datepicker__calendar header .prev {
   opacity: .5;
+  float: none;
 }
 
 .vdp-datepicker__calendar header .next:after,
@@ -194,6 +199,7 @@
 }
 
 .vdp-datepicker .day__month_btn {
+  display: flex;
   width: 60%;
   text-align: right;
   font-weight: bold;

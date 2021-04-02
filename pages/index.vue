@@ -2,9 +2,9 @@
   <div class="flex justify-center">
     <ul>
       <li v-for="link in links" :key="link">
-        <router-link :to="link">
+        <a :href="link">
           {{ link }}
-        </router-link>
+        </a>
       </li>
     </ul>
   </div>

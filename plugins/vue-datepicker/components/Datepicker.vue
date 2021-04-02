@@ -12,7 +12,6 @@
       :inline="inline"
       :name="name"
       :ref-name="refName"
-      :open-date="openDate"
       :placeholder="placeholder"
       :input-class="inputClass"
       :typeable="typeable"
