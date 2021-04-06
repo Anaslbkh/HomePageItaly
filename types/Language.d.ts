@@ -1,4 +1,5 @@
 import { Socials } from './Socials'
+import { Country } from './Country'
 
 export type Language = {
     id: number;
@@ -8,4 +9,5 @@ export type Language = {
     domain: string;
     gtm_key?: string;
     socials: Socials;
+    country: Country
 }

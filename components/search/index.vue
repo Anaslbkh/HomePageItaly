@@ -8,9 +8,7 @@
         {{ $i18n('general.compare-parking') }}
       </h1>
       <p>
-        {{ $i18n('templates.from-x-euro-day', {
-          amount: pricePerDay
-        }) }}
+        {{ $i18n('templates.from-x-euro-day', { amount: pricePerDay }) }}
       </p>
       <button class="ml-4 text-white text-opacity-50 focus:outline-none" @click="showAirportSelector = !showAirportSelector">
         {{ $i18n('general.change-airport') }}
@@ -18,7 +16,7 @@
     </div>
 
     <form
-      action="/schiphol-parking/search/"
+      :action="'/' + formData.airport + '/search/'"
       class="max-w-full sm:max-w-sm flex flex-col mx-auto mb-12"
     >
       <input type="hidden" name="parkosfastsearchtest">
@@ -223,9 +221,9 @@ export default Vue.extend({
       // loop to increment the time and push results in array
       for (let i = 0; time < 24 * 60; i++) {
         times[i] =
-                ('0' + Math.floor(time / 60)).slice(-2) +
-                ':' +
-                ('0' + (time % 60)).slice(-2)
+          ('0' + Math.floor(time / 60)).slice(-2) +
+          ':' +
+          ('0' + (time % 60)).slice(-2)
         time = time + interval
       }
 
@@ -233,9 +231,8 @@ export default Vue.extend({
     },
 
     availableAirports() {
-      const obj: any = {}
+      let obj: { [key: string]: Array<AirportType> } = {}
       const airports = this.$airports.sort((a, b) => (a.name > b.name) ? 1 : -1)
-
       airports.forEach((airport: AirportType) => {
         if (!Object.prototype.hasOwnProperty.call(obj, airport.country.name)) {
           obj[airport.country.name] = []
@@ -243,6 +240,13 @@ export default Vue.extend({
 
         obj[airport.country.name].push(airport)
       })
+
+      obj = Object.fromEntries(
+        Object.entries(obj)
+          .sort(([, a], [, b]) =>
+            a[0].country.name > b[0].country.name ? 1 : (b[0].country.id === this.$currentLanguage.country.id ? 1 : -1)
+          )
+      )
 
       return obj
     },
@@ -284,45 +288,45 @@ export default Vue.extend({
 </script>
 
 <style>
- select[name="airport"] {
-   user-select: none;
-   background-image: url(https://assets.parkos.com/assets/images/dropdown.png)!important;
-   background-position-x: 95%;
-   background-position-y: 14px;
-   background-position: right 15px center;
-   background-repeat: no-repeat;
-   background-size: 11px 20px;
- }
+select[name="airport"] {
+  user-select: none;
+  background-image: url(https://assets.parkos.com/assets/images/dropdown.png)!important;
+  background-position-x: 95%;
+  background-position-y: 14px;
+  background-position: right 15px center;
+  background-repeat: no-repeat;
+  background-size: 11px 20px;
+}
 
- .slide-enter-active {
-   -moz-transition-duration: 0.3s;
-   -webkit-transition-duration: 0.3s;
-   -o-transition-duration: 0.3s;
-   transition-duration: 0.3s;
-   -moz-transition-timing-function: ease-in;
-   -webkit-transition-timing-function: ease-in;
-   -o-transition-timing-function: ease-in;
-   transition-timing-function: ease-in;
- }
+.slide-enter-active {
+  -moz-transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -moz-transition-timing-function: ease-in;
+  -webkit-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+}
 
- .slide-leave-active {
-   -moz-transition-duration: 0.3s;
-   -webkit-transition-duration: 0.3s;
-   -o-transition-duration: 0.3s;
-   transition-duration: 0.3s;
-   -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
- }
+.slide-leave-active {
+  -moz-transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
 
- .slide-enter-to, .slide-leave {
-   max-height: 100px;
-   overflow: hidden;
- }
+.slide-enter-to, .slide-leave {
+  max-height: 100px;
+  overflow: hidden;
+}
 
- .slide-enter, .slide-leave-to {
-   overflow: hidden;
-   max-height: 0;
- }
+.slide-enter, .slide-leave-to {
+  overflow: hidden;
+  max-height: 0;
+}
 </style>

@@ -36,10 +36,14 @@ declare module '@nuxt/types' {
 
 // @ts-ignore
 const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params, req, route }, inject) => {
-  const languages: Array<LanguageType> = (await $axios.$get('languages')).data;
+  const languages: Array<LanguageType> = (await $axios.$get('languages')).data
   inject('languages', languages)
 
-  const hostname: string = 'parkos.it';
+  let hostname = 'parkos.it'
+  if (req && req.headers && req.headers.host?.includes('localhost') === false) {
+    hostname = req.headers.host.replace(/\.?test|staging\.?/, '')
+  }
+
   const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === hostname)
   inject('currentLanguage', currentLanguage)
 

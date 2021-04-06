@@ -22,7 +22,7 @@
               <template #content>
                 <ul class="py-2">
                   <li v-for="airport in $airports" :key="airport.slug">
-                    <a :href="airport.slug" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.maintitle }}</a>
+                    <a :href="'/' + airport.slug" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.maintitle }}</a>
                   </li>
                 </ul>
               </template>
@@ -34,13 +34,13 @@
               </a>
             </li>
             <li>
-              <a href="https://parkos.it/login/" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a href="/login/" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <span class="material-icons mr-1 text-xl">person</span>
                 Gestisci prenotazione
               </a>
             </li>
             <li>
-              <a href="https://parkos.it/chi-siamo.html" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a href="/chi-siamo.html" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <span class="material-icons mr-1 text-xl">language</span>
                 Chi siamo
               </a>
