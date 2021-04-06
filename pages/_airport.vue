@@ -206,7 +206,7 @@ export default Vue.extend({
               airportName: '${this.$currentAirport.name}',
               pageType: 'locations',
               domainName: 'parkos.it',
-              token: 504Z8p2vH6TtWX7BJC0rYaArFl9sYKdAHfisTESx,
+              token: '504Z8p2vH6TtWX7BJC0rYaArFl9sYKdAHfisTESx',
             }];
             var cId = document.cookie.match(/cId=([^ ;]*);?/);
             var ul = 0; var ps = '[]';
