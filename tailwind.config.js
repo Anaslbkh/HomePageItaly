@@ -80,7 +80,7 @@ module.exports = {
           // font size utilities
           /^text-([0-9]?[xsgl].?$|base)$/,
           // sizing utilities
-          '/[h|w]-/',
+          /^(sm|md|lg|xl|2xl)?:?[h|w]-/
         ],
       }
     }
