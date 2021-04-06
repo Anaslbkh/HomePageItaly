@@ -40,9 +40,13 @@ const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params, req, route },
   inject('languages', languages)
 
   let hostname = 'parkos.it'
-  if (req && req.headers && req.headers.host?.includes('localhost') === false) {
-    hostname = req.headers.host.replace(/\.?test|staging\.?/, '')
+  console.log('Hostname', req?.headers?.host)
+
+  if (req?.headers?.host?.includes('localhost') === false) {
+    hostname = req.headers.host.replace(/\.?test|staging\.?|:[0-9]+/, '')
   }
+
+  console.log('Result hostname', hostname)
 
   const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === hostname)
   inject('currentLanguage', currentLanguage)

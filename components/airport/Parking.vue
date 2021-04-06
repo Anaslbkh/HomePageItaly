@@ -1,5 +1,5 @@
 <template>
-  <a :href="`https://parkos.it/parcheggio-linate/${parking.slug}.html`">
+  <a :href="`${$currentAirport.slug}/${parking.slug}.html`">
     <article class="bg-white border border-gray-500 rounded">
       <div class="flex items-center justify-center p-12">
         <img

@@ -16,7 +16,7 @@
     </div>
 
     <form
-      :action="'/' + formData.airport + '/search/'"
+      :action="`/${formData.airport}/${$i18n('general.search-slug')}/`"
       class="max-w-full sm:max-w-sm flex flex-col mx-auto mb-12"
     >
       <input type="hidden" name="parkosfastsearchtest">

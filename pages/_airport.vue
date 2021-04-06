@@ -40,7 +40,7 @@
     <div class="container mx-auto">
       <div class="border-b border-gray-500"></div>
     </div>
-    <section v-if="reviews" id="reviews" class="pt-10 pb-24 overflow-hidden">
+    <section  v-if="reviews.length > 3" id="reviews" class="pt-10 pb-24 overflow-hidden">
       <div class="container mx-auto mb-16">
         <div class="w-full lg:w-3/5">
           <ReviewSummary :meta="reviewsMeta" />
@@ -77,7 +77,7 @@
       </div>
     </section>
 
-    <Faq :items="faq" />
+    <Faq :items="faq" v-if="faq.length > 0" />
 
     <section id="map" class="bg-gray-200 border-t border-b border-gray-500 py-24">
       <div class="container mx-auto">
@@ -110,7 +110,6 @@ import { Parking as ParkingType } from '~/types/Parking'
 import { Review as ReviewType } from '~/types/Review'
 import Usps from '~/components/airport/Usps.vue'
 
-const lang = 'nl'
 export default Vue.extend({
 
   components: {
@@ -147,9 +146,9 @@ export default Vue.extend({
 
     return {
       parkings,
-      reviews: reviews.data[$currentLanguage.lang],
-      reviewsMeta: reviews.meta.reviews,
-      faq: faq.data[$currentLanguage.lang]
+      reviews: reviews.data?.[$currentLanguage.lang] || [],
+      reviewsMeta: reviews?.meta?.reviews || {},
+      faq: faq.data?.[$currentLanguage.lang] || []
     }
   },
 
