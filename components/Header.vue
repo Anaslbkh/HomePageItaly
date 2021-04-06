@@ -22,7 +22,7 @@
               <template #content>
                 <ul class="py-2">
                   <li v-for="airport in $airports" :key="airport.slug">
-                    <a :href="airport.slug" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.name }}</a>
+                    <a :href="airport.slug" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.maintitle }}</a>
                   </li>
                 </ul>
               </template>
@@ -112,7 +112,6 @@ export default Vue.extend({
 
   methods: {
     toggleMenu(): void {
-      console.log('toggle');
       this.navShown = !this.navShown
     },
   },

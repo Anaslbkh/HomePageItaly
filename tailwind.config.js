@@ -33,6 +33,11 @@ module.exports = {
           800: '#555'
         }
       },
+      lineHeight: {
+        11: '2.5rem',
+        12: '3rem',
+        13: '3.5rem',
+      },
       transformOrigin: {
         navTop: '10% 10%',
         navBottom: '10% 90%',
@@ -49,7 +54,11 @@ module.exports = {
       input: 'inset 0 3px 0 0 hsla(0,0%,82.4%,.4)'
     }
   },
-  variants: {},
+  variants: {
+    extend: {
+      borderRadius: ['first']
+    }
+  },
   plugins: [],
   purge: {
     enabled: process.env.NODE_ENV === 'production',

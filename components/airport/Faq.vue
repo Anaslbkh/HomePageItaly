@@ -5,61 +5,53 @@
         {{ $i18n("additional.faq") }}
       </h2>
 
-      <ul role="tablist" class="hidden sm:flex items-end questions">
-        <li
-          v-for="(item, index) in items"
-          :key="`q-${item.slug}`"
-          role="presentation"
-        >
-          <button
-            type="button"
-            role="tab"
-            :data-target="`#${item.slug}`"
-            :id="`question-${index}`"
-            class="inline-block border border-b-0 py-3 px-4 mr-2 rounded-t max-w-sm whitespace-normal"
-            :class="{
-              'bg-white border-gray-500': item.slug === active,
-              'border-transparent text-blue-700 hover:bg-gray-300':
-                item.slug !== active,
-            }"
-            @click="select"
-          >
-            {{ item.title }}
-          </button>
-        </li>
-      </ul>
+      <div>
+        <ul class="hidden sm:flex border-b border-gray-500 tab-buttons">
+          <li v-for="item in items" :key="`q-${item.slug}`" class="mr-1 items-end" :class="{'-mb-0.5': item.slug === active}">
+            <button
+              :class="{
+                'border-gray-500 border-l border-t border-r rounded-t': item.slug === active,
+                'border-transparent text-blue-700 hover:bg-gray-300':
+                  item.slug !== active,
+              }"
+              class="inline-block bg-white py-2 px-4 mr-2 rounded-t max-w-sm whitespace-normal focus:outline-none text-left"
+              @click.prevent="select(item)"
+            >
+              {{ item.title }}
+            </button>
+          </li>
+        </ul>
 
-      <section
-        v-for="(item, index) in items"
-        :key="`a-${item.slug}`"
-        class="border border-gray-500 questions"
-        :class="{ 'sm:border-transparent sm:rounded-b': item.slug !== active }"
-      >
-        <a
-          :href="`#${item.slug}`"
-          role="tab"
-          @click="select"
-          class="block sm:hidden font-bold py-3 px-4"
-          :class="{ 'bg-gray-200': item.slug === active }"
-        >
-          {{ item.title }}
-        </a>
-        <div
-          role="tabpanel"
-          v-bind="{ hidden: item.slug !== active }"
-          :id="item.slug"
-          :aria-labelledby="`question-${index}`"
-          class="sm:rounded-b py-3 px-4 bg-gray-200 sm:bg-white"
-        >
-          {{ item.content | strip | preview }}
-
-          <a
-            :href="`${$route.path}/${item.slug}.html`"
-            class="text-blue-700 hover:text-blue-900 hover:underline"
-            >{{ $i18n("templates.read-full-answer") }}</a
+        <ul class="block tab-contents w-full">
+          <li
+            v-for="(item) in items"
+            :key="`a-${item.slug}`"
+            :class="{ 'sm:hidden block': item.slug !== active }"
+            class="block border sm:border-t-0 border-gray-500 w-full first:rounded-t first:rounded-b relative"
           >
-        </div>
-      </section>
+            <a
+              :href="`#${item.slug}`"
+              role="tab"
+              class="tab-title block sm:hidden font-bold px-4 leading-13 opacity-90"
+              :class="{ 'bg-gray-200 underline active': item.slug === active }"
+              @click.prevent="toggle(item)"
+            >
+              {{ item.title }}
+            </a>
+
+            <div
+              :class="{ 'hidden': item.slug !== active }"
+              class="sm:rounded-b py-0 pb-3 sm:py-5 px-4 bg-gray-200 sm:bg-white leading-8"
+            >
+              <span :inner-html.prop="item.content | strip | preview" />
+              <a
+                :href="`${$route.path}/${item.slug}.html`"
+                class="text-blue-700 hover:text-blue-900 hover:underline"
+              >{{ $i18n("templates.read-full-answer") }}</a>
+            </div>
+          </li>
+        </ul>
+      </div>
 
       <div class="flex pt-8">
         <a
@@ -75,47 +67,61 @@
 </template>
 
 <script lang="ts">
-import { FaqItem as FaqItemType } from "~/types/FaqItem";
+import Vue, { PropOptions } from 'vue'
+import { FaqItem as FaqItemType } from '~/types/FaqItem'
 
-import Vue, { PropOptions } from "vue";
 export default Vue.extend({
+  filters: {
+    strip: (value: string): string => value.replace(/(<([^>]+)>)/gi, ''),
+    preview: (value: string, limit: number = 15): string =>
+      value.split(/\s+/).slice(0, limit).join(' ') + '...'
+  },
+
   props: {
     items: {
       type: Array,
-      required: true,
-    } as PropOptions<Array<FaqItemType>>,
+      required: true
+    } as PropOptions<Array<FaqItemType>>
   },
 
   data(): {
-    active: string;
-  } {
+    active: null|string;
+    } {
     return {
-      active: this.items[0].slug,
-    };
+      active: this.items[0].slug
+    }
   },
 
   methods: {
-    select($event: MouseEvent) {
-      // @ts-ignore
-      const target: string = $event.target.getAttribute('data-target')!.slice(1);
-
-      // @ts-ignore
-      $event.target.blur();
-
-      this.active = target;
+    select(item: FaqItemType) {
+      this.active = item.slug
+    },
+    toggle(item: FaqItemType) {
+      this.active = this.active === item.slug ? null : item.slug
     },
   },
-
-  filters: {
-    strip: (value: string): string => value.replace(/(<([^>]+)>)/gi, ""),
-    preview: (value: string, limit: number = 15): string =>
-      value.split(/\s+/).slice(0, limit).join(" ") + "...",
-  },
-});
+})
 </script>
 
 <style>
-.questions {
-  margin-bottom: -1px;
-}
+  .tab-contents .tab-title:after {
+    content: "⌃";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 30px;
+    color: #000;
+    font-weight: 400!important;
+    line-height: 60px;
+    height: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .tab-contents .tab-title:not(.active):after {
+    color: #828282;
+    transform: rotate(
+      -180deg
+    );
+  }
 </style>
