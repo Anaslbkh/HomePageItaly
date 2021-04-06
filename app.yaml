@@ -2,10 +2,16 @@ runtime: custom
 env: flex
 service: mpl
 
-manual_scaling:
-  instances: 1
+automatic_scaling:
+  min_num_instances: %%AUTOMATIC_SCALING_MIN_NUM_INSTANCES%%
+  max_num_instances: %%AUTOMATIC_SCALING_MAX_NUM_INSTANCES%%
+
+resources:
+  cpu: %%RESOURCES_CPU%%
+  memory_gb: %%RESOURCES_MEMORY_GB%%
 
 env_variables:
-  NODE_ENV: production
-  API_BASE_URL: "https://staging.parkos.com/api/v1/"
-  GOOGLE_MAPS_API_KEY: "AIzaSyCI3AGvFFcfOMQpNNrbakwy29Go7f5tOXk"
+  NODE_ENV: %%NODE_ENV%%
+  API_BASE_URL: "%%API_BASE_URL%%"
+  GOOGLE_MAPS_API_KEY: "%%GOOGLE_MAPS_API_KEY%%"
+  SENTRY_DSN: "%%SENTRY_DSN%%"

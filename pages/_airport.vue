@@ -195,13 +195,31 @@ export default Vue.extend({
         { property: 'og:image', content: `https://assets.parkos.com/assets/img/locations/${this.$currentAirport.devtitle}.jpg` },
         { property: 'og:url', content: 'https://parkos.it'+this.$route.path } // @TODO get dynamic hostname server side
       ],
-      link: links
-      // link: [
-        // { rel: 'canonical', href: 'https://parkos.it'+this.$route.path }, // @TODO get dynamic hostname server side
-        // ...(this.alternateLinks) => {
-        //   return []
-        // }
-      // ],
+      link: links,
+      script: [
+        {
+          hid: 'datalayer',
+          innerHTML: `
+            var dataLayer = [{
+              airportDevTitle: '${this.$currentAirport.devtitle}',
+              airportSlug: '${this.$currentAirport.slug}',
+              airportName: '${this.$currentAirport.name}',
+              pageType: locations,
+              domainName: parkos.it,
+              token: 504Z8p2vH6TtWX7BJC0rYaArFl9sYKdAHfisTESx,
+            }];
+            var cId = document.cookie.match(/cId=([^ ;]*);?/);
+            var ul = 0; var ps = '[]';
+            if (!(cId === null && typeof cId === "object")) {
+                dataLayer[0].cId = cId[1];
+            }
+          `,
+          type: 'text/javascript',
+        }
+      ],
+      __dangerouslyDisableSanitizersByTagID: {
+        'datalayer': ['innerHTML']
+      },
     }
   },
 
