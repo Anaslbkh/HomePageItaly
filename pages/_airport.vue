@@ -91,6 +91,10 @@
         <Map :parkings="parkings" />
       </div>
     </section>
+
+    <HelpButton v-if="[
+      'nl-be', 'nl', 'de', 'de-at', 'es', 'it',  'fr-be', 'fr', 'sv-se'
+    ].includes($currentLanguage.lang)" />
   </div>
 </template>
 
@@ -105,6 +109,7 @@ import ReviewSummary from '~/components/reviews/Summary.vue'
 import Review from '~/components/reviews/Review.vue'
 import Map from '~/components/airport/Map.vue'
 import Faq from '~/components/airport/Faq.vue'
+import HelpButton from '~/components/airport/HelpButton.vue'
 
 import { Parking as ParkingType } from '~/types/Parking'
 import { Review as ReviewType } from '~/types/Review'
@@ -118,7 +123,8 @@ export default Vue.extend({
     ReviewSummary,
     Review,
     Map,
-    Faq
+    Faq,
+    HelpButton
   },
 
   layout: 'search',
