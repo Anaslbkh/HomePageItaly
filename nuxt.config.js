@@ -73,6 +73,7 @@ export default {
     '@nuxtjs/gtm',
     '@nuxtjs/sentry',
     '@dansmaculotte/nuxt-zendesk',
+    'nuxt-speedkit'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

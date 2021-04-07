@@ -26,8 +26,6 @@
 import Vue from 'vue'
 import Zendesk from '@dansmaculotte/nuxt-zendesk'
 
-Vue.use(Zendesk)
-
 export default Vue.extend({
   data(): {
     loadedZE: boolean,
