@@ -14,7 +14,7 @@ const pathsPlugin: Plugin = ({
     langHost: 'parkos.it',
     protocol: 'https',
     host: req?.headers?.host || 'parkos.it',
-    url: (trailingSlash = true) => {
+    url: (trailingSlash: boolean = true) => {
       return paths.protocol + '://' + paths.host + (trailingSlash ? '/' : '')
     },
     assetsUrl: 'https://assets.parkos.com/assets/'

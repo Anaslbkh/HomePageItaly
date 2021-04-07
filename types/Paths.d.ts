@@ -3,5 +3,5 @@ export type Paths = {
   schema: string;
   host: string;
   assetsUrl: string;
-  url: (trailingSlash: boolean) => string;
+  url: (trailingSlash?: boolean) => string;
 }

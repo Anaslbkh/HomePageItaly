@@ -45,7 +45,7 @@
             >
               <span :inner-html.prop="item.content | strip | preview" />
               <a
-                :href="`${$paths.url(false)}${$route.path}/${item.slug}.html`"
+                :href="`${$paths.url(false)}${$route.path}${item.slug}.html`"
                 class="text-blue-700 hover:text-blue-900 hover:underline"
               >{{ $i18n("templates.read-full-answer") }}</a>
             </div>

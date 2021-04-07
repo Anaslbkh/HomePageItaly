@@ -7,9 +7,9 @@
         </a>
         <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50 focus:outline-none" aria-controls="#navigation" @click="toggleMenu">
           <span class="sr-only">Toggle navigation</span>
-          <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all origin-navTop" :class="{ 'transform  rotate-45': navShown }"></span>
-          <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1" :class="{ 'opacity-0': navShown }"></span>
-          <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1 origin-navBottom" :class="{ 'transform -rotate-45': navShown }"></span>
+          <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all origin-navTop" :class="{ 'transform  rotate-45': navShown }" />
+          <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1" :class="{ 'opacity-0': navShown }" />
+          <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1 origin-navBottom" :class="{ 'transform -rotate-45': navShown }" />
         </button>
         <nav id="navigation" class="sm:block text-white bg-blue-900 sm:bg-transparent absolute sm:static top-0 left-0 bottom-0 right-0 h-screen sm:h-auto z-10 py-12 sm:py-0 px-6 sm:px-0" :class="{ 'hidden': !navShown, 'block': navShown }">
           <ul class="flex flex-col sm:flex-row sm:inline-flex text-lg sm:text-base">
@@ -22,7 +22,7 @@
               <template #content>
                 <ul class="py-2">
                   <li v-for="airport in $airports" :key="airport.slug">
-                    <a :href="'/' + airport.slug" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.maintitle }}</a>
+                    <a :href="$paths.url() + airport.slug" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.maintitle }}</a>
                   </li>
                 </ul>
               </template>
@@ -34,13 +34,13 @@
               </a>
             </li>
             <li>
-              <a href="/login/" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a :href="`${$paths.url()}login/`" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <span class="material-icons mr-1 text-xl">person</span>
                 Gestisci prenotazione
               </a>
             </li>
             <li>
-              <a href="/chi-siamo.html" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a :href="`${$paths.url()}chi-siamo.html`" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <span class="material-icons mr-1 text-xl">language</span>
                 Chi siamo
               </a>
@@ -55,13 +55,14 @@
                 <ul class="py-2">
                   <li
                     v-for="(content, lang) in $currentAirportDetails.content"
+                    v-show="lang === $currentLanguage.lang"
                     :key="`lang-${lang}`"
-                    v-bind="{ 'hidden': lang === $currentLanguage.lang }"
                   >
                     <a
                       :href="content.url"
-                      class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">
-                        {{ $languages.find(language => language.lang === lang).native_name }}
+                      class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200"
+                    >
+                      {{ $languages.find(language => language.lang === lang).native_name }}
                     </a>
                   </li>
                 </ul>
@@ -78,7 +79,7 @@
           <section class="grid grid-cols-1 sm:grid-cols-3 text-white border-t py-8">
             <article v-for="i in 3" :key="`header-usp-${i}`" class="flex items-center justify-center">
               <img :src="`${$paths.assetsUrl}images/checkmark.svg`" class="h-4 mr-1" aria-hidden="true" alt="check">
-              <span>{{ $i18n(`templates.header-usp-${i}`)}}</span>
+              <span>{{ $i18n(`templates.header-usp-${i}`) }}</span>
             </article>
           </section>
         </div>
@@ -94,6 +95,10 @@ import Logo from './Logo.vue'
 import Dropdown from './header/Dropdown.vue'
 
 export default Vue.extend({
+  filters: {
+    uppercase: (value: string): string => value.toUpperCase()
+  },
+
   components: {
     Logo,
     Dropdown,
@@ -106,18 +111,18 @@ export default Vue.extend({
     } {
     return {
       navOpen: true,
-      navShown: false,
+      navShown: false
     }
+  },
+
+  mounted() {
+    console.log(this.$currentAirportDetails.content, this.$currentLanguage.lang)
   },
 
   methods: {
     toggleMenu(): void {
       this.navShown = !this.navShown
-    },
-  },
-
-  filters: {
-    uppercase: (value: string): string => value.toUpperCase()
+    }
   }
 })
 </script>
