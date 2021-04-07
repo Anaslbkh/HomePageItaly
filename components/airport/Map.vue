@@ -20,8 +20,8 @@ export default Vue.extend({
   computed: {
     coordinates(): Array<any> {
       return Array.prototype.map.call(this.parkings, (parking: ParkingType) => ({
-          latitude: parking.address.latitude,
-          longitude: parking.address.longitude,
+        latitude: parking.address.latitude,
+        longitude: parking.address.longitude,
       }) as Pick<AddressType, 'latitude' | 'longitude'>)
     },
   },

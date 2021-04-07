@@ -27,21 +27,21 @@ export default Vue.extend({
         {
           key: 'templates.parkos-usp-1',
           img: {
-            src: 'https://assets.parkos.com/assets/images/checklist.svg',
+            src: `${this.$paths.assetsUrl}images/checklist.svg`,
             alt: 'personally inspected parkings'
           }
         },
         {
           key: 'templates.parkos-usp-3',
           img: {
-            src: 'https://assets.parkos.com/assets/images/offer.svg',
+            src: `${this.$paths.assetsUrl}images/offer.svg`,
             alt: 'lowest price'
           }
         },
         {
           key: 'templates.parkos-usp-4',
           img: {
-            src: 'https://assets.parkos.com/assets/images/history_blue.svg',
+            src: `${this.$paths.assetsUrl}images/history_blue.svg`,
             alt: 'free cancellation'
           }
         }

@@ -5,7 +5,7 @@
         <ul class="flex">
           <li v-for="(link, social) in $currentLanguage.socials" :key="social">
             <a :href="link" target="_blank" rel="noopener nofollow" :aria-label="social" class="w-12 h-12 mx-3 flex items-center justify-center border border-white rounded hover:border-gray-700">
-              <img :src="`https://assets.parkos.com/assets/images/${social}.svg`" :alt="`Logo: ${social}`" class="w-9 h-9">
+              <img :src="`${$paths.assetsUrl}images/${social}.svg`" :alt="`Logo: ${social}`" class="w-9 h-9">
             </a>
           </li>
         </ul>
@@ -14,8 +14,8 @@
         <p class="mx-4 font-bold">
           &copy; Parkos
         </p>
-        <a href="/termini-e-condizioni.html" class="mx-4">Termini e condizioni</a>
-        <a href="/privacy-policy.html" class="mx-4">Privacy Policy</a>
+        <a :href="`${$paths.url()}termini-e-condizioni.html`" class="mx-4">Termini e condizioni</a>
+        <a :href="`${$paths.url()}privacy-policy.html`" class="mx-4">Privacy Policy</a>
       </div>
     </div>
   </section>

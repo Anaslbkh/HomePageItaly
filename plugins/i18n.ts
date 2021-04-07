@@ -16,29 +16,28 @@ declare module '@nuxt/types' {
   }
 }
 
-const i18nPlugin: Plugin = async ({$axios, app}, inject) => {
-  const languages: Array<LanguageType> = (await $axios.$get('languages')).data;
-  const hostname: string = 'parkos.it';
+const i18nPlugin: Plugin = async({ $axios, app, $paths }, inject) => {
+  const languages: Array<LanguageType> = (await $axios.$get('languages')).data
 
-  const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === hostname)
-  const translations: object = await $axios.$get(`translations/${currentLanguage.lang}/airport`);
+  const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === $paths.langHost)
+  const translations: object = await $axios.$get(`translations/${currentLanguage.lang}/airport`)
 
   type ReplacerObject = {
     [key: string]: string;
   }
 
   const i18n: Function = (key: string, replace: ReplacerObject = {}): string => {
-    let translation = key.split('.').reduce( (t: any, i: any) => t[i] || null, translations)
+    let translation = key.split('.').reduce((t: any, i: any) => t[i] || null, translations)
 
-    for (var placeholder of Object.keys(replace)) {
-        translation = translation.replace(`:${placeholder}`, replace[placeholder]);
+    for (const placeholder of Object.keys(replace)) {
+      translation = translation.replace(`:${placeholder}`, replace[placeholder])
     }
 
-    return translation;
+    return translation
   }
 
   app.i18n = i18n
   inject('i18n', i18n)
 }
 
-export default i18nPlugin;
+export default i18nPlugin

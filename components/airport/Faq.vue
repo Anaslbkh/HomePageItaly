@@ -45,7 +45,7 @@
             >
               <span :inner-html.prop="item.content | strip | preview" />
               <a
-                :href="`${$route.path}/${item.slug}.html`"
+                :href="`${$paths.url(false)}${$route.path}/${item.slug}.html`"
                 class="text-blue-700 hover:text-blue-900 hover:underline"
               >{{ $i18n("templates.read-full-answer") }}</a>
             </div>
@@ -55,7 +55,7 @@
 
       <div class="flex pt-8">
         <a
-          href="https://parkos.it/domande-frequenti/"
+          :href="`${$paths.url()}domande-frequenti/`"
           target="_blank"
           class="inline-block bg-white text-blue-900 p-3 border border-gray-500 text-lg font-heading rounded shadow-button hover:border-gray-700 hover:shadow-buttonhover ml-auto"
         >

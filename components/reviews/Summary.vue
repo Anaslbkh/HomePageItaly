@@ -7,7 +7,7 @@
     <meta itemprop="name" :content="$currentAirportContent.meta.title" />
     <meta
       itemprop="image"
-      content="https://assets.parkos.com/assets/img/locations/bergamo-orio-airport.jpg"
+      :content="`${$paths.assetsUrl}img/locations/bergamo-orio-airport.jpg`"
     />
     <meta itemprop="brand" :content="$currentAirport.devtitle.replace('-', ' ')" />
       <div

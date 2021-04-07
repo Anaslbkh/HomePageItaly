@@ -19,7 +19,7 @@
       :action="`/${formData.airport}/${$i18n('general.search-slug')}/`"
       class="max-w-full sm:max-w-sm flex flex-col mx-auto mb-12"
     >
-      <input type="hidden" name="parkosfastsearchtest">
+      <input type="hidden" name="parkosfastsearchtest" v-if="enableNewFastSearch">
 
       <transition name="slide">
         <div v-if="showAirportSelector" class="flex mb-4">
@@ -143,7 +143,7 @@
 
       <button
         type="submit"
-        class="bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700"
+        class="bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700 focus:outline-none"
       >
         {{ $i18n('home.search-parkingplace') }}
       </button>
@@ -181,11 +181,13 @@ export default Vue.extend({
   },
 
   data(): {
+    enableNewFastSearch: boolean,
     formData: SearchParameters,
     showAirportSelector: boolean,
     datePickerParameters: DatePickerParameters,
     } {
     return {
+      enableNewFastSearch: false,
       formData: {
         airport: undefined,
         arrival: undefined,

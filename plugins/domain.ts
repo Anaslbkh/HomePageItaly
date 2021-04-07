@@ -1,11 +1,13 @@
 import { Plugin } from '@nuxt/types'
-import { Airport as AirportType } from '~/types/Airport';
+import { Airport as AirportType } from '~/types/Airport'
 import { AirportDetails as AirportDetailsType } from '~/types/AirportDetails'
 import { AirportContent as AirportContentType } from '~/types/AirportContent'
-import { Language as LanguageType } from '~/types/Language';
+import { Language as LanguageType } from '~/types/Language'
+import { Paths } from '~/types/Paths'
 
 declare module 'vue/types/vue' {
   interface Vue {
+    $paths: Paths
     $airports: Array<AirportType>,
     $languages: Array<LanguageType>,
     $currentLanguage: LanguageType,
@@ -24,7 +26,9 @@ declare module '@nuxt/types' {
     $currentAirportDetails: AirportDetailsType,
     $currentAirportContent: AirportContentType,
   }
+
   interface Context {
+    $paths: Paths,
     $airports: Array<AirportType>,
     $languages: Array<LanguageType>,
     $currentLanguage: LanguageType,
@@ -34,36 +38,29 @@ declare module '@nuxt/types' {
   }
 }
 
-// @ts-ignore
-const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params, req, route }, inject) => {
+const domainPlugin: Plugin = async({
+  $axios,
+  // @ts-ignore
+  $gtm,
+  $paths,
+  isDev,
+  params,
+  route
+}, inject) => {
   const languages: Array<LanguageType> = (await $axios.$get('languages')).data
   inject('languages', languages)
 
-  let hostname = 'parkos.it'
-  console.log('Hostname', req?.headers?.host)
-
-  if (req?.headers?.host?.includes('localhost') === false) {
-    hostname = req.headers.host.replace(/\.?test|staging\.?|:[0-9]+/, '')
-  }
-
-  console.log('Result hostname', hostname)
-
-  const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === hostname)
-  console.log(currentLanguage)
+  const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === $paths.langHost)
 
   inject('currentLanguage', currentLanguage)
 
-  if (!isDev && currentLanguage.gtm_key) $gtm.init(currentLanguage.gtm_key);
-
-  let airportSlug: string;
-  if (isDev) {
-    airportSlug = params.airport;
-  } else {
-    airportSlug = route.path.split('/').filter(Boolean).pop()!;
+  if (!isDev && currentLanguage.gtm_key) {
+    $gtm.init(currentLanguage.gtm_key)
   }
 
+  const airportSlug: string = isDev ? params.airport : route.path.split('/').filter(Boolean).pop()!
   if (airportSlug && airportSlug !== 'client') {
-    console.log(`Airport: ${airportSlug}`);
+    console.log(`Airport: ${airportSlug}`)
 
     const airports: Array<AirportType> = (await $axios.$get('airports', {
       params: {
