@@ -49,6 +49,8 @@ const domainPlugin: Plugin = async ({ $axios, $gtm, isDev, params, req, route },
   console.log('Result hostname', hostname)
 
   const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === hostname)
+  console.log(currentLanguage)
+
   inject('currentLanguage', currentLanguage)
 
   if (!isDev && currentLanguage.gtm_key) $gtm.init(currentLanguage.gtm_key);

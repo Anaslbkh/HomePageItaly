@@ -1,5 +1,5 @@
 <template>
-  <a :href="`${$currentAirport.slug}/${parking.slug}.html`">
+  <a :href="`/${$currentAirport.slug}/${parking.slug}.html`">
     <article class="bg-white border border-gray-500 rounded">
       <div class="flex items-center justify-center p-12">
         <img
@@ -9,7 +9,7 @@
       </div>
       <p class="flex flex-col text-center p-4 border-t border-gray-500">
         <strong>{{ parking.name }}</strong>
-        <span v-if="this.parking.from_price > 0">
+        <span v-if="parking.from_price > 0">
           {{ $i18n('templates.from-x-euro-week', { amount: price }) }}
         </span>
       </p>
