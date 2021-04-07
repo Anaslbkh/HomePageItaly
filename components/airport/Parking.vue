@@ -5,6 +5,7 @@
         <img
           :src="parking.logo"
           :alt="parking.name"
+          loading="lazy"
         >
       </div>
       <p class="flex flex-col text-center p-4 border-t border-gray-500">

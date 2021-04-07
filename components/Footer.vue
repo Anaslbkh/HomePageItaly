@@ -73,6 +73,7 @@
               :src="`${$paths.assetsUrl}img/payment-logos/trustpilot.png?t=1`"
               height="50px"
               alt="TrustPilot"
+              loading="lazy"
             />
           </li>
           <li class="mx-2">
@@ -80,6 +81,7 @@
               :src="`${$paths.assetsUrl}img/payment-icons/810.png`"
               height="50px"
               alt="CartaSi"
+              loading="lazy"
             />
           </li>
           <li class="mx-2">
@@ -87,6 +89,7 @@
               :src="`${$paths.assetsUrl}img/payment-icons/138.png`"
               height="50px"
               alt="PayPal"
+              loading="lazy"
             />
           </li>
           <li class="mx-2">
@@ -94,6 +97,7 @@
               :src="`${$paths.assetsUrl}img/payment-icons/706.png`"
               height="50px"
               alt="Mastercard"
+              loading="lazy"
             />
           </li>
           <li class="mx-2">
@@ -101,6 +105,7 @@
               :src="`${$paths.assetsUrl}img/payment-icons/707.png`"
               height="50px"
               alt="Visa"
+              loading="lazy"
             />
           </li>
           <li class="mx-2">
@@ -108,6 +113,7 @@
               :src="`${$paths.assetsUrl}img/payment-logos/footer_american_express_blue_2.png`"
               height="50px"
               alt="American Express"
+              loading="lazy"
             />
           </li>
           <li class="mx-2">
@@ -115,6 +121,7 @@
               :src="`${$paths.assetsUrl}img/payment-icons/it-postepay.png`"
               height="32px"
               alt="PostePay"
+              loading="lazy"
               style="max-height: 40px"
             />
           </li>
