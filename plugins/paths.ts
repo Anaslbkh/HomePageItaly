@@ -10,10 +10,12 @@ declare module 'vue/types/vue' {
 const pathsPlugin: Plugin = ({
   req
 }, inject) => {
+  const host: string | undefined = process.server ? req.headers.host : window.location.host
+
   const paths = {
     langHost: 'parkos.it',
     protocol: 'https',
-    host: req?.headers?.host || 'parkos.it',
+    host: host || 'parkos.it',
     url: (trailingSlash: boolean = true) => {
       return paths.protocol + '://' + paths.host + (trailingSlash ? '/' : '')
     },
