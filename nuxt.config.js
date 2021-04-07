@@ -69,18 +69,10 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // [
-    //   '@nuxtjs/component-cache',
-    //   {
-    //     max: 1000,
-    //     maxAge: 1000 * 60 * 60
-    //   }
-    // ],
     '@nuxtjs/axios',
-
     '@nuxtjs/gtm',
-
     '@nuxtjs/sentry',
+    '@dansmaculotte/nuxt-zendesk',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -112,5 +104,18 @@ export default {
     port: 3000,
     host: '127.0.0.1',
     timing: false
-  }
+  },
+
+  zendesk: {
+    key: process.env.ZENDESK_KEY,
+    disabled: true,
+    hideOnLoad: true,
+    settings: {
+      webWidget: {
+        color: {
+          theme: '#0a83ef'
+        }
+      }
+    }
+  },
 }
