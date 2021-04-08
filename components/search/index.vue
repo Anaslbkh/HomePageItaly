@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex justify-center flex-wrap text-white mb-8">
-      <h1 v-if="$currentAirportContent" class="w-full text-6xl text-center font-heading mb-4">
+      <h1 v-if="$currentAirportContent" class="w-full text-4xl md:text-6xl text-center font-heading mb-4">
         {{ $currentAirportContent.title }}
       </h1>
       <h1 v-else class="w-full text-6xl text-center font-heading mb-4">
@@ -10,7 +10,7 @@
       <p>
         {{ $i18n('templates.from-x-euro-day', { amount: pricePerDay }) }}
       </p>
-      <button class="ml-4 text-white text-opacity-50 focus:outline-none" @click="showAirportSelector = !showAirportSelector">
+      <button class="ml-4 text-white text-opacity-50 focus:outline-none hover:underline" @click="showAirportSelector = !showAirportSelector">
         {{ $i18n('general.change-airport') }}
       </button>
     </div>
@@ -143,7 +143,7 @@
 
       <button
         type="submit"
-        class="bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700 focus:outline-none"
+        class="bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700"
       >
         {{ $i18n('home.search-parkingplace') }}
       </button>
@@ -261,7 +261,7 @@ export default Vue.extend({
     }
   },
 
-  mounted() {
+  created() {
     if (Object.prototype.hasOwnProperty.call(this.$route.params, 'airport')) {
       this.formData.airport = this.$route.params.airport
       this.showAirportSelector = false

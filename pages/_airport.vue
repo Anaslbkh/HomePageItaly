@@ -2,7 +2,7 @@
   <div>
     <div class="container mx-auto">
       <p
-        class="py-24 text-3xl text-blue-900 sm:text-center font-heading"
+        class="py-24 text-2xl md:text-3xl text-blue-900 sm:text-center font-heading"
         v-html="$i18n('location.count-customers-merchants-airports-location', {
           'customers': '500.000',
           'merchants': parkings.length,
@@ -27,7 +27,7 @@
           <a
             href="https://parkos.zendesk.com/hc/it"
             rel="nofollow"
-            class="inline-block bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 focus:bg-primary-700"
+            class="inline-block bg-primary-500 text-white p-3 text-lg font-heading rounded shadow-button hover:bg-primary-600 hover:no-underline hover:text-white focus:bg-primary-700"
           >
             {{ $i18n('customer.contact-us') }}
           </a>
@@ -92,11 +92,12 @@
       </div>
     </section>
 
-    <HelpButton
-      v-if="[
+      <HelpButton
+        v-if="[
         'nl-be', 'nl', 'de', 'de-at', 'es', 'it', 'fr-be', 'fr', 'sv-se'
       ].includes($currentLanguage.lang)"
-    />
+      />
+
   </div>
 </template>
 

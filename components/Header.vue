@@ -22,25 +22,25 @@
               <template #content>
                 <ul class="py-2">
                   <li v-for="airport in $airports" :key="airport.slug">
-                    <a :href="$paths.url() + airport.slug" class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.maintitle }}</a>
+                    <a :href="$paths.url() + airport.slug + '/'" class="text-black hover:text-black hover:no-underline block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.maintitle }}</a>
                   </li>
                 </ul>
               </template>
             </Dropdown>
             <li>
-              <a href="https://parkos.zendesk.com/hc/it" rel="nofollow" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a href="https://parkos.zendesk.com/hc/it" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <span class="material-icons mr-1 text-xl" aria-hidden="true">question_answer</span>
-                Servizio clienti
+                {{ $i18n('general.customer-service') }}
               </a>
             </li>
             <li>
-              <a :href="`${$paths.url()}login/`" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a :href="`${$paths.url()}login/`" class="flex sm:inline-flex text-white hover:text-white hover:no-underline items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <span class="material-icons mr-1 text-xl">person</span>
-                Gestisci prenotazione
+                {{ $i18n('templates.header-login') }}
               </a>
             </li>
             <li>
-              <a :href="`${$paths.url()}chi-siamo.html`" class="flex sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a :href="`${$paths.url()}chi-siamo.html`" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <span class="material-icons mr-1 text-xl">language</span>
                 Chi siamo
               </a>
@@ -55,12 +55,12 @@
                 <ul class="py-2">
                   <li
                     v-for="(content, lang) in $currentAirportDetails.content"
-                    v-show="lang === $currentLanguage.lang"
+                    v-show="lang !== $currentLanguage.lang"
                     :key="`lang-${lang}`"
                   >
                     <a
                       :href="content.url"
-                      class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200"
+                      class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200 text-black hover:text-black hover:no-underline"
                     >
                       {{ $languages.find(language => language.lang === lang).native_name }}
                     </a>
@@ -76,10 +76,10 @@
         <div class="container mx-auto">
           <SearchForm />
 
-          <section class="grid grid-cols-1 sm:grid-cols-3 text-white border-t py-8">
-            <article v-for="i in 3" :key="`header-usp-${i}`" class="flex items-center justify-center">
-              <img :src="`${$paths.assetsUrl}images/checkmark.svg`" class="h-4 mr-1" aria-hidden="true" alt="check">
-              <span>{{ $i18n(`templates.header-usp-${i}`) }}</span>
+          <section class="grid grid-cols-1 sm:grid-cols-3 text-white border-t py-7">
+            <article v-for="i in 3" :key="`header-usp-${i}`" class="flex items-center justify-center mb-2">
+              <img :src="`${$paths.assetsUrl}images/checkmark.svg`" class="h-4 mr-1 -top-0.5 relative" aria-hidden="true" alt="check">
+              <span class="text-md md:text-base">{{ $i18n(`templates.header-usp-${i}`) }}</span>
             </article>
           </section>
         </div>
@@ -113,10 +113,6 @@ export default Vue.extend({
       navOpen: true,
       navShown: false
     }
-  },
-
-  mounted() {
-    console.log(this.$currentAirportDetails.content, this.$currentLanguage.lang)
   },
 
   methods: {

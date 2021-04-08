@@ -1,5 +1,5 @@
 <template>
-  <a :href="`/${$currentAirport.slug}/${parking.slug}.html`">
+  <a :href="`${$paths.url()}${$currentAirport.slug}/${parking.slug}.html`" class="text-black hover:no-underline hover:text-blue-300">
     <article class="bg-white border border-gray-500 rounded">
       <div class="flex items-center justify-center p-12">
         <img
@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-import { Parking } from '../../types/Parking'
+import { Parking } from '~/types/Parking'
 
 export default Vue.extend({
 
@@ -32,7 +32,7 @@ export default Vue.extend({
 
   computed: {
     price(): string {
-      if (! this.parking.from_price) return ''
+      if (!this.parking.from_price) { return '' }
 
       return new Intl.NumberFormat(this.$currentLanguage.lang, {
         style: 'currency',

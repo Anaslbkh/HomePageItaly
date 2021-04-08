@@ -4,40 +4,43 @@
       <section class="grid grid-cols-1 md:grid-cols-4 border-b border-gray-500">
         <article>
           <ul class="mb-4 leading-loose">
-            <li><strong>Aeroporti</strong></li>
+            <li><strong>{{ $i18n('general.airports') }}</strong></li>
             <li>
-              <a :href="`${$paths.url()}parcheggio-malpensa/`">
+              <a class="text-white hover:text-white" :href="`${$paths.url()}parcheggio-malpensa/`">
                 Milano Malpensa
               </a>
             </li>
             <li>
-              <a :href="`${$paths.url()}parcheggio-orio-al-serio/`">
+              <a class="text-white hover:text-white" :href="`${$paths.url()}parcheggio-orio-al-serio/`">
                 Bergamo Orio al Serio
               </a>
             </li>
             <li>
-              <a :href="`${$paths.url()}parcheggio-fiumicino/`">
+              <a class="text-white hover:text-white" :href="`${$paths.url()}parcheggio-fiumicino/`">
                 Roma Fiumicino
               </a>
             </li>
             <li>
               <a
+                class="text-white hover:text-white"
                 :href="`${$paths.url()}#all`"
                 style="text-decoration: underline"
               >
-                Tutti gli aeroporti
+                {{ $i18n('general.all-airports') }}
               </a>
             </li>
           </ul>
         </article>
         <article>
           <ul class="mb-4 leading-loose">
-            <li><strong>Informazioni</strong></li>
-            <li><a :href="`${$paths.url()}car-valet.html`">
-              Car valet
-            </a></li>
+            <li><strong>{{ $i18n('additional.information') }}</strong></li>
             <li>
-              <a :href="`${$paths.url()}parcheggio-bus-navetta.html`">
+              <a class="text-white hover:text-white" :href="`${$paths.url()}car-valet.html`">
+                Car valet
+              </a>
+            </li>
+            <li>
+              <a class="text-white hover:text-white" :href="`${$paths.url()}parcheggio-bus-navetta.html`">
                 Parcheggio con bus navetta
               </a>
             </li>
@@ -45,11 +48,11 @@
         </article>
         <article>
           <ul class="mb-4 leading-loose">
-            <li><strong>Su Parkos</strong></li>
+            <li><strong>{{ $i18n('templates.faq-about-parkos') }}</strong></li>
             <li>
-              <a href="https://parkos.zendesk.com/hc/it/">Servizio clienti</a>
+              <a class="text-white hover:text-white" href="https://parkos.zendesk.com/hc/it/">Servizio clienti</a>
             </li>
-            <li><a :href="`${$paths.url()}blog/`">Blog</a></li>
+            <li><a class="text-white hover:text-white" :href="`${$paths.url()}blog/`">Blog</a></li>
           </ul>
         </article>
         <article>

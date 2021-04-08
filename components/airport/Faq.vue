@@ -57,7 +57,7 @@
         <a
           :href="`${$paths.url()}domande-frequenti/`"
           target="_blank"
-          class="inline-block bg-white text-blue-900 p-3 border border-gray-500 text-lg font-heading rounded shadow-button hover:border-gray-700 hover:shadow-buttonhover ml-auto"
+          class="inline-block bg-white text-blue-900 p-3 border border-gray-500 text-lg font-heading hover:text-blue-900 hover:no-underline rounded shadow-button hover:border-gray-700 hover:shadow-buttonhover ml-auto"
         >
           {{ $i18n("templates.read-all-faqs") }}
         </a>

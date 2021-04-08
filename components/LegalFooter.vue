@@ -14,8 +14,8 @@
         <p class="mx-4 font-bold">
           &copy; Parkos
         </p>
-        <a :href="`${$paths.url()}termini-e-condizioni.html`" class="mx-4">Termini e condizioni</a>
-        <a :href="`${$paths.url()}privacy-policy.html`" class="mx-4">Privacy Policy</a>
+        <a :href="`${$paths.url()}termini-e-condizioni.html`" class="mx-4 text-white hover:text-white">Termini e condizioni</a>
+        <a :href="`${$paths.url()}privacy-policy.html`" class="mx-4 text-white hover:text-white">Privacy Policy</a>
       </div>
     </div>
   </section>
