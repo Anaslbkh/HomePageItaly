@@ -10,6 +10,7 @@
           :alt="item.img.alt"
           class="sm:w-10 sm:h-10 w-8.5 h-8.5 mr-8 sm:mr-0 sm:mb-5"
           aria-hidden="true"
+          loading="lazy"
         >
         <p class="text-left sm:text-center text-md sm:text-base" v-html="$i18n(item.key)"></p>
       </article>

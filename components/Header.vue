@@ -78,7 +78,7 @@
 
           <section class="grid grid-cols-1 sm:grid-cols-3 text-white border-t py-7">
             <article v-for="i in 3" :key="`header-usp-${i}`" class="flex items-center justify-center mb-2">
-              <img :src="`${$paths.assetsUrl}images/checkmark.svg`" class="h-4 mr-1 -top-0.5 relative" aria-hidden="true" alt="check">
+              <img :src="`${$paths.assetsUrl}images/checkmark.svg`" class="h-4 mr-1 -top-0.5 relative" aria-hidden="true" alt="check" loading="lazy">
               <span class="text-md md:text-base">{{ $i18n(`templates.header-usp-${i}`) }}</span>
             </article>
           </section>

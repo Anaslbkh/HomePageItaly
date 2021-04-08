@@ -34,7 +34,7 @@
         </div>
         <div class="hidden sm:block">
           <figure>
-            <img :src="`${$paths.assetsUrl}img/home-customerservice.jpg`" alt="Customer Service Team">
+            <img :src="`${$paths.assetsUrl}img/home-customerservice.jpg`" alt="Customer Service Team" loading="lazy">
           </figure>
         </div>
       </div>
