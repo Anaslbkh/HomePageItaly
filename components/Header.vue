@@ -13,20 +13,8 @@
         </button>
         <nav id="navigation" class="sm:block text-white bg-blue-900 sm:bg-transparent absolute sm:static top-0 left-0 bottom-0 right-0 h-screen sm:h-auto z-10 py-12 sm:py-0 px-6 sm:px-0" :class="{ 'hidden': !navShown, 'block': navShown }">
           <ul class="flex flex-col sm:flex-row sm:inline-flex text-lg sm:text-base">
-            <Dropdown class="border-b">
-              <template #button>
-                <span class="material-icons mr-1 text-xl" aria-hidden="true">flight_takeoff</span>
-                {{ $i18n('general.airports') }}
-                <span class="material-icons" aria-hidden="true">arrow_drop_down</span>
-              </template>
-              <template #content>
-                <ul class="py-2">
-                  <li v-for="airport in $airports" :key="airport.slug">
-                    <a :href="$paths.url() + airport.slug + '/'" class="text-black hover:text-black hover:no-underline block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">{{ airport.maintitle }}</a>
-                  </li>
-                </ul>
-              </template>
-            </Dropdown>
+            <Airports />
+
             <li>
               <a href="https://parkos.zendesk.com/hc/it" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <span class="material-icons mr-1 text-xl" aria-hidden="true">question_answer</span>
@@ -45,29 +33,8 @@
                 Chi siamo
               </a>
             </li>
-            <Dropdown class="border-b-0">
-              <template #button>
-                <span class="material-icons mr-1 text-xl">flag</span>
-                {{ $currentLanguage.lang | uppercase }}
-                <span class="material-icons">arrow_drop_down</span>
-              </template>
-              <template #content>
-                <ul class="py-2">
-                  <li
-                    v-for="(content, lang) in $currentAirportDetails.content"
-                    v-show="lang !== $currentLanguage.lang"
-                    :key="`lang-${lang}`"
-                  >
-                    <a
-                      :href="content.url"
-                      class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200 text-black hover:text-black hover:no-underline"
-                    >
-                      {{ $languages.find(language => language.lang === lang).native_name }}
-                    </a>
-                  </li>
-                </ul>
-              </template>
-            </Dropdown>
+
+            <Languages />
           </ul>
         </nav>
       </div>
@@ -92,16 +59,14 @@
 import Vue from 'vue'
 import SearchForm from '../components/search/index.vue'
 import Logo from './Logo.vue'
-import Dropdown from './header/Dropdown.vue'
+import Languages from '~/components/header/Languages.vue'
+import Airports from '~/components/header/Airports.vue'
 
 export default Vue.extend({
-  filters: {
-    uppercase: (value: string): string => value.toUpperCase()
-  },
-
   components: {
+    Airports,
+    Languages,
     Logo,
-    Dropdown,
     SearchForm
   },
 

@@ -75,11 +75,7 @@ const domainPlugin: Plugin = async({
     const currentAirport: AirportType = Array.prototype.find.call(airports, (airport: AirportType) => airport.slug === airportSlug)
     inject('currentAirport', currentAirport)
 
-    const currentAirportDetails: AirportDetailsType = (await $axios.$get(`airports/${currentAirport.id}/details`, {
-      params: {
-        lang: currentLanguage.lang
-      }
-    }))
+    const currentAirportDetails: AirportDetailsType = (await $axios.$get(`airports/${currentAirport.id}/details`))
     inject('currentAirportDetails', currentAirportDetails)
 
     // @ts-ignore @todo fix type or move to components
