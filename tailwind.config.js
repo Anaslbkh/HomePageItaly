@@ -114,16 +114,68 @@ module.exports = {
       'nuxt.config.ts'
     ],
     options: {
-      safelist: {
-        standard: [
-          // (responsive) margin and padding utils
-          /[p|m][t|r|b|l|x|y]?-([0-9]+(\.[0-9])?|px|auto)$/,
-          // font size utilities
-          /^text-([0-9]?[xsgl].?$|base)$/,
-          // sizing utilities
-          /^(sm|md|lg|xl|2xl)?:?[h|w]-/
-        ],
-      }
+      safelist: [
+        // font-size
+        'font-heading',
+        'text-2xl',
+        'text-base',
+        'text-lg',
+
+        'md:text-3xl',
+        'md:text-xl',
+
+        // sizing
+        'w-full',
+
+        'lg:float-left',
+        'lg:w-1/12',
+        'lg:w-11/12',
+        'lg:w-5/12',
+        'lg:w-7/12',
+        'md:w-10/12',
+        'md:w-2/12',
+        'md:w-4/12',
+        'md:w-8/12',
+        'sm:w-1/2',
+        'sm:w-10/12',
+
+        // margin/padding
+        '-mx-6',
+        'mb-6',
+        'mr-2',
+        'mx-auto',
+
+        'md:mb-12',
+        'md:mx-auto',
+        'sm:mx-auto',
+
+        'p-3',
+        'pb-3.5',
+        'pt-2',
+        'pt-6',
+        'px-3.5',
+        'px-6',
+        'py-12',
+
+        'md:pt-12',
+        'md:py-24',
+
+        // (responsive) design
+        'flex',
+        'flex-wrap',
+
+        'md:float-left',
+
+        // other
+        'focus:bg-primary-700',
+        'hover:bg-primary-600',
+        'hover:no-underline',
+        'hover:text-white',
+        'Inline-block',
+        'rounded',
+        'shadow-button',
+        'text-white',
+      ],
     }
   }
 }
