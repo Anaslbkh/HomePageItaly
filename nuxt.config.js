@@ -107,6 +107,35 @@ export default {
     timing: false
   },
 
+  speedkit: {
+    detection: {
+      performance: true,
+      browserSupport: true
+    },
+    performance: {
+      device: {
+        hardwareConcurrency: { min: 2, max: 48 },
+        deviceMemory: { min: 2 }
+      },
+      timing: {
+        fcp: 800,
+        dcl: 1200
+      },
+      lighthouseDetectionByUserAgent: false
+    },
+
+    componentAutoImport: false,
+    componentPrefix: undefined,
+
+    /**
+     * IntersectionObserver rootMargin for Compoennts and Assets
+     */
+    lazyOffset: {
+      component: '0%',
+      asset: '0%'
+    }
+  },
+
   zendesk: {
     key: process.env.ZENDESK_KEY,
     disabled: true,
