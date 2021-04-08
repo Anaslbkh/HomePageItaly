@@ -61,7 +61,7 @@
       </section>
     </section>
     <section class="bg-gray-200 border-t border-b border-gray-500 py-24">
-      <div class="container mx-auto" v-html="$currentAirportContent.content" />
+      <div v-html="$currentAirportContent.content" />
     </section>
     <section id="parkings" class="py-24">
       <div class="container mx-auto mb-16">

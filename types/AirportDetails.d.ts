@@ -1,4 +1,5 @@
-import { Meta } from './Meta';
+import { Meta } from './Meta'
+import { AirportContent } from '~/types/AirportContent'
 
 export type AirportDetails = {
     id: number;
@@ -6,5 +7,5 @@ export type AirportDetails = {
     title: string;
     name: string;
     meta: Meta;
-    content: object;
+    content: { [key: string]: AirportContent };
 }

@@ -41,12 +41,12 @@ export default Vue.extend({
 
   computed: {
     languages(): Array<Object> {
-      const content = this.$currentAirportDetails.content
+      const content = { ...this.$currentAirportDetails.content }
 
       return Object.keys(content).map((lang: string) => {
         return {
           lang,
-          name: this.$languages.find(language => language.lang === lang).native_name,
+          name: this.$languages.find(language => language.lang === lang)?.native_name || '',
           url: content[lang].url
         }
       }).sort((a, b) => {
