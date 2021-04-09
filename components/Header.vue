@@ -1,6 +1,6 @@
 <template>
-  <header class="bg-blue-500 gradient" :class="{ 'skew -mt-8 pt-8': navOpen, 'fixed z-50': navShown }">
-    <section :class="{ unskew: navOpen }">
+  <header class="bg-blue-500 gradient" :class="{ 'skew -mt-8 pt-8': navOpen }">
+    <section class="w-full" :class="{ unskew: navOpen, 'fixed z-50': navShown }">
       <div class="container mx-auto flex justify-between h-16 items-center">
         <a href="/">
           <Logo />
@@ -11,7 +11,7 @@
           <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1" :class="{ 'opacity-0': navShown }" />
           <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1 origin-navBottom" :class="{ 'transform -rotate-45': navShown }" />
         </button>
-        <nav id="navigation" class="sm:block text-white bg-blue-900 sm:bg-transparent absolute sm:static top-0 left-0 bottom-0 right-0 h-screen sm:h-auto z-10 py-12 sm:py-0 px-6 sm:px-0" :class="{ 'hidden': !navShown, 'block': navShown }">
+        <nav id="navigation" class="sm:block text-white bg-blue-900 sm:bg-transparent absolute sm:static top-0 left-0 bottom-0 right-0 h-screen sm:h-auto z-10 py-12 sm:py-0 px-6 sm:px-0" :class="{ 'hidden': !navShown, 'block overflow-y-scroll': navShown }">
           <ul class="flex flex-col sm:flex-row sm:inline-flex text-lg sm:text-base">
             <Airports />
 
@@ -83,6 +83,8 @@ export default Vue.extend({
   methods: {
     toggleMenu(): void {
       this.navShown = !this.navShown
+
+      this.$emit('toggle', this.navShown)
     }
   }
 })

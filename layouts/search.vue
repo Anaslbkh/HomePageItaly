@@ -1,6 +1,8 @@
 <template>
-  <div class="overflow-x-hidden">
-    <Header />
+  <div class="overflow-x-hidden" :class="{ fixed: navShown }">
+    <Header
+      @toggle="navToggle"
+    />
     <main>
       <Nuxt />
     </main>
@@ -21,6 +23,20 @@ export default Vue.extend({
     Footer,
     LegalFooter
   },
+
+  data(): {
+    navShown: boolean
+    } {
+    return {
+      navShown: false
+    }
+  },
+
+  methods: {
+    navToggle(value: boolean) {
+      this.navShown = value
+    }
+  }
 })
 </script>
 

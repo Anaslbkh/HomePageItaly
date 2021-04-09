@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <Dropdown class="border-b-0">
-      <template #button>
-        <span class="material-icons mr-1 text-xl">flag</span>
-        {{ $currentLanguage.lang | uppercase }}
-        <span class="material-icons">arrow_drop_down</span>
-      </template>
-      <template #content>
-        <ul class="py-2">
-          <li
-            v-for="item in languages"
-            v-show="item.lang !== $currentLanguage.lang"
-            :key="`lang-${item.lang}`"
+  <Dropdown class="border-b-0">
+    <template #button>
+      <span class="material-icons mr-1 text-xl">flag</span>
+      {{ $currentLanguage.lang | uppercase }}
+      <span class="material-icons">arrow_drop_down</span>
+    </template>
+    <template #content>
+      <ul class="py-2 pt-0 sm:pt-2 -ml-2 sm:ml-0">
+        <li
+          v-for="item in languages"
+          v-show="item.lang !== $currentLanguage.lang"
+          :key="`lang-${item.lang}`"
+        >
+          <a
+            :href="item.url"
+            class="text-gray-600 text-base sm:text-black hover:text-black hover:no-underline block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200"
           >
-            <a
-              :href="item.url"
-              class="block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200 text-black hover:text-black hover:no-underline"
-            >
-              {{ $languages.find(language => language.lang === item.lang).native_name }}
-            </a>
-          </li>
-        </ul>
-      </template>
-    </Dropdown>
-  </div>
+            {{ $languages.find(language => language.lang === item.lang).native_name }}
+          </a>
+        </li>
+      </ul>
+    </template>
+  </Dropdown>
 </template>
 
 <script lang="ts">

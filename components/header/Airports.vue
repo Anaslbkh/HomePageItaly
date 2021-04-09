@@ -1,22 +1,20 @@
 <template>
-  <div>
-    <Dropdown class="border-b">
-      <template #button>
-        <span class="material-icons mr-1 text-xl" aria-hidden="true">flight_takeoff</span>
-        {{ $i18n('general.airports') }}
-        <span class="material-icons" aria-hidden="true">arrow_drop_down</span>
-      </template>
-      <template #content>
-        <ul class="py-2">
-          <li v-for="airport in $airports" :key="airport.slug">
-            <a :href="$paths.url() + airport.slug + '/'" class="text-black hover:text-black hover:no-underline block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">
-              {{ airport.maintitle }}
-            </a>
-          </li>
-        </ul>
-      </template>
-    </Dropdown>
-  </div>
+  <Dropdown class="border-b">
+    <template #button>
+      <span class="material-icons mr-1 text-xl" aria-hidden="true">flight_takeoff</span>
+      {{ $i18n('general.airports') }}
+      <span class="material-icons" aria-hidden="true">arrow_drop_down</span>
+    </template>
+    <template #content>
+      <ul class="py-2 pt-0 sm:pt-2 -ml-2 sm:ml-0">
+        <li v-for="airport in $airports" :key="airport.slug">
+          <a :href="$paths.url() + airport.slug + '/'" class="text-gray-600 text-base sm:text-black hover:text-black hover:no-underline block px-4 py-1 whitespace-nowrap sm:hover:bg-gray-200">
+            {{ airport.maintitle }}
+          </a>
+        </li>
+      </ul>
+    </template>
+  </Dropdown>
 </template>
 
 <script lang="ts">
