@@ -15,12 +15,12 @@
     </button>
     <div v-if="open"
          v-click-outside="{exclude: ['button'], handler: toggle}"
-         class="absolute flex shadow-dropdown border-1 border-black border-opacity-20 left-0 rounded bg-white tooltip items-center z-50"
+         class="absolute flex pr-3.5 shadow-dropdown border-1 border-black border-opacity-20 left-0 rounded bg-white tooltip items-center z-50"
          role="tooltip">
-      <p class="whitespace-nowrap text-sm p-3 max-w-xs">
+      <p class="whitespace-normal text-sm p-3 max-w-xs">
         <slot />
       </p>
-      <button type="button" class="p-1 px-2 text-xl focus:outline-none" @click="toggle">
+      <button type="button" class="absolute top-0 right-0 p-1 px-2 text-xl focus:outline-none" @click="toggle">
         x
       </button>
     </div>
@@ -56,7 +56,14 @@ export default Vue.extend({
 
 <style>
 .tooltip {
-  transform: translateX(-50%);
-  top: 2rem;
+  min-width: 10rem;
+  top: 2.45rem;
+  transform: translateX(-6.4rem);
+
+  @media (min-width: 768px) {
+    min-width: max-content;
+    top: 2rem;
+    transform: translateX(-50%);
+  }
 }
 </style>
