@@ -6,7 +6,7 @@
           {{ review.name }}
         </p>
         <p class="font-semibold">
-          {{ review.date.date }}
+          {{ date }}
         </p>
       </div>
       <p class="text-3xl font-semibold border-b-4 border-blue-500 font-heading leading-tight">
@@ -29,6 +29,14 @@ export default Vue.extend({
       type: Object,
       required: true
     } as PropOptions<Review>
+  },
+
+  computed: {
+    date(): string {
+      return new Intl.DateTimeFormat(this.$currentLanguage.lang, {
+        dateStyle: 'full'
+      }).format(new Date(this.review.date));
+    }
   }
 })
 </script>

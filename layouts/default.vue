@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <Header />
+  <div class="overflow-x-hidden">
     <main>
       <Nuxt />
     </main>
-    <Footer />
-    <LegalFooter />
   </div>
 </template>
 

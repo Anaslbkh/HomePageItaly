@@ -1,26 +1,61 @@
 <template>
-  <div>
-    <h2 class="text-3xl mb-10 font-heading">
-      Customers rate our car parking providers with an average of {{ meta.reviews.score | score }}
-    </h2>
-    <p class="text-base">
-      Customers who have booked a parking space through us, rate these with an average of {{ meta.reviews.score | score }}/{{ meta.reviews.best }} based on {{ meta.reviews.count }} reviews.
-    </p>
-  </div>
+  <div itemscope itemtype="http://schema.org/Product">
+    <meta
+      itemprop="description"
+      :content="$currentAirportContent.meta.description"
+    />
+    <meta itemprop="name" :content="$currentAirportContent.meta.title" />
+    <meta
+      itemprop="image"
+      :content="`${$paths.assetsUrl}img/locations/bergamo-orio-airport.jpg`"
+    />
+    <meta itemprop="brand" :content="$currentAirport.devtitle.replace('-', ' ')" />
+      <div
+        itemprop="offers"
+        itemscope=""
+        itemtype="http://schema.org/AggregateOffer"
+      >
+        <meta itemprop="priceCurrency" content="EUR" />
+        <meta itemprop="lowPrice" :content="$currentAirport.from_price / 8" />
+      </div>
+      <div
+        itemprop="aggregateRating"
+        itemscope=""
+        itemtype="http://schema.org/AggregateRating"
+      >
+        <meta itemprop="worstRating" content="1" />
+        <p class="text-3xl mb-10 font-heading">
+          {{ $i18n('templates.customer-parking-reviews-title', {
+            airportName: $currentAirport.name,
+            reviewsScoreAvg: new Intl.NumberFormat('it').format(meta.score.toFixed(1)) // @TODO dynamic number format
+          }) }}
+        </p>
+        <p class="text-base" v-html="$i18n('templates.customer-parking-reviews-intro-schema', {
+            airportName: $currentAirport.name,
+            'price-per-day-raw': $currentAirport.from_price,
+            'price-per-day': $currentAirport.from_price,
+            reviewPageUrl: '#',
+            reviewsScoreAvg: new Intl.NumberFormat('it').format(meta.score.toFixed(1)), // @TODO dynamic number format
+            reviewsTotal: meta.count
+          })">
+        </p>
+      </div>
+    </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+/**
+ * @TODO:
+ * - Fill in meta props
+ */
+import Vue from "vue";
 export default Vue.extend({
 
-  filters: {
-    score: (value: number): string => value.toFixed(1)
-  },
   props: {
     meta: {
       type: Object,
-      required: true
-    }
-  }
-})
+      required: false,
+    },
+  },
+});
 </script>

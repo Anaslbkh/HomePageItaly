@@ -1,113 +1,132 @@
 <template>
   <footer class="bg-blue-300 skew -mt-4 z-10 py-24 text-white">
     <div class="container unskew mx-auto">
-      <section class="grid grid-cols-4 border-b border-gray-500">
+      <section class="grid grid-cols-1 md:grid-cols-4 border-b border-gray-500">
         <article>
-          <ul>
-            <li><strong>Airports</strong></li>
+          <ul class="mb-4 leading-loose">
+            <li><strong>{{ $i18n('general.airports') }}</strong></li>
             <li>
-              <a href="https://eu.parkos.com/dusseldorf-airport-parking/">
-                Düsseldorf Airport
+              <a class="text-white hover:text-white" :href="`${$paths.url()}parcheggio-malpensa/`">
+                Milano Malpensa
               </a>
             </li>
             <li>
-              <a href="https://eu.parkos.com/malpensa-airport-parking/">
-                Milano Malpensa Airport
+              <a class="text-white hover:text-white" :href="`${$paths.url()}parcheggio-orio-al-serio/`">
+                Bergamo Orio al Serio
               </a>
             </li>
             <li>
-              <a href="https://eu.parkos.com/cologne-airport-parking/">
-                Cologne Airport
+              <a class="text-white hover:text-white" :href="`${$paths.url()}parcheggio-fiumicino/`">
+                Roma Fiumicino
               </a>
             </li>
             <li>
-              <a href="https://eu.parkos.com/#all" class="underline">
-                All airports
+              <a
+                class="text-white hover:text-white"
+                :href="`${$paths.url()}#all`"
+                style="text-decoration: underline"
+              >
+                {{ $i18n('general.all-airports') }}
               </a>
             </li>
           </ul>
         </article>
         <article>
-          <ul>
-            <li><strong>Information</strong></li>
+          <ul class="mb-4 leading-loose">
+            <li><strong>{{ $i18n('additional.information') }}</strong></li>
             <li>
-              <a href="https://parkos.com/valet-parking.html">Valet parking</a>
-            </li>
-            <li>
-              <a href="https://parkos.com/self-park.html">Shuttle parking</a>
-            </li>
-          </ul>
-        </article>
-        <article>
-          <ul>
-            <li><b>About Parkos</b></li>
-            <li>
-              <a href="https://parkos.com/frequently-asked-questions/">
-                Frequently Asked Questions
+              <a class="text-white hover:text-white" :href="`${$paths.url()}car-valet.html`">
+                Car valet
               </a>
             </li>
             <li>
-              <a href="https://eu.parkos.com/partners.html">Become a partner</a>
-            </li>
-            <li>
-              <a href="https://eu.parkos.com/customerservice.html">
-                Customer Service
-              </a>
-            </li>
-            <li>
-              <a href="https://eu.parkos.com/vacancies-parkos-groningen.html">
-                Vacancies and internships
+              <a class="text-white hover:text-white" :href="`${$paths.url()}parcheggio-bus-navetta.html`">
+                Parcheggio con bus navetta
               </a>
             </li>
           </ul>
         </article>
         <article>
-          <figure>
+          <ul class="mb-4 leading-loose">
+            <li><strong>{{ $i18n('templates.faq-about-parkos') }}</strong></li>
+            <li>
+              <a class="text-white hover:text-white" href="https://parkos.zendesk.com/hc/it/">Servizio clienti</a>
+            </li>
+            <li><a class="text-white hover:text-white" :href="`${$paths.url()}blog/`">Blog</a></li>
+          </ul>
+        </article>
+        <article>
+          <figure class="flex justify-center">
             <img
-              src="https://assets.parkos.com/assets/img/static/parkos-employees-en-eu.png"
+              :src="`${$paths.assetsUrl}img/static/parkos-employees-en-eu.png`"
               alt="Parkos Employees"
               loading="lazy"
-            >
+            />
           </figure>
         </article>
       </section>
       <section class="flex justify-center items-center flex-wrap">
         <p class="w-full text-center font-bold my-8">
-          Book safely and pay securely
+          Prenota e paga in maniera sicura
         </p>
 
-        <ul class="flex">
+        <ul class="flex flex-wrap justify-center">
           <li class="mx-2">
             <img
-              src="https://assets.parkos.com/assets/img/payment-icons/707.png"
+              :src="`${$paths.assetsUrl}img/payment-logos/trustpilot.png?t=1`"
+              height="50px"
+              alt="TrustPilot"
               loading="lazy"
+            />
+          </li>
+          <li class="mx-2">
+            <img
+              :src="`${$paths.assetsUrl}img/payment-icons/810.png`"
+              height="50px"
+              alt="CartaSi"
+              loading="lazy"
+            />
+          </li>
+          <li class="mx-2">
+            <img
+              :src="`${$paths.assetsUrl}img/payment-icons/138.png`"
+              height="50px"
+              alt="PayPal"
+              loading="lazy"
+            />
+          </li>
+          <li class="mx-2">
+            <img
+              :src="`${$paths.assetsUrl}img/payment-icons/706.png`"
+              height="50px"
+              alt="Mastercard"
+              loading="lazy"
+            />
+          </li>
+          <li class="mx-2">
+            <img
+              :src="`${$paths.assetsUrl}img/payment-icons/707.png`"
               height="50px"
               alt="Visa"
-            >
+              loading="lazy"
+            />
           </li>
           <li class="mx-2">
             <img
-              src="https://assets.parkos.com/assets/img/payment-icons/706.png"
+              :src="`${$paths.assetsUrl}img/payment-logos/footer_american_express_blue_2.png`"
               height="50px"
-              loading="lazy"
-              alt="Mastercard"
-            >
-          </li>
-          <li class="mx-2">
-            <img
-              src="https://assets.parkos.com/assets/img/payment-logos/footer_american_express_blue_2.png"
-              height="50px"
-              loading="lazy"
               alt="American Express"
-            >
+              loading="lazy"
+            />
           </li>
           <li class="mx-2">
             <img
-              src="https://assets.parkos.com/assets/img/payment-icons/138.png"
-              height="50px"
+              :src="`${$paths.assetsUrl}img/payment-icons/it-postepay.png`"
+              height="32px"
+              alt="PostePay"
               loading="lazy"
-              alt="PayPal"
-            >
+              style="max-height: 40px"
+            />
           </li>
         </ul>
       </section>

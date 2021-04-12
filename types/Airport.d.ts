@@ -6,6 +6,8 @@ export interface Airport {
     object: string;
     name: string;
     slug: string;
+    maintitle: string;
+    devtitle: string;
     logo: string;
     from_price: number;
     address: Address;
