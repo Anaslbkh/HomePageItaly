@@ -1,9 +1,9 @@
 <template>
   <Dropdown class="border-b-0">
     <template #button>
-      <span class="material-icons mr-1 text-xl">flag</span>
+      <img src="~/static/icons/flag.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
       {{ $currentLanguage.lang | uppercase }}
-      <span class="material-icons">arrow_drop_down</span>
+      <span class="caret"></span>
     </template>
     <template #content>
       <ul class="py-2 pt-0 sm:pt-2 -ml-2 sm:ml-0">
