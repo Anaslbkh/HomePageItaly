@@ -18,8 +18,6 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'https://assets.parkos.com/assets/favicon/favicon.ico' },
-      { rel: 'preconnect', href: 'https://fonts.gstatic.com/' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bree+Serif&family=Roboto:wght@400;700&display=swap&family=Material+Icons' },
       { rel: 'apple-touch-icon', href: 'https://assets.parkos.com/assets/favicon/apple-icon.png' },
       { rel: 'apple-touch-icon', sizes: '57x57', href: 'https://assets.parkos.com/assets/favicon/apple-icon-57x57.png' },
       { rel: 'apple-touch-icon', sizes: '60x60', href: 'https://assets.parkos.com/assets/favicon/apple-icon-60x60.png' },
@@ -40,6 +38,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/css/fonts.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
