@@ -59,6 +59,8 @@
           <figure class="flex justify-center">
             <img
               :src="`${$paths.assetsUrl}img/static/parkos-employees-en-eu.png`"
+              width="300"
+              height="200"
               alt="Parkos Employees"
               loading="lazy"
             />
@@ -73,8 +75,9 @@
         <ul class="flex flex-wrap justify-center">
           <li class="mx-2">
             <img
-              :src="`${$paths.assetsUrl}img/payment-logos/trustpilot.png?t=1`"
-              height="50px"
+              :src="`${$paths.assetsUrl}img/payment-logos/trustpilot.png`"
+              width="130"
+              height="50"
               alt="TrustPilot"
               loading="lazy"
             />
@@ -82,15 +85,17 @@
           <li class="mx-2">
             <img
               :src="`${$paths.assetsUrl}img/payment-icons/810.png`"
-              height="50px"
-              alt="CartaSi"
+              width="54"
+              height="50"
+              alt="Nexi"
               loading="lazy"
             />
           </li>
           <li class="mx-2">
             <img
               :src="`${$paths.assetsUrl}img/payment-icons/138.png`"
-              height="50px"
+              width="50"
+              height="50"
               alt="PayPal"
               loading="lazy"
             />
@@ -98,7 +103,8 @@
           <li class="mx-2">
             <img
               :src="`${$paths.assetsUrl}img/payment-icons/706.png`"
-              height="50px"
+              width="54"
+              height="50"
               alt="Mastercard"
               loading="lazy"
             />
@@ -106,7 +112,8 @@
           <li class="mx-2">
             <img
               :src="`${$paths.assetsUrl}img/payment-icons/707.png`"
-              height="50px"
+              width="53"
+              height="50"
               alt="Visa"
               loading="lazy"
             />
@@ -114,7 +121,8 @@
           <li class="mx-2">
             <img
               :src="`${$paths.assetsUrl}img/payment-logos/footer_american_express_blue_2.png`"
-              height="50px"
+              width="58"
+              height="50"
               alt="American Express"
               loading="lazy"
             />
@@ -122,7 +130,8 @@
           <li class="mx-2">
             <img
               :src="`${$paths.assetsUrl}img/payment-icons/it-postepay.png`"
-              height="32px"
+              width="135"
+              height="32"
               alt="PostePay"
               loading="lazy"
               style="max-height: 40px"
