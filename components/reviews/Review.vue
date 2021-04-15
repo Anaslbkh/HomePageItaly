@@ -14,7 +14,7 @@
       </p>
     </div>
     <p class="w-full">
-      <span class="material-icons text-3xl text-blue-500 relative" style="top: 0.5rem;">format_quote</span>{{ review.content }}
+      <img src="~/static/icons/quote.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="inline mr-1 -top-1 relative"> {{ review.content }}
     </p>
   </article>
 </template>

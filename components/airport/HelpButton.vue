@@ -1,15 +1,14 @@
 f<template>
   <div>
     <div
-      class="help-btn transition-bg-ease opacity-0 fixed right-2 inline-flex bottom-0 text-white bg-blue-500 z-50 py-3.5 px-4 rounded-full mb-3 hover:bg-blue-550 cursor-pointer"
+      class="help-btn transition-bg-ease opacity-0 fixed right-2 inline-flex bottom-0 text-white bg-blue-500 z-50 py-3.5 px-3.5 rounded-full mb-3 hover:bg-blue-550 cursor-pointer"
       :class="{ 'opacity-100': isMounted }"
       @click="show()"
     >
-      <span class="material-icons text-3xl leading-3 top-1.5 relative">
-        {{ isLoading ? 'loop' : 'help_outline' }}
-      </span>
+      <img v-if="isLoading" src="~/static/icons/loop.svg" width="24" height="24" aria-hidden="true" alt="check" loading="lazy" class="inline sm:mr-1 relative">
+      <img v-else src="~/static/icons/help.svg" width="24" height="24" aria-hidden="true" alt="check" loading="lazy" class="inline sm:mr-1 relative">
 
-      <div class="font-sans px-1.5 font-bold">
+      <div class="hidden sm:block font-sans px-1.5 font-bold">
         {{ $i18n('general.help') }}
       </div>
     </div>

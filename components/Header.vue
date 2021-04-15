@@ -16,20 +16,21 @@
             <Airports />
 
             <li>
-              <a href="https://parkos.zendesk.com/hc/it" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
-                <span class="material-icons mr-1 text-xl" aria-hidden="true">question_answer</span>
+              <a href="https://parkos.zendesk.com/hc/it" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+                <img src="~/static/icons/customerservice.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
+
                 {{ $i18n('general.customer-service') }}
               </a>
             </li>
             <li>
-              <a :href="`${$paths.url()}login/`" class="flex sm:inline-flex text-white hover:text-white hover:no-underline items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
-                <span class="material-icons mr-1 text-xl">person</span>
+              <a :href="`${$paths.url()}login/`" class="flex sm:inline-flex text-white hover:text-white hover:no-underline items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+                <img src="~/static/icons/account.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
                 {{ $i18n('templates.header-login') }}
               </a>
             </li>
             <li>
-              <a :href="`${$paths.url()}chi-siamo.html`" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-end px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
-                <span class="material-icons mr-1 text-xl">language</span>
+              <a :href="`${$paths.url()}chi-siamo.html`" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+                <img src="~/static/icons/globe.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
                 Chi siamo
               </a>
             </li>
