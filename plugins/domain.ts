@@ -14,6 +14,7 @@ declare module 'vue/types/vue' {
     $currentAirport: AirportType,
     $currentAirportDetails: AirportDetailsType,
     $currentAirportContent: AirportContentType,
+    $gtmKey: string | undefined,
   }
 }
 
@@ -25,6 +26,7 @@ declare module '@nuxt/types' {
     $currentAirport: AirportType,
     $currentAirportDetails: AirportDetailsType,
     $currentAirportContent: AirportContentType,
+    $gtmKey: string | undefined,
   }
 
   interface Context {
@@ -35,13 +37,13 @@ declare module '@nuxt/types' {
     $currentAirport: AirportType,
     $currentAirportDetails: AirportDetailsType,
     $currentAirportContent: AirportContentType,
+    $gtmKey: string | undefined,
   }
 }
 
 const domainPlugin: Plugin = async({
   $axios,
   // @ts-ignore
-  $gtm,
   $paths,
   isDev,
   params,
@@ -55,7 +57,7 @@ const domainPlugin: Plugin = async({
   inject('currentLanguage', currentLanguage)
 
   if (!isDev && currentLanguage.gtm_key) {
-    $gtm.init(currentLanguage.gtm_key)
+    inject('gtmKey', currentLanguage.gtm_key)
   }
 
   const airportSlug: string = isDev ? params.airport : route.path.split('/').filter(Boolean).pop()!

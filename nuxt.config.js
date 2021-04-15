@@ -62,14 +62,12 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/dotenv',
-    '@nuxtjs/gtm',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/gtm',
     '@nuxtjs/sentry',
     '@dansmaculotte/nuxt-zendesk',
   ],
