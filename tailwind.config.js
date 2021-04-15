@@ -156,6 +156,7 @@ module.exports = {
         'pt-6',
         'px-3.5',
         'px-6',
+        'px-10',
         'py-12',
         'pt-12',
         'pb-12',
@@ -164,6 +165,7 @@ module.exports = {
         'md:py-24',
         'md:pt-24',
         'md:pb-24',
+        'lg:px-0',
 
         // (responsive) design
         'flex',
