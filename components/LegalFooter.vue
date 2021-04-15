@@ -3,7 +3,7 @@
     <div class="container mx-auto py-12">
       <div class="flex justify-center mb-12">
         <ul class="flex">
-          <li v-for="(link, social) in $currentLanguage.socials" :key="social">
+          <li v-for="(link, social) in language.socials" :key="social">
             <a :href="link" target="_blank" rel="noopener nofollow" :aria-label="social" class="w-12 h-12 mx-3 flex items-center justify-center border border-white rounded hover:border-gray-700">
               <img :src="`${$paths.assetsUrl}images/${social}.svg`" :alt="`Logo: ${social}`" class="w-9 h-9" loading="lazy">
             </a>
@@ -20,3 +20,25 @@
     </div>
   </section>
 </template>
+
+<script>
+import { getInstance } from '~/services/apiService'
+
+export default {
+  data() {
+    return {
+      language: {}
+    }
+  },
+
+  async fetch() {
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
+
+    const languages = await api.getLanguages();
+    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
+    this.language = currentLanguage;
+  }
+}
+</script>

@@ -1,5 +1,6 @@
 import { Plugin } from '@nuxt/types'
 import { Language as LanguageType } from '~/types/Language'
+import { getInstance } from '~/services/apiService';
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -16,11 +17,14 @@ declare module '@nuxt/types' {
   }
 }
 
-const i18nPlugin: Plugin = async({ $axios, app, $paths, ssrContext }, inject) => {
-  const languages: Array<LanguageType> = (await $axios.$get('languages')).data
+const i18nPlugin: Plugin = async({ app, $paths }, inject) => {
+  const api = getInstance('parkos', {
+    baseURL: 'https://parkos.com/api/v1/',
+  });
+  const languages: Array<LanguageType> = await api.getLanguages();
 
   const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === $paths.langHost)
-  const translations: object = await $axios.$get(`translations/${currentLanguage.lang}/airport`)
+  const translations: object = await api.getTranslations(currentLanguage.lang);
 
   type ReplacerObject = {
     [key: string]: string;

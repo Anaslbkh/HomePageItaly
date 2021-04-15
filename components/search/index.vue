@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="flex justify-center flex-wrap text-white mb-8">
-      <h1 v-if="$currentAirportContent" class="w-full text-4xl md:text-6xl text-center font-heading mb-4">
-        {{ $currentAirportContent.title }}
+      <h1 v-if="airportData" class="w-full text-4xl md:text-6xl text-center font-heading mb-4">
+        {{ airportData.content[language.lang].title }}
       </h1>
       <h1 v-else class="w-full text-6xl text-center font-heading mb-4">
         {{ $i18n('general.compare-parking') }}
@@ -60,7 +60,7 @@
             ref-name="arrivalDatePickerInput"
             name="arrival"
             :placeholder="$i18n('templates.date-from')"
-            :lang="$currentLanguage.lang"
+            :lang="language.lang"
             :full-month-name="datePickerParameters.fullMonthName"
             :open-date="datePickerParameters.startDate"
             :disabled-dates="datePickerParameters.disableDates"
@@ -108,7 +108,7 @@
             ref-name="departureDatePickerInput"
             name="departure"
             :placeholder="$i18n('templates.date-until')"
-            :lang="$currentLanguage.lang"
+            :lang="language.lang"
             :full-month-name="datePickerParameters.fullMonthName"
             :open-date="datePickerParameters.startDate"
             :disabled-dates="datePickerParameters.disableDates"
@@ -154,9 +154,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Airport as AirportType } from '../../types/Airport'
+import { Language as LanguageType } from '../../types/Language'
 import IconInfo from '~/components/icons/IconInfo.vue'
 import IconCalendar from '~/components/icons/IconCalendar.vue'
 import IconPin from '~/components/icons/IconPin.vue'
+
+import { getInstance } from '~/services/apiService';
 
 type SearchParameters = {
   airport: string|undefined;
@@ -185,6 +188,10 @@ export default Vue.extend({
     formData: SearchParameters,
     showAirportSelector: boolean,
     datePickerParameters: DatePickerParameters,
+    language?: LanguageType,
+    airport?: AirportType,
+    airports?: Array<AirportType>,
+    airportData: {},
     } {
     return {
       enableNewFastSearch: false,
@@ -203,8 +210,29 @@ export default Vue.extend({
         disableDates: {
           to: (new Date()).setDate((new Date()).getDate() - 1)
         }
-      }
+      },
+      language: undefined,
+      airport: undefined,
+      airports: undefined,
+      airportData: {},
     }
+  },
+
+  async fetch() {
+    const slug = this.$route.params.airport;
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
+
+    const languages = await api.getLanguages();
+
+    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
+    this.language = currentLanguage;
+
+    this.airports = await api.getAirports(this.language!.lang);
+    this.airport = await api.getAirport(slug, this.language!.lang);
+
+    this.airportData = await api.getAirportData(slug, this.language!.lang);
   },
 
   computed: {
@@ -234,7 +262,7 @@ export default Vue.extend({
 
     availableAirports() {
       let obj: { [key: string]: Array<AirportType> } = {}
-      const airports = this.$airports.sort((a, b) => (a.name > b.name) ? 1 : -1)
+      const airports = this.airports!.sort((a, b) => (a.name > b.name) ? 1 : -1)
       airports.forEach((airport: AirportType) => {
         if (!Object.prototype.hasOwnProperty.call(obj, airport.country.name)) {
           obj[airport.country.name] = []
@@ -246,7 +274,7 @@ export default Vue.extend({
       obj = Object.fromEntries(
         Object.entries(obj)
           .sort(([, a], [, b]) =>
-            a[0].country.name > b[0].country.name ? 1 : (b[0].country.id === this.$currentLanguage.country.id ? 1 : -1)
+            a[0].country.name > b[0].country.name ? 1 : (b[0].country.id === this.language!.country.id ? 1 : -1)
           )
       )
 
@@ -254,10 +282,10 @@ export default Vue.extend({
     },
 
     pricePerDay(): string {
-      return new Intl.NumberFormat(this.$currentLanguage.lang, {
+      return new Intl.NumberFormat(this.language!.lang, {
         style: 'currency',
         currency: 'EUR'
-      }).format(this.$currentAirport.from_price / 8)
+      }).format(this.airport!.from_price / 8)
     }
   },
 

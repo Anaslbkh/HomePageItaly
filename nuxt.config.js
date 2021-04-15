@@ -50,7 +50,7 @@ export default {
     { src: '@/plugins/click-outside', mode: 'all' },
     { src: '@/plugins/i18n.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     '@/plugins/axios',
-    { src: '@/plugins/domain.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
+    // { src: '@/plugins/domain.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     { src: '@/plugins/zendesk.ts', mode: 'all' },
   ],
 

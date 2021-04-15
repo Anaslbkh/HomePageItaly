@@ -34,7 +34,7 @@
               </a>
             </li>
 
-            <Languages />
+            <!-- <Languages /> -->
           </ul>
         </nav>
       </div>
