@@ -2,7 +2,7 @@
   <div>
     <div class="container mx-auto">
       <p
-        class="py-24 text-2xl md:text-3xl text-blue-900 sm:text-center font-heading"
+        class="py-10 sm:py-24 text-2xl md:text-3xl text-blue-900 sm:text-center font-heading"
         v-html="$i18n('location.count-customers-merchants-airports-location', {
           'customers': '500.000',
           'merchants': parkings.length,
@@ -97,7 +97,6 @@
         'nl-be', 'nl', 'de', 'de-at', 'es', 'it', 'fr-be', 'fr', 'sv-se'
       ].includes($currentLanguage.lang)"
       />
-
   </div>
 </template>
 
