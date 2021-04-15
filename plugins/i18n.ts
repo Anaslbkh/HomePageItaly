@@ -16,7 +16,7 @@ declare module '@nuxt/types' {
   }
 }
 
-const i18nPlugin: Plugin = async({ $axios, app, $paths }, inject) => {
+const i18nPlugin: Plugin = async({ $axios, app, $paths, ssrContext }, inject) => {
   const languages: Array<LanguageType> = (await $axios.$get('languages')).data
 
   const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === $paths.langHost)

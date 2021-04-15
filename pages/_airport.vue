@@ -131,6 +131,18 @@ export default Vue.extend({
 
   layout: 'search',
 
+  data(): {
+    parkings: Array<ParkingType>,
+    reviews: Array<ReviewType>,
+    reviewsMeta: object,
+  } {
+    return {
+      parkings: [],
+      reviews: [],
+      reviewsMeta: {},
+    }
+  },
+
   async asyncData({ $axios, $currentAirport, $currentLanguage }) {
     const defaultParams = {
       lang: $currentLanguage.lang
@@ -158,18 +170,6 @@ export default Vue.extend({
       reviews: reviews.data?.[$currentLanguage.lang] || [],
       reviewsMeta: reviews?.meta?.reviews || {},
       faq: faq.data?.[$currentLanguage.lang] || []
-    }
-  },
-
-  data(): {
-    parkings: Array<ParkingType>,
-    reviews: Array<ReviewType>,
-    reviewsMeta: object,
-    } {
-    return {
-      parkings: [],
-      reviews: [],
-      reviewsMeta: {}
     }
   },
 
