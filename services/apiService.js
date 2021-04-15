@@ -8,6 +8,7 @@ class ApiService {
         this.airportData = {}
         this.airportReviews = {}
         this.airportFaq = {}
+        this.parkings = {}
         this.axiosInstance = axios.create({
             baseURL
         });
@@ -153,6 +154,32 @@ class ApiService {
         console.log('b', 'airport faq (already set)')
         return new Promise( function(resolve, reject) {
             resolve(self.airportFaq[slug]);
+        })
+    }
+
+    getAirportParkings = async function(slug, lang) {
+        let self = this;
+
+        if ( !(slug in self.parkings) ) {
+            console.log('a', 'airport parkings');
+            const airport = await self.getAirport(slug);
+
+            return new Promise( function(resolve, reject) {
+                self.axiosInstance.get('parkings', {
+                    params: {
+                        lang,
+                        airport: airport.id
+                    }
+                }).then( function(response) {
+                    self.parkings[slug] = response.data;
+                    resolve(self.parkings[slug])
+                })
+            })
+        }
+
+        console.log('b', 'airport parkings (already set)')
+        return new Promise( function(resolve, reject) {
+            resolve(self.parkings[slug]);
         })
     }
 }

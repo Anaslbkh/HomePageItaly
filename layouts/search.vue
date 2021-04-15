@@ -60,6 +60,7 @@ export default Vue.extend({
     const reviewData = await apiService.getAirportReviews(slug, currentLanguage.lang);
     this.reviews = reviewData.data;
     this.reviewsMeta = reviewData.meta;
+    this.parkings = await apiService.getAirportParkings(slug, currentLanguage.lang);
     await apiService.getAirportFaq(slug, currentLanguage.lang)
     console.timeEnd('test');
   },
