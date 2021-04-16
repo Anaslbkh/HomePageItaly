@@ -8,6 +8,7 @@ import { Loader } from '@googlemaps/js-api-loader'
 import Vue, { PropOptions } from 'vue'
 import { Address as AddressType } from '~/types/Address'
 import { Parking as ParkingType } from '~/types/Parking'
+import { Airport as AirportType } from '~/types/Airport'
 
 export default Vue.extend({
   props: {
@@ -15,6 +16,10 @@ export default Vue.extend({
       type: Array,
       required: true
     } as PropOptions<Array<ParkingType>>,
+    airport: {
+      type: Object,
+      required: true,
+    } as PropOptions<AirportType>
   },
 
   computed: {
@@ -46,7 +51,7 @@ export default Vue.extend({
       ) {
         this.mapWasInViewPort = true
 
-        const { latitude, longitude } = this.$currentAirport.address
+        const { latitude, longitude } = this.airport.address
         const coordinatesList: Array<Pick<AddressType, 'latitude' | 'longitude'>> = this.coordinates
         const loader = new Loader({
           apiKey: process.env.GOOGLE_MAPS_API_KEY || '',
@@ -90,9 +95,5 @@ export default Vue.extend({
       window.removeEventListener('scroll', this.loadMapIfVisible);
     }
   },
-
-  mounted(): void {
-
-  }
 })
 </script>

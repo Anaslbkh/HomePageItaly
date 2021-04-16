@@ -1,4 +1,4 @@
-<template>
+f<template>
   <div>
     <div
       class="help-btn transition-bg-ease opacity-0 fixed right-2 inline-flex bottom-0 text-white bg-blue-500 z-50 py-3.5 px-3.5 rounded-full mb-3 hover:bg-blue-550 cursor-pointer"
@@ -16,22 +16,37 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { getInstance } from '~/services/apiService';
+import { Language as LanguageType } from '~/types/Language';
 
 export default Vue.extend({
   data(): {
     isLoading: boolean,
     isLoaded: boolean,
-    isMounted: boolean
+    isMounted: boolean,
+    language?: LanguageType
     } {
     return {
-      isLoading: false,
+      isLoading: true,
       isLoaded: false,
-      isMounted: false
+      isMounted: false,
+      language: undefined
     }
   },
 
   mounted() {
     this.isMounted = true
+  },
+
+  async fetch() {
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
+
+    const languages = await api.getLanguages();
+
+    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
+    this.language = currentLanguage;
   },
 
   methods: {
@@ -59,7 +74,7 @@ export default Vue.extend({
       this.$zendesk.load()
 
       this.$zendesk.$on('loaded', () => {
-        this.$zendesk.setLocale(this.$currentLanguage.lang)
+        this.$zendesk.setLocale(this.language!.lang)
 
         this.open()
 

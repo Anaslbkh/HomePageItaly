@@ -7,6 +7,15 @@ declare module 'vue/types/vue' {
   }
 }
 
+declare module '@nuxt/types' {
+  interface NuxtAppOptions {
+    $paths: Paths,
+  }
+  interface Context {
+    $paths: Paths,
+  }
+}
+
 const pathsPlugin: Plugin = ({
   req
 }, inject) => {

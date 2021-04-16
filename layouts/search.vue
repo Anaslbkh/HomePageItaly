@@ -9,17 +9,18 @@
     <Footer />
     <LegalFooter />
 
-    <template v-if="$gtmKey">
-      <noscript> <iframe :src="`https://www.googletagmanager.com/ns.html?id=${$gtmKey}&noscript=`" height="0" width="0" style="display:none;visibility:hidden"></iframe> </noscript>
+    <template>
+      <noscript> <iframe :src="`https://www.googletagmanager.com/ns.html?id=${gtmKey}&noscript=`" height="0" width="0" style="display:none;visibility:hidden"></iframe> </noscript>
     </template>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import LegalFooter from '@/components/LegalFooter.vue'
+import { getInstance } from '~/services/apiService';
 
 export default Vue.extend({
   components: {
@@ -28,12 +29,21 @@ export default Vue.extend({
     LegalFooter
   },
 
-  data(): {
-    navShown: boolean,
-    } {
+  data() {
     return {
-      navShown: false
+      navShown: false,
+      gtmKey: undefined
     }
+  },
+
+  async fetch() {
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
+    this.languages = await api.getLanguages();
+
+    const currentLanguage = await Array.prototype.find.call(this.languages, (language) => language.domain === this.$paths.langHost);
+    this.gtmKey = currentLanguage.gtm_key;
   },
 
   mounted() {
@@ -51,7 +61,7 @@ export default Vue.extend({
       }
     },
 
-    navToggle(value: boolean) {
+    navToggle(value) {
       this.navShown = value
     }
   }

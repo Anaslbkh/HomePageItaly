@@ -1,5 +1,5 @@
 <template>
-  <a :href="`${$paths.url()}${$currentAirport.slug}/${parking.slug}.html`" class="text-black hover:no-underline hover:text-blue-300">
+  <a :href="`${$paths.url()}${airport.slug}/${parking.slug}.html`" class="text-black hover:no-underline hover:text-blue-300">
     <article class="bg-white border border-gray-500 rounded">
       <div class="flex items-center justify-center p-12">
         <img
@@ -20,28 +20,43 @@
   </a>
 </template>
 
-<script lang="ts">
-import Vue, { PropOptions } from 'vue'
-import { Parking } from '~/types/Parking'
+<script>
+import { getInstance } from '~/services/apiService';
 
-export default Vue.extend({
+export default {
+  data() {
+    return {
+      airport: {},
+      language: {},
+    }
+  },
+
+  async fetch() {
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
+
+    const languages = await api.getLanguages();
+    this.language = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
+    this.airport = await api.getAirport(this.$route.params.airport, this.language.lang);
+  },
 
   props: {
     parking: {
       type: Object,
       required: true
-    } as PropOptions<Parking>
+    }
   },
 
   computed: {
-    price(): string {
+    price() {
       if (!this.parking.from_price) { return '' }
 
-      return new Intl.NumberFormat(this.$currentLanguage.lang, {
+      return new Intl.NumberFormat(this.language.lang, {
         style: 'currency',
         currency: 'EUR'
       }).format(this.parking.from_price)
     }
   }
-})
+}
 </script>
