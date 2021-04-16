@@ -5,7 +5,13 @@
         <ul class="flex">
           <li v-for="(link, social) in language.socials" :key="social">
             <a :href="link" target="_blank" rel="noopener nofollow" :aria-label="social" class="w-12 h-12 mx-3 flex items-center justify-center border border-white rounded hover:border-gray-700">
-              <img :src="`${$paths.assetsUrl}images/${social}.svg`" :alt="`Logo: ${social}`" class="w-9 h-9" loading="lazy">
+              <img
+                :src="`${$paths.assetsUrl}images/${social}.svg`"
+                :alt="`Logo: ${social}`"
+                width="36"
+                height="36"
+                class="w-9 h-9"
+                loading="lazy">
             </a>
           </li>
         </ul>

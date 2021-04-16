@@ -1,5 +1,5 @@
 <template>
-  <div class="vdp-datepicker" :class="[wrapperClass, isRtl ? 'rtl' : '']">
+  <div class="w-full vdp-datepicker" :class="[wrapperClass, isRtl ? 'rtl' : '']">
     <date-input
       :id="id"
       ref="datepickerBox"

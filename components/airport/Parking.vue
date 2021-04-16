@@ -5,6 +5,8 @@
         <img
           :src="parking.logo"
           :alt="parking.name"
+          width="180"
+          height="52"
           loading="lazy"
         >
       </div>

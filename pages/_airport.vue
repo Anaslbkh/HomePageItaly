@@ -2,7 +2,7 @@
   <div>
     <div class="container mx-auto">
       <p
-        class="py-24 text-2xl md:text-3xl text-blue-900 sm:text-center font-heading"
+        class="py-10 sm:py-24 text-2xl md:text-3xl text-blue-900 sm:text-center font-heading"
         v-html="$i18n('location.count-customers-merchants-airports-location', {
           'customers': '500.000',
           'merchants': parkings.length,
@@ -34,7 +34,12 @@
         </div>
         <div class="hidden sm:block">
           <figure>
-            <img :src="`${$paths.assetsUrl}img/home-customerservice.jpg`" alt="Customer Service Team" loading="lazy">
+            <img
+              :src="`${$paths.assetsUrl}img/home-customerservice.jpg`"
+              width="252"
+              height="252"
+              alt="Customer Service Team"
+              loading="lazy">
           </figure>
         </div>
       </div>
@@ -97,7 +102,6 @@
         'nl-be', 'nl', 'de', 'de-at', 'es', 'it', 'fr-be', 'fr', 'sv-se'
       ].includes(language.lang)"
       />
-
   </div>
 </template>
 

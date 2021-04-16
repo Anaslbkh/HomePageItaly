@@ -8,6 +8,8 @@
         <img
           :src="item.img.src"
           :alt="item.img.alt"
+          width="40"
+          height="40"
           class="sm:w-10 sm:h-10 w-8.5 h-8.5 mr-8 sm:mr-0 sm:mb-5"
           aria-hidden="true"
           loading="lazy"
