@@ -28,7 +28,7 @@ export default Vue.extend({
     navShown: boolean
     } {
     return {
-      navShown: false
+      navShown: false,
     }
   },
 

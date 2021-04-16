@@ -6,7 +6,7 @@
         v-html="$i18n('location.count-customers-merchants-airports-location', {
           'customers': '500.000',
           'merchants': parkings.length,
-          'airport': $currentAirport ? $currentAirport.name : ''
+          'airport': airport ? airport.name : ''
         })"
       />
     </div>
@@ -61,12 +61,12 @@
       </section>
     </section>
     <section class="bg-gray-200 border-t border-b border-gray-500 py-24">
-      <div v-html="$currentAirportContent.content" />
+      <div v-html="airportData.content[language.lang].content" />
     </section>
     <section id="parkings" class="py-24">
       <div class="container mx-auto mb-16">
         <h2 class="text-3xl text-blue-900 font-heading mb-24">
-          {{ $i18n('templates.merchants-at-airport', { location: $currentAirport.name }) }}
+          {{ $i18n('templates.merchants-at-airport', { location: airport.name }) }}
         </h2>
 
         <section class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-x-8 gap-y-16">
@@ -80,45 +80,42 @@
     <section id="map" class="bg-gray-200 border-t border-b border-gray-500 py-24">
       <div class="container mx-auto">
         <h2 class="text-3xl text-blue-900 font-heading mb-4">
-          {{ $i18n('templates.map-parkinglots', { location: $currentAirport.name }) }}
+          {{ $i18n('templates.map-parkinglots', { location: airport.name }) }}
         </h2>
         <p>
           {{ $i18n('templates.more-info-marker') }} <a :href="`${$paths.url(false)}${$route.path}${$i18n('additional.map-slug')}`" class="text-blue-700 hover:text-blue-900 hover:underline">{{ $i18n('reservation.directions-to', {
-            location: $currentAirport.name
+            location: airport.name
           }) }}</a>
         </p>
 
-        <Map :parkings="parkings" />
+        <Map :parkings="parkings" :airport="airport" />
       </div>
     </section>
 
       <HelpButton
         v-if="[
         'nl-be', 'nl', 'de', 'de-at', 'es', 'it', 'fr-be', 'fr', 'sv-se'
-      ].includes($currentLanguage.lang)"
+      ].includes(language.lang)"
       />
 
   </div>
 </template>
 
-<script lang="ts">
+<script>
 /**
  * @TODO:
  * - Add route planner link
  */
-import Vue from 'vue'
-
 import ReviewSummary from '~/components/reviews/Summary.vue'
 import Review from '~/components/reviews/Review.vue'
 import Map from '~/components/airport/Map.vue'
 import Faq from '~/components/airport/Faq.vue'
 import HelpButton from '~/components/airport/HelpButton.vue'
-
-import { Parking as ParkingType } from '~/types/Parking'
-import { Review as ReviewType } from '~/types/Review'
 import Usps from '~/components/airport/Usps.vue'
 
-export default Vue.extend({
+import { getInstance } from '~/services/apiService';
+
+export default {
 
   components: {
     Usps,
@@ -131,76 +128,84 @@ export default Vue.extend({
 
   layout: 'search',
 
-  async asyncData({ $axios, $currentAirport, $currentLanguage }) {
-    const defaultParams = {
-      lang: $currentLanguage.lang
-    }
-    const parkings = (await $axios.$get('parkings', {
-      params: Object.assign({
-        airport: $currentAirport.id
-      }, defaultParams)
-    })).data
-
-    const reviews = await $axios.$get('reviews', {
-      params: {
-        airport: $currentAirport.id,
-        lang: $currentLanguage.lang,
-        limit: 4
-      }
-    })
-
-    const faq = await $axios.$get(`airports/${$currentAirport.id}/faq`, {
-      params: defaultParams
-    })
-
-    return {
-      parkings,
-      reviews: reviews.data?.[$currentLanguage.lang] || [],
-      reviewsMeta: reviews?.meta?.reviews || {},
-      faq: faq.data?.[$currentLanguage.lang] || []
+  computed: {
+    date() {
+      return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
+    },
+    alternateLinks() {
+      return [
+        { en: 'https://eu.parkos.com/parking-linate-airport/' },
+        { fr: 'https://parkos.fr/parking-linate/' },
+        { it: 'https://parkos.it/parcheggio-linate/' }
+      ]
     }
   },
 
-  data(): {
-    parkings: Array<ParkingType>,
-    reviews: Array<ReviewType>,
-    reviewsMeta: object,
-    } {
+  data() {
     return {
+      airport: null,
+      airports: {},
+      airportData: {},
       parkings: [],
       reviews: [],
-      reviewsMeta: {}
+      reviewsMeta: {},
+      languages: {},
+      language: null,
+      faq: {}
     }
+  },
+
+  async fetch() {
+    const slug = this.$route.params.airport;
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
+    this.languages = await api.getLanguages();
+
+    const currentLanguage = await Array.prototype.find.call(this.languages, (language) => language.domain === this.$paths.langHost);
+    this.language = currentLanguage;
+
+    this.airports = await api.getAirports(this.language.lang);
+    this.airport = await api.getAirport(slug, this.language.lang);
+    this.airportData = await api.getAirportData(slug, this.language.lang);
+
+    this.parkings = await api.getAirportParkings(slug, this.language.lang);
+    
+    const reviewData = await api.getAirportReviews(slug, this.language.lang);
+    this.reviews = reviewData.data;
+    this.reviewsMeta = reviewData.meta;
+    const faq = await api.getAirportFaq(slug, this.language.lang)
+    this.faq = faq?.data[this.language.lang]
   },
 
   head() {
-    if (typeof this.$currentAirportContent === 'undefined') { return {} }
+    if ( this.airport === null) { return {} }
 
     const links = [{ rel: 'canonical', href: this.$paths.url(false) + this.$route.path }]
 
     // add alternate language links
-    Object.entries(this.$currentAirportDetails.content).forEach(([lang, content]) => {
+    Object.entries(this.airportData.content).forEach(([lang, content]) => {
       // @ts-ignore @todo fix types
       links.push({ rel: 'alternate', hreflang: lang, href: String(content.url) })
     })
 
     return {
-      title: this.$currentAirportContent.meta.title,
+      title: this.airportData.content[this.language.lang].meta.title,
       meta: [
-        { property: 'og:title', content: this.$currentAirportContent.meta.title },
-        { name: 'description', content: this.$currentAirportContent.meta.description },
-        { property: 'og:description', content: this.$currentAirportContent.meta.description },
+        { property: 'og:title', content: this.airportData.content[this.language.lang].meta.title },
+        { name: 'description', content: this.airportData.content[this.language.lang].meta.description },
+        { property: 'og:description', content: this.airportData.content[this.language.lang].meta.description },
         { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:title', content: this.$currentAirportContent.meta.title },
-        { name: 'twitter:site', content: this.$currentLanguage.socials.twitter ? `@${this.$currentLanguage.socials.twitter.split('/').pop()}` : '' },
-        { name: 'twitter:creator', content: this.$currentLanguage.socials.twitter ? `@${this.$currentLanguage.socials.twitter.split('/').pop()}` : '' },
-        { name: 'twitter:description', content: this.$currentAirportContent.meta.description },
-        { name: 'twitter:image', content: `${this.$paths.assetsUrl}img/locations/${this.$currentAirport.devtitle}.jpg` },
+        { name: 'twitter:title', content: this.airportData.content[this.language.lang].meta.title },
+        { name: 'twitter:site', content: this.language.socials.twitter ? `@${this.language.socials.twitter.split('/').pop()}` : '' },
+        { name: 'twitter:creator', content: this.language.socials.twitter ? `@${this.language.socials.twitter.split('/').pop()}` : '' },
+        { name: 'twitter:description', content: this.airportData.content[this.language.lang].meta.description },
+        { name: 'twitter:image', content: `${this.$paths.assetsUrl}img/locations/${this.airport.devtitle}.jpg` },
         { property: 'og:type', content: 'place' },
         { property: 'og:locale', content: 'it' },
-        { property: 'place:location:latitude', content: String(this.$currentAirport.address.latitude) },
-        { property: 'place:location:longitude', content: String(this.$currentAirport.address.longitude) },
-        { property: 'og:image', content: `${this.$paths.assetsUrl}/img/locations/${this.$currentAirport.devtitle}.jpg` },
+        { property: 'place:location:latitude', content: String(this.airport.address.latitude) },
+        { property: 'place:location:longitude', content: String(this.airport.address.longitude) },
+        { property: 'og:image', content: `${this.$paths.assetsUrl}/img/locations/${this.airport.devtitle}.jpg` },
         { property: 'og:url', content: this.$paths.url(false) + this.$route.path }
       ],
       link: links,
@@ -209,9 +214,9 @@ export default Vue.extend({
           hid: 'datalayer',
           innerHTML: `
             var dataLayer = [{
-              airportDevTitle: '${this.$currentAirport.devtitle}',
-              airportSlug: '${this.$currentAirport.slug}',
-              airportName: '${this.$currentAirport.name}',
+              airportDevTitle: '${this.airport.devtitle}',
+              airportSlug: '${this.airport.slug}',
+              airportName: '${this.airport.name}',
               pageType: 'locations',
               domainName: '${this.$paths.host}',
               token: '504Z8p2vH6TtWX7BJC0rYaArFl9sYKdAHfisTESx',
@@ -230,20 +235,7 @@ export default Vue.extend({
       }
     }
   },
-
-  computed: {
-    date() {
-      return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
-    },
-    alternateLinks() {
-      return [
-        { en: 'https://eu.parkos.com/parking-linate-airport/' },
-        { fr: 'https://parkos.fr/parking-linate/' },
-        { it: 'https://parkos.it/parcheggio-linate/' }
-      ]
-    }
-  }
-})
+}
 </script>
 
 <style>

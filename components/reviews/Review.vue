@@ -22,6 +22,8 @@
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
 import { Review } from '../../types/Review'
+import { Language as LanguageType } from '../../types/Language'
+import { getInstance } from '~/services/apiService';
 
 export default Vue.extend({
   props: {
@@ -31,9 +33,29 @@ export default Vue.extend({
     } as PropOptions<Review>
   },
 
+  data(): {
+    language?: LanguageType
+  } {
+    return {
+      language: undefined
+    }
+  },
+
+  async fetch() {
+    const slug = this.$route.params.airport;
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
+
+    const languages = await api.getLanguages();
+
+    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
+    this.language = currentLanguage;
+  },
+
   computed: {
     date(): string {
-      return new Intl.DateTimeFormat(this.$currentLanguage.lang, {
+      return new Intl.DateTimeFormat(this.language!.lang, {
         dateStyle: 'full'
       }).format(new Date(this.review.date));
     }
