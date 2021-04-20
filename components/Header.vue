@@ -3,6 +3,7 @@
     <section class="w-full" :class="{ unskew: navOpen, 'fixed z-50': navShown }">
       <div class="container mx-auto flex justify-between h-16 items-center">
         <a href="/">
+          <div class="sr-only">Parkos</div>
           <Logo />
         </a>
         <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50 focus:outline-none" aria-controls="#navigation" @click="toggleMenu">
@@ -35,7 +36,7 @@
               </a>
             </li>
 
-            <!-- <Languages /> -->
+            <Languages />
           </ul>
         </nav>
       </div>

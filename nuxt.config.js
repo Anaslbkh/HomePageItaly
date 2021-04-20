@@ -46,7 +46,6 @@ export default {
     { src: '@/plugins/paths.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     // @see https://www.npmjs.com/package/vuejs-datepicker v1.6.2
     { src: '@/plugins/vue-datepicker/', mode: 'all' },
-    { src: '@/plugins/click-outside', mode: 'all' },
     { src: '@/plugins/i18n.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     '@/plugins/axios',
     // { src: '@/plugins/domain.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side

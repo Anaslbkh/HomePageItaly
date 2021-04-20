@@ -50,8 +50,8 @@
     <section v-if="reviews.length > 3" id="reviews" class="pt-10 pb-24 overflow-hidden">
       <div class="container mx-auto mb-16">
         <div class="w-full lg:w-3/5">
-          <ReviewSummary :meta="reviewsMeta" />
-        </div>
+          <ReviewSummary :meta="reviewsMeta.reviews" />
+        </div> 
       </div>
 
       <section class="relative mb-16">
@@ -176,7 +176,7 @@ export default {
     this.parkings = await api.getAirportParkings(slug, this.language.lang);
     
     const reviewData = await api.getAirportReviews(slug, this.language.lang);
-    this.reviews = reviewData.data;
+    this.reviews = reviewData.data[this.language.lang];
     this.reviewsMeta = reviewData.meta;
     const faq = await api.getAirportFaq(slug, this.language.lang)
     this.faq = faq?.data[this.language.lang]

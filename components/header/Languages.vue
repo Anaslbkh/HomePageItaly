@@ -1,14 +1,14 @@
 <template>
-  <Dropdown class="border-b-0">
+  <Dropdown class="border-b-0" key="languages-dropdown">
     <template #button>
       <img src="~/static/icons/flag.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
-      {{ $currentLanguage.lang | uppercase }}
+      {{ language.lang | uppercase }}
       <span class="caret"></span>
     </template>
     <template #content>
       <ul class="py-2 pt-0 sm:pt-2 -ml-2 sm:ml-0">
         <li
-          v-for="item in languages"
+          v-for="item in contentLanguages"
           v-show="item.lang !== language.lang"
           :key="`lang-${item.lang}`"
         >
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Dropdown from '~/components/header/Dropdown.vue'
 import { getInstance } from '~/services/apiService';
 
@@ -59,19 +58,22 @@ export default {
   },
 
   computed: {
-    languages() {
-      const content = { ...this.airportData.content[this.language.lang].content } // @ts-ignore
+    contentLanguages() {
+      const availableLanguages = [];
 
-      return Object.keys(content).map( function(lang) {
-        return {
-          lang,
-          name: this.languages.find((language) => language.lang === lang)?.native_name || '',
-          url: content[lang].url
-        }
-      }).sort((a, b) => {
+      for(const language in this.airportData.content) {
+        const _language = this.languages.find( (_language) => _language.lang === language)
+        availableLanguages.push({
+          lang: language,
+          name: _language?.native_name || _language.name,
+          url: this.airportData.content[language].url
+        })
+      }
+
+      return availableLanguages.sort((a, b) => {
         return a.name > b.name ? 1 : -1
-      })
-    }
+      });
+    },
   }
 }
 </script>

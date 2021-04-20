@@ -4,8 +4,7 @@
       <slot name="button" />
     </button>
     <div
-      v-if="isExpanded"
-      v-click-outside="{exclude: ['button'], handler: toggle}"
+      v-show="isExpanded"
       role="menu"
       class="static sm:absolute sm:bg-white text-gray-600 sm:text-black right-0 min-w-min sm:shadow-dropdown border-1 border-black border-opacity-20 rounded-b overflow-hidden z-10 pl-7 sm:pl-0">
       <slot name="content" />
@@ -13,9 +12,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
+<script>
+export default {
+  mounted() {
+    document.addEventListener('click', this.handleOutsideClick);
+  },
+
+  destroyed() {
+    document.removeEventListener('click', this.handleOutsideClick);
+  },
+
   data() {
     return {
       isExpanded: false
@@ -23,9 +29,15 @@ export default Vue.extend({
   },
 
   methods: {
-    toggle(_event: MouseEvent, state: boolean|undefined = undefined) {
-      this.isExpanded = state ?? !this.isExpanded
+    toggle() {
+      this.isExpanded = !this.isExpanded
+    },
+
+    handleOutsideClick(e) {
+      if (!this.$el.contains(e.target)) {
+        this.isExpanded = false;
+      }
     }
   }
-})
+}
 </script>

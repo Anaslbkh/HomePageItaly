@@ -2,21 +2,21 @@
   <div itemscope itemtype="http://schema.org/Product">
     <meta
       itemprop="description"
-      :content="$currentAirportContent.meta.description"
+      :content="airportData.content[language.lang].meta.description"
     />
-    <meta itemprop="name" :content="$currentAirportContent.meta.title" />
+    <meta itemprop="name" :content="airportData.content[language.lang].meta.description" />
     <meta
       itemprop="image"
       :content="`${$paths.assetsUrl}img/locations/bergamo-orio-airport.jpg`"
     />
-    <meta itemprop="brand" :content="$currentAirport.devtitle.replace('-', ' ')" />
+    <meta itemprop="brand" :content="airportData.airport.devtitle.replace('-', ' ')" />
       <div
         itemprop="offers"
         itemscope=""
         itemtype="http://schema.org/AggregateOffer"
       >
         <meta itemprop="priceCurrency" content="EUR" />
-        <meta itemprop="lowPrice" :content="$currentAirport.from_price / 8" />
+        <meta itemprop="lowPrice" :content="airportData.airport.from_price / 8" />
       </div>
       <div
         itemprop="aggregateRating"
@@ -26,14 +26,14 @@
         <meta itemprop="worstRating" content="1" />
         <p class="text-3xl mb-10 font-heading">
           {{ $i18n('templates.customer-parking-reviews-title', {
-            airportName: $currentAirport.name,
+            airportName: airportData.airport.name,
             reviewsScoreAvg: new Intl.NumberFormat('it').format(meta.score.toFixed(1)) // @TODO dynamic number format
           }) }}
         </p>
         <p class="text-base" v-html="$i18n('templates.customer-parking-reviews-intro-schema', {
-            airportName: $currentAirport.name,
-            'price-per-day-raw': $currentAirport.from_price,
-            'price-per-day': $currentAirport.from_price,
+            airportName: airportData.airport.name,
+            'price-per-day-raw': airportData.airport.from_price,
+            'price-per-day': airportData.airport.from_price,
             reviewPageUrl: '#',
             reviewsScoreAvg: new Intl.NumberFormat('it').format(meta.score.toFixed(1)), // @TODO dynamic number format
             reviewsTotal: meta.count
@@ -43,19 +43,38 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 /**
  * @TODO:
  * - Fill in meta props
  */
-import Vue from "vue";
-export default Vue.extend({
+import { getInstance } from '~/services/apiService';
 
+export default {
   props: {
     meta: {
       type: Object,
       required: false,
     },
   },
-});
+
+  data() {
+    return {
+      airportData: {},
+      language: {}
+    }
+  },
+
+  async fetch() {
+    const slug = this.$route.params.airport;
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
+
+    const languages = await api.getLanguages();
+    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
+    this.language = currentLanguage;
+    this.airportData = await api.getAirportData(slug, currentLanguage.lang);
+  },
+}
 </script>

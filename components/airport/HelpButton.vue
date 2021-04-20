@@ -5,7 +5,8 @@ f<template>
       :class="{ 'opacity-100': isMounted, 'disabled': isLoading }"
       @click="show()"
     >
-      <img :src="`~/static/icons/${isLoading ? 'loop' : 'help'}.svg`" width="24" height="24" aria-hidden="true" alt="check" loading="lazy" class="inline sm:mr-1 relative">
+      <img v-if="isLoading" src="~/static/icons/loop.svg" width="24" height="24" aria-hidden="true" alt="check" loading="lazy" class="inline sm:mr-1 relative">
+      <img v-else src="~/static/icons/help.svg" width="24" height="24" aria-hidden="true" alt="check" loading="lazy" class="inline sm:mr-1 relative">
 
       <div class="hidden sm:block font-sans px-1.5 font-bold">
         {{ $i18n('general.help') }}

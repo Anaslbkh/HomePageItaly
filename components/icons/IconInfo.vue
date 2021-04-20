@@ -1,6 +1,7 @@
 <template>
   <div class="flex items-center relative">
     <button type="button" aria-haspopup="true" ref="button" :aria-expanded="open.toString()" @click="toggle" class="focus:outline-none">
+      <div class="sr-only">{{ $i18n('templates.more-information') }}</div>
       <svg
         fill="#288BE4"
         :width="size"
