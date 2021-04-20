@@ -1,6 +1,6 @@
 <template>
   <div class="inline-block relative border-white border-opacity-20 sm:border-b-0 z-50" style="z-index: 100">
-    <a href="#" role="button" class="flex w-full sm:inline-flex items-center px-3 py-6  pb-3 sm:py-0 focus:outline-none" aria-haspopup="true" :aria-expanded="isExpanded.toString()" @click="toggle">
+    <a href="#" role="button" class="flex text-white hover:text-white hover:no-underline w-full sm:inline-flex items-center px-3 py-6  pb-3 sm:py-0 focus:outline-none" aria-haspopup="true" :aria-expanded="isExpanded.toString()" @click="toggle">
       <slot name="button" />
     </a>
     <div

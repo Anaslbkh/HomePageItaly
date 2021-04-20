@@ -6,7 +6,7 @@
           <div class="sr-only">Parkos</div>
           <Logo />
         </a>
-        <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50 focus:outline-none" aria-controls="#navigation" @click="toggleMenu">
+        <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50 focus:outline-none" aria-controls="navigation" @click="toggleMenu">
           <span class="sr-only">Toggle navigation</span>
           <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all origin-navTop" :class="{ 'transform  rotate-45': navShown }" />
           <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1" :class="{ 'opacity-0': navShown }" />
