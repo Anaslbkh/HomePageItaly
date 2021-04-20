@@ -63,7 +63,7 @@
               height="200"
               alt="Parkos Employees"
               loading="lazy"
-            />
+            >
           </figure>
         </article>
       </section>
@@ -80,7 +80,7 @@
               height="50"
               alt="TrustPilot"
               loading="lazy"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -89,7 +89,7 @@
               height="50"
               alt="Nexi"
               loading="lazy"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -98,7 +98,7 @@
               height="50"
               alt="PayPal"
               loading="lazy"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -107,7 +107,7 @@
               height="50"
               alt="Mastercard"
               loading="lazy"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -116,7 +116,7 @@
               height="50"
               alt="Visa"
               loading="lazy"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -125,7 +125,7 @@
               height="50"
               alt="American Express"
               loading="lazy"
-            />
+            >
           </li>
           <li class="mx-2">
             <img
@@ -135,7 +135,7 @@
               alt="PostePay"
               loading="lazy"
               style="max-height: 40px"
-            />
+            >
           </li>
         </ul>
       </section>

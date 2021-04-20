@@ -14,7 +14,15 @@
       </p>
     </div>
     <p class="w-full">
-      <img src="~/static/icons/quote.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="inline mr-1 -top-1 relative"> {{ review.content }}
+      <img
+        src="~/static/icons/quote.svg"
+        width="16"
+        height="16"
+        aria-hidden="true"
+        alt="check"
+        loading="lazy"
+        class="inline mr-1 -top-1 relative"
+      > {{ review.content }}
     </p>
   </article>
 </template>
@@ -23,7 +31,7 @@
 import Vue, { PropOptions } from 'vue'
 import { Review } from '../../types/Review'
 import { Language as LanguageType } from '../../types/Language'
-import { getInstance } from '~/services/apiService';
+import { getInstance } from '~/services/apiService'
 
 export default Vue.extend({
   props: {
@@ -35,29 +43,29 @@ export default Vue.extend({
 
   data(): {
     language?: LanguageType
-  } {
+    } {
     return {
       language: undefined
     }
   },
 
   async fetch() {
-    const slug = this.$route.params.airport;
+    const slug = this.$route.params.airport
     const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
+      baseURL: 'https://parkos.com/api/v1/'
+    })
 
-    const languages = await api.getLanguages();
+    const languages = await api.getLanguages()
 
-    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
-    this.language = currentLanguage;
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    this.language = currentLanguage
   },
 
   computed: {
     date(): string {
       return new Intl.DateTimeFormat(this.language!.lang, {
         dateStyle: 'full'
-      }).format(new Date(this.review.date));
+      }).format(new Date(this.review.date))
     }
   }
 })

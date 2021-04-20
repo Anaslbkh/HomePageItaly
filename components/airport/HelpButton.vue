@@ -5,7 +5,26 @@ f<template>
       :class="{ 'opacity-100': isMounted, 'disabled': isLoading }"
       @click="show()"
     >
-      <img :src="`~/static/icons/${isLoading ? 'loop' : 'help'}.svg`" width="24" height="24" aria-hidden="true" alt="check" loading="lazy" class="inline sm:mr-1 relative">
+      <img
+        v-if="isLoading"
+        src="~/static/icons/loop.svg"
+        width="24"
+        height="24"
+        aria-hidden="true"
+        alt="check"
+        loading="lazy"
+        class="inline sm:mr-1 relative"
+      >
+      <img
+        v-else
+        src="~/static/icons/help.svg"
+        width="24"
+        height="24"
+        aria-hidden="true"
+        alt="check"
+        loading="lazy"
+        class="inline sm:mr-1 relative"
+      >
 
       <div class="hidden sm:block font-sans px-1.5 font-bold">
         {{ $i18n('general.help') }}
@@ -16,8 +35,8 @@ f<template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { getInstance } from '~/services/apiService';
-import { Language as LanguageType } from '~/types/Language';
+import { getInstance } from '~/services/apiService'
+import { Language as LanguageType } from '~/types/Language'
 
 export default Vue.extend({
   data(): {
@@ -34,19 +53,19 @@ export default Vue.extend({
     }
   },
 
-  mounted() {
-    this.isMounted = true
-  },
-
   async fetch() {
     const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
+      baseURL: 'https://parkos.com/api/v1/'
+    })
 
-    const languages = await api.getLanguages();
+    const languages = await api.getLanguages()
 
-    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
-    this.language = currentLanguage;
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    this.language = currentLanguage
+  },
+
+  mounted() {
+    this.isMounted = true
   },
 
   methods: {
@@ -83,7 +102,7 @@ export default Vue.extend({
         }, 300)
       })
     }
-  },
+  }
 })
 </script>
 

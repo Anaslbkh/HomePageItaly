@@ -7,10 +7,10 @@ module.exports = {
       md: '990px',
       lg: '1190px',
       xl: '1190px',
-      '2xl': '1190px',
+      '2xl': '1190px'
     },
     container: {
-      padding: '25px',
+      padding: '25px'
     },
     extend: {
       fontSize: {
@@ -57,12 +57,12 @@ module.exports = {
       lineHeight: {
         11: '2.5rem',
         12: '3rem',
-        13: '3.5rem',
+        13: '3.5rem'
       },
       transformOrigin: {
         navTop: '10% 10%',
-        navBottom: '10% 90%',
-      },
+        navBottom: '10% 90%'
+      }
     },
     fontFamily: {
       sans: ['"Roboto"', 'sans-serif'],
@@ -181,8 +181,8 @@ module.exports = {
         'Inline-block',
         'rounded',
         'shadow-button',
-        'text-white',
-      ],
+        'text-white'
+      ]
     }
   }
 }

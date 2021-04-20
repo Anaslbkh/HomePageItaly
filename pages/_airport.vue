@@ -39,7 +39,8 @@
               width="252"
               height="252"
               alt="Customer Service Team"
-              loading="lazy">
+              loading="lazy"
+            >
           </figure>
         </div>
       </div>
@@ -50,7 +51,7 @@
     <section v-if="reviews.length > 3" id="reviews" class="pt-10 pb-24 overflow-hidden">
       <div class="container mx-auto mb-16">
         <div class="w-full lg:w-3/5">
-          <ReviewSummary :meta="reviewsMeta" />
+          <ReviewSummary :meta="reviewsMeta.reviews" />
         </div>
       </div>
 
@@ -97,11 +98,11 @@
       </div>
     </section>
 
-      <HelpButton
-        v-if="[
+    <HelpButton
+      v-if="[
         'nl-be', 'nl', 'de', 'de-at', 'es', 'it', 'fr-be', 'fr', 'sv-se'
       ].includes(language.lang)"
-      />
+    />
   </div>
 </template>
 
@@ -117,7 +118,7 @@ import Faq from '~/components/airport/Faq.vue'
 import HelpButton from '~/components/airport/HelpButton.vue'
 import Usps from '~/components/airport/Usps.vue'
 
-import { getInstance } from '~/services/apiService';
+import { getInstance } from '~/services/apiService'
 
 export default {
 
@@ -131,19 +132,6 @@ export default {
   },
 
   layout: 'search',
-
-  computed: {
-    date() {
-      return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
-    },
-    alternateLinks() {
-      return [
-        { en: 'https://eu.parkos.com/parking-linate-airport/' },
-        { fr: 'https://parkos.fr/parking-linate/' },
-        { it: 'https://parkos.it/parcheggio-linate/' }
-      ]
-    }
-  },
 
   data() {
     return {
@@ -160,30 +148,30 @@ export default {
   },
 
   async fetch() {
-    const slug = this.$route.params.airport;
+    const slug = this.$route.params.airport
     const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
-    this.languages = await api.getLanguages();
+      baseURL: 'https://parkos.com/api/v1/'
+    })
+    this.languages = await api.getLanguages()
 
-    const currentLanguage = await Array.prototype.find.call(this.languages, (language) => language.domain === this.$paths.langHost);
-    this.language = currentLanguage;
+    const currentLanguage = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
+    this.language = currentLanguage
 
-    this.airports = await api.getAirports(this.language.lang);
-    this.airport = await api.getAirport(slug, this.language.lang);
-    this.airportData = await api.getAirportData(slug, this.language.lang);
+    this.airports = await api.getAirports(this.language.lang)
+    this.airport = await api.getAirport(slug, this.language.lang)
+    this.airportData = await api.getAirportData(slug, this.language.lang)
 
-    this.parkings = await api.getAirportParkings(slug, this.language.lang);
-    
-    const reviewData = await api.getAirportReviews(slug, this.language.lang);
-    this.reviews = reviewData.data;
-    this.reviewsMeta = reviewData.meta;
+    this.parkings = await api.getAirportParkings(slug, this.language.lang)
+
+    const reviewData = await api.getAirportReviews(slug, this.language.lang)
+    this.reviews = reviewData.data[this.language.lang]
+    this.reviewsMeta = reviewData.meta
     const faq = await api.getAirportFaq(slug, this.language.lang)
     this.faq = faq?.data[this.language.lang]
   },
 
   head() {
-    if ( this.airport === null) { return {} }
+    if (this.airport === null) { return {} }
 
     const links = [{ rel: 'canonical', href: this.$paths.url(false) + this.$route.path }]
 
@@ -239,6 +227,19 @@ export default {
       }
     }
   },
+
+  computed: {
+    date() {
+      return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
+    },
+    alternateLinks() {
+      return [
+        { en: 'https://eu.parkos.com/parking-linate-airport/' },
+        { fr: 'https://parkos.fr/parking-linate/' },
+        { it: 'https://parkos.it/parcheggio-linate/' }
+      ]
+    }
+  }
 }
 </script>
 
