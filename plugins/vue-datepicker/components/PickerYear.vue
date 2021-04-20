@@ -51,13 +51,6 @@ export default {
       utils: constructedDateUtils
     }
   },
-  watch: {
-    showYearView () {
-      setTimeout(() => {
-        this.$refs.yearPicker.scrollTo({top: this.$refs.selected[0].offsetTop})
-      }, 0)
-    }
-  },
   computed: {
     years() {
       const d = new Date()
@@ -105,6 +98,13 @@ export default {
       return this.isRtl
         ? this.isPreviousDecadeDisabled(this.pageTimestamp)
         : this.isNextDecadeDisabled(this.pageTimestamp)
+    }
+  },
+  watch: {
+    showYearView() {
+      setTimeout(() => {
+        this.$refs.yearPicker.scrollTo({ top: this.$refs.selected[0].offsetTop })
+      }, 0)
     }
   },
   methods: {

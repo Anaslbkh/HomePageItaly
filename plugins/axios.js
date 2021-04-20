@@ -7,7 +7,7 @@ export default function({ $axios }) {
     $axios.onRequest((config) => {
       let params = ''
       if (config.params) {
-        params = Object.keys(config.params).map((key) => [key, config.params[key]].join('=')).join('&')
+        params = Object.keys(config.params).map(key => [key, config.params[key]].join('=')).join('&')
       }
 
       console.log('Making request to ' + config.baseURL + config.url + '?' + params)

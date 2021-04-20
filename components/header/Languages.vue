@@ -1,9 +1,17 @@
 <template>
-  <Dropdown class="border-b-0" key="languages-dropdown">
+  <Dropdown key="languages-dropdown" class="border-b-0">
     <template #button>
-      <img src="~/static/icons/flag.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
+      <img
+        src="~/static/icons/flag.svg"
+        width="16"
+        height="16"
+        aria-hidden="true"
+        alt="check"
+        loading="lazy"
+        class="mr-1 -top-0.5 relative"
+      >
       {{ language.lang | uppercase }}
-      <span class="caret"></span>
+      <span class="caret" />
     </template>
     <template #content>
       <ul class="py-2 pt-0 sm:pt-2 -ml-2 sm:ml-0">
@@ -26,9 +34,17 @@
 
 <script>
 import Dropdown from '~/components/header/Dropdown.vue'
-import { getInstance } from '~/services/apiService';
+import { getInstance } from '~/services/apiService'
 
 export default {
+
+  filters: {
+    uppercase: value => value.toUpperCase()
+  },
+
+  components: {
+    Dropdown
+  },
   data() {
     return {
       languages: [],
@@ -38,31 +54,23 @@ export default {
   },
 
   async fetch() {
-    const slug = this.$route.params.airport;
+    const slug = this.$route.params.airport
     const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
+      baseURL: 'https://parkos.com/api/v1/'
+    })
 
-    this.languages = await api.getLanguages();
-    const currentLanguage = await Array.prototype.find.call(this.languages, (language) => language.domain === this.$paths.langHost);
-    this.language = currentLanguage;
-    this.airportData = await api.getAirportData(slug, this.language.lang);
-  },
-
-  filters: {
-    uppercase: (value) => value.toUpperCase()
-  },
-
-  components: {
-    Dropdown
+    this.languages = await api.getLanguages()
+    const currentLanguage = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
+    this.language = currentLanguage
+    this.airportData = await api.getAirportData(slug, this.language.lang)
   },
 
   computed: {
     contentLanguages() {
-      const availableLanguages = [];
+      const availableLanguages = []
 
-      for(const language in this.airportData.content) {
-        const _language = this.languages.find( (_language) => _language.lang === language)
+      for (const language in this.airportData.content) {
+        const _language = this.languages.find(_language => _language.lang === language)
         availableLanguages.push({
           lang: language,
           name: _language?.native_name || _language.name,
@@ -72,8 +80,8 @@ export default {
 
       return availableLanguages.sort((a, b) => {
         return a.name > b.name ? 1 : -1
-      });
-    },
+      })
+    }
   }
 }
 </script>

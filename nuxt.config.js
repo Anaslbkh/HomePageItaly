@@ -14,7 +14,7 @@ export default {
       { 'http-equiv': 'content-language', content: 'it' },
       { name: 'msapplication-TileColor', content: '#0983F0' },
       { name: 'msapplication-TileImage', content: 'https://assets.parkos.com/assets/favicon/ms-icon-144x144.png' },
-      { name: 'msapplication-TileConfig', content: 'https://assets.parkos.com/assets/favicon/browserconfig.xml' },
+      { name: 'msapplication-TileConfig', content: 'https://assets.parkos.com/assets/favicon/browserconfig.xml' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'https://assets.parkos.com/assets/favicon/favicon.ico' },
@@ -32,8 +32,8 @@ export default {
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: 'https://assets.parkos.com/assets/favicon/android-icon-32x32.png' },
       { rel: 'icon', type: 'image/png', sizes: '96x96', href: 'https://assets.parkos.com/assets/favicon/android-icon-96x96.png' },
       { rel: 'icon', type: 'image/png', sizes: '192x192', href: 'https://assets.parkos.com/assets/favicon/android-icon-192x192.png' },
-      { rel: 'manifest', href: '/manifest.json' },
-    ],
+      { rel: 'manifest', href: '/manifest.json' }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -49,7 +49,7 @@ export default {
     { src: '@/plugins/i18n.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     '@/plugins/axios',
     // { src: '@/plugins/domain.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
-    { src: '@/plugins/zendesk.ts', mode: 'all' },
+    { src: '@/plugins/zendesk.ts', mode: 'all' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -68,7 +68,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/sentry',
-    '@dansmaculotte/nuxt-zendesk',
+    '@dansmaculotte/nuxt-zendesk'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -113,5 +113,5 @@ export default {
         }
       }
     }
-  },
+  }
 }

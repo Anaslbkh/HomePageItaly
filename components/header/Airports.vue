@@ -2,9 +2,17 @@
   <li>
     <Dropdown class="border-b">
       <template #button>
-        <img src="~/static/icons/flight_takeoff.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
+        <img
+          src="~/static/icons/flight_takeoff.svg"
+          width="16"
+          height="16"
+          aria-hidden="true"
+          alt="check"
+          loading="lazy"
+          class="mr-1 -top-0.5 relative"
+        >
         {{ $i18n('general.airports') }}
-        <span class="caret"></span>
+        <span class="caret" />
       </template>
       <template #content>
         <ul class="py-2 pt-0 sm:pt-2 -ml-2 sm:ml-0">
@@ -35,15 +43,15 @@ export default {
   },
 
   async fetch() {
-    const slug = this.$route.params.airport;
+    const slug = this.$route.params.airport
     const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
+      baseURL: 'https://parkos.com/api/v1/'
+    })
 
-    const languages = await api.getLanguages();
-    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
+    const languages = await api.getLanguages()
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
 
-    this.airports = await api.getAirports(currentLanguage.lang);
-  },
+    this.airports = await api.getAirports(currentLanguage.lang)
+  }
 }
 </script>

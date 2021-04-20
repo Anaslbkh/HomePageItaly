@@ -20,7 +20,7 @@ import Vue from 'vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import LegalFooter from '@/components/LegalFooter.vue'
-import { getInstance } from '~/services/apiService';
+import { getInstance } from '~/services/apiService'
 
 export default Vue.extend({
   components: {
@@ -38,12 +38,12 @@ export default Vue.extend({
 
   async fetch() {
     const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
-    this.languages = await api.getLanguages();
+      baseURL: 'https://parkos.com/api/v1/'
+    })
+    this.languages = await api.getLanguages()
 
-    const currentLanguage = await Array.prototype.find.call(this.languages, (language) => language.domain === this.$paths.langHost);
-    this.gtmKey = currentLanguage.gtm_key;
+    const currentLanguage = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
+    this.gtmKey = currentLanguage.gtm_key
   },
 
   mounted() {

@@ -98,8 +98,8 @@ export default Vue.extend({
     },
     toggle(item: FaqItemType) {
       this.active = this.active === item.slug ? null : item.slug
-    },
-  },
+    }
+  }
 })
 </script>
 

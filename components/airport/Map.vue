@@ -18,24 +18,36 @@ export default Vue.extend({
     } as PropOptions<Array<ParkingType>>,
     airport: {
       type: Object,
-      required: true,
+      required: true
     } as PropOptions<AirportType>
+  },
+
+  data(): {
+    mapWasInViewPort: boolean,
+    } {
+    return {
+      mapWasInViewPort: false
+    }
   },
 
   computed: {
     coordinates(): Array<any> {
       return Array.prototype.map.call(this.parkings, (parking: ParkingType) => ({
         latitude: parking.address.latitude,
-        longitude: parking.address.longitude,
+        longitude: parking.address.longitude
       }) as Pick<AddressType, 'latitude' | 'longitude'>)
-    },
+    }
   },
 
-  data(): {
-    mapWasInViewPort: boolean,
-  } {
-    return {
-      mapWasInViewPort: false,
+  created(): void {
+    if (process.client) {
+      window.addEventListener('scroll', this.loadMapIfVisible)
+    }
+  },
+
+  destroyed(): void {
+    if (process.client) {
+      window.removeEventListener('scroll', this.loadMapIfVisible)
     }
   },
 
@@ -82,18 +94,6 @@ export default Vue.extend({
         })
       }
     }
-  },
-
-  created(): void {
-    if (process.client) {
-      window.addEventListener('scroll', this.loadMapIfVisible);
-    }
-  },
-
-  destroyed(): void {
-    if (process.client) {
-      window.removeEventListener('scroll', this.loadMapIfVisible);
-    }
-  },
+  }
 })
 </script>
