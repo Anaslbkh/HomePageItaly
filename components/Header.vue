@@ -3,9 +3,10 @@
     <section class="w-full" :class="{ unskew: navOpen, 'fixed z-50': navShown }">
       <div class="container mx-auto flex justify-between h-16 items-center">
         <a href="/">
+          <div class="sr-only">Parkos</div>
           <Logo />
         </a>
-        <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50 focus:outline-none" aria-controls="#navigation" @click="toggleMenu">
+        <button class="block px-4 h-14 fixed right-0 mr-4 sm:hidden z-50 focus:outline-none" aria-controls="navigation" @click="toggleMenu">
           <span class="sr-only">Toggle navigation</span>
           <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all origin-navTop" :class="{ 'transform  rotate-45': navShown }" />
           <span style="width: 22px;" class="block h-0.5 bg-white bg-opacity-50 transition-all mt-1" :class="{ 'opacity-0': navShown }" />
@@ -17,25 +18,49 @@
 
             <li>
               <a href="https://parkos.zendesk.com/hc/it" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
-                <img src="~/static/icons/customerservice.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
+                <img
+                  src="~/static/icons/customerservice.svg"
+                  width="16"
+                  height="16"
+                  aria-hidden="true"
+                  alt="check"
+                  loading="lazy"
+                  class="mr-1 -top-0.5 relative"
+                >
 
                 {{ $i18n('general.customer-service') }}
               </a>
             </li>
             <li>
               <a :href="`${$paths.url()}login/`" class="flex sm:inline-flex text-white hover:text-white hover:no-underline items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
-                <img src="~/static/icons/account.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
+                <img
+                  src="~/static/icons/account.svg"
+                  width="16"
+                  height="16"
+                  aria-hidden="true"
+                  alt="check"
+                  loading="lazy"
+                  class="mr-1 -top-0.5 relative"
+                >
                 {{ $i18n('templates.header-login') }}
               </a>
             </li>
             <li>
               <a :href="`${$paths.url()}chi-siamo.html`" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
-                <img src="~/static/icons/globe.svg" width="16" height="16" aria-hidden="true" alt="check" loading="lazy" class="mr-1 -top-0.5 relative">
+                <img
+                  src="~/static/icons/globe.svg"
+                  width="16"
+                  height="16"
+                  aria-hidden="true"
+                  alt="check"
+                  loading="lazy"
+                  class="mr-1 -top-0.5 relative"
+                >
                 Chi siamo
               </a>
             </li>
 
-            <!-- <Languages /> -->
+            <Languages />
           </ul>
         </nav>
       </div>
@@ -53,7 +78,8 @@
                 class="h-4 mr-1 -top-0.5 relative"
                 aria-hidden="true"
                 alt="check"
-                loading="lazy">
+                loading="lazy"
+              >
               <span class="text-md md:text-base">{{ $i18n(`templates.header-usp-${i}`) }}</span>
             </article>
           </section>

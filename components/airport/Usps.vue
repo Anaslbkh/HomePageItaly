@@ -4,7 +4,7 @@
       {{ $i18n('templates.parkos-usps') }}
     </p>
     <section class="w-full sm:w-7/10 mx-auto grid grid-cols-1 sm:grid-cols-3 md:gap-12 gap-4">
-      <article class="flex flex-row sm:flex-col items-center justify-start" v-for="item in items" :key="item.key">
+      <article v-for="item in items" :key="item.key" class="flex flex-row sm:flex-col items-center justify-start">
         <img
           :src="item.img.src"
           :alt="item.img.alt"
@@ -14,7 +14,7 @@
           aria-hidden="true"
           loading="lazy"
         >
-        <p class="text-left sm:text-center text-md sm:text-base" v-html="$i18n(item.key)"></p>
+        <p class="text-left sm:text-center text-md sm:text-base" v-html="$i18n(item.key)" />
       </article>
     </section>
   </div>

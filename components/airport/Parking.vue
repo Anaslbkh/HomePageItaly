@@ -21,31 +21,31 @@
 </template>
 
 <script>
-import { getInstance } from '~/services/apiService';
+import { getInstance } from '~/services/apiService'
 
 export default {
-  data() {
-    return {
-      airport: {},
-      language: {},
-    }
-  },
-
-  async fetch() {
-    const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
-
-    const languages = await api.getLanguages();
-    this.language = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
-    this.airport = await api.getAirport(this.$route.params.airport, this.language.lang);
-  },
 
   props: {
     parking: {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      airport: {},
+      language: {}
+    }
+  },
+
+  async fetch() {
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/'
+    })
+
+    const languages = await api.getLanguages()
+    this.language = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    this.airport = await api.getAirport(this.$route.params.airport, this.language.lang)
   },
 
   computed: {

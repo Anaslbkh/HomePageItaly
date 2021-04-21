@@ -6,19 +6,23 @@
       </h2>
 
       <div>
-        <ul class="hidden sm:flex border-b border-gray-500 tab-buttons">
-          <li v-for="item in items" :key="`q-${item.slug}`" class="mr-1 items-end" :class="{'-mb-0.5': item.slug === active}">
-            <button
+        <ul class="hidden sm:flex border-b border-gray-500 tab-buttons" role="tablist">
+          <li v-for="item in items" :key="`q-${item.slug}`" class="mr-1 items-end" :class="{'-mb-0.5': item.slug === active}" role="presentation">
+            <a
+              :href="`#${item.slug}`"
               :class="{
-                'border-gray-500 border-l border-t border-r rounded-t': item.slug === active,
+                'border-gray-500 border-l border-t border-r rounded-t text-gray-800': item.slug === active,
                 'border-transparent text-blue-700 hover:bg-gray-300':
                   item.slug !== active,
               }"
               class="inline-block bg-white py-2 px-4 mr-2 rounded-t max-w-sm whitespace-normal focus:outline-none text-left"
               @click.prevent="select(item)"
+              role="tab"
+              :aria-selected="(item.slug === active).toString()"
+              :aria-controls="item.slug"
             >
               {{ item.title }}
-            </button>
+            </a>
           </li>
         </ul>
 
@@ -28,13 +32,16 @@
             :key="`a-${item.slug}`"
             :class="{ 'sm:hidden block': item.slug !== active }"
             class="block border sm:border-t-0 border-gray-500 w-full first:rounded-t first:rounded-b relative"
+            role="presentation"
           >
             <a
               :href="`#${item.slug}`"
-              role="tab"
               class="tab-title block sm:hidden font-bold px-4 leading-13 opacity-90"
               :class="{ 'bg-gray-200 underline active': item.slug === active }"
               @click.prevent="toggle(item)"
+              role="tab"
+              :aria-selected="(item.slug === active).toString()"
+              :aria-controls="item.slug"
             >
               {{ item.title }}
             </a>
@@ -42,6 +49,8 @@
             <div
               :class="{ 'hidden': item.slug !== active }"
               class="sm:rounded-b py-0 pb-3 sm:py-5 px-4 bg-gray-200 sm:bg-white leading-8"
+              role="tabpanel"
+              :id="item.slug"
             >
               <span :inner-html.prop="item.content | strip | preview" />
               <a
@@ -98,8 +107,8 @@ export default Vue.extend({
     },
     toggle(item: FaqItemType) {
       this.active = this.active === item.slug ? null : item.slug
-    },
-  },
+    }
+  }
 })
 </script>
 

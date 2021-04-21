@@ -19,7 +19,7 @@
       :action="`${$paths.url()}${formData.airport}/${$i18n('general.search-slug')}/`"
       class="max-w-full sm:max-w-sm flex flex-col mx-auto mb-12"
     >
-      <input type="hidden" name="parkosfastsearchtest" v-if="enableNewFastSearch">
+      <input v-if="enableNewFastSearch" type="hidden" name="parkosfastsearchtest">
 
       <transition name="slide">
         <div v-if="showAirportSelector" class="flex mb-4">
@@ -159,7 +159,7 @@ import IconInfo from '~/components/icons/IconInfo.vue'
 import IconCalendar from '~/components/icons/IconCalendar.vue'
 import IconPin from '~/components/icons/IconPin.vue'
 
-import { getInstance } from '~/services/apiService';
+import { getInstance } from '~/services/apiService'
 
 type SearchParameters = {
   airport: string|undefined;
@@ -214,25 +214,25 @@ export default Vue.extend({
       language: undefined,
       airport: undefined,
       airports: undefined,
-      airportData: {},
+      airportData: {}
     }
   },
 
   async fetch() {
-    const slug = this.$route.params.airport;
+    const slug = this.$route.params.airport
     const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
+      baseURL: 'https://parkos.com/api/v1/'
+    })
 
-    const languages = await api.getLanguages();
+    const languages = await api.getLanguages()
 
-    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
-    this.language = currentLanguage;
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    this.language = currentLanguage
 
-    this.airports = await api.getAirports(this.language!.lang);
-    this.airport = await api.getAirport(slug, this.language!.lang);
+    this.airports = await api.getAirports(this.language!.lang)
+    this.airport = await api.getAirport(slug, this.language!.lang)
 
-    this.airportData = await api.getAirportData(slug, this.language!.lang);
+    this.airportData = await api.getAirportData(slug, this.language!.lang)
   },
 
   computed: {

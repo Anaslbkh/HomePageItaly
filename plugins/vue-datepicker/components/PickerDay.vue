@@ -1,41 +1,49 @@
 <template>
-  <div :class="[calendarClass, 'vdp-datepicker__calendar']" v-show="showDayView" :style="calendarStyle" @mousedown.prevent>
-    <slot name="beforeCalendarHeader"></slot>
+  <div v-show="showDayView" :class="[calendarClass, 'vdp-datepicker__calendar']" :style="calendarStyle" @mousedown.prevent>
+    <slot name="beforeCalendarHeader" />
     <header>
       <span
-        @click="isRtl ? nextMonth() : previousMonth()"
         class="prev"
-        :class="{'disabled': isLeftNavDisabled}">&lt;</span>
+        :class="{'disabled': isLeftNavDisabled}"
+        @click="isRtl ? nextMonth() : previousMonth()"
+      >&lt;</span>
       <span class="day__select_today" @click="setDate(new Date())">
-        <icon-house width="15px" height="30px"></icon-house>
+        <icon-house width="15px" height="30px" />
       </span>
       <span class="day__month_btn">
         <span @click="showMonthCalendar">{{ isYmd ? currYearName : currMonthName }}</span>
         <span @click="showYearCalendar">{{ isYmd ? currMonthName : currYearName }}</span>
       </span>
       <span
-        @click="isRtl ? previousMonth() : nextMonth()"
         class="next"
-        :class="{'disabled': isRightNavDisabled}">&gt;</span>
+        :class="{'disabled': isRightNavDisabled}"
+        @click="isRtl ? previousMonth() : nextMonth()"
+      >&gt;</span>
     </header>
     <div :class="isRtl ? 'flex-rtl' : ''">
-      <span class="cell day-header"
-            @click="blurPickers"
-            v-for="d in daysOfWeek"
-            :key="d.timestamp">{{ d }}</span>
+      <span
+        v-for="d in daysOfWeek"
+        :key="d.timestamp"
+        class="cell day-header"
+        @click="blurPickers"
+      >{{ d }}</span>
       <template v-if="prevDays.length > 0">
-        <span class="cell day"
-              :class="dayClasses(day)"
-              @click="selectDate(day)"
-              v-for="day in prevDays"
-              :key="day.timestamp">{{ dayCellContent(day) }}</span>
-      </template><!--
-      --><span class="cell day"
-          v-for="day in days"
+        <span
+          v-for="day in prevDays"
           :key="day.timestamp"
+          class="cell day"
           :class="dayClasses(day)"
+          @click="selectDate(day)"
+        >{{ dayCellContent(day) }}</span>
+      </template><!--
+      --><span
+v-for="day in days"
+          :key="day.timestamp"
+          class="cell day"
+          :class="dayClasses(day)"
+          @click="selectDate(day)"
           v-html="dayCellContent(day)"
-          @click="selectDate(day)"></span>
+/>
     </div>
   </div>
 </template>
@@ -64,7 +72,7 @@ export default {
     mondayFirst: Boolean,
     useUtc: Boolean
   },
-  data () {
+  data() {
     const constructedDateUtils = makeDateUtils(this.useUtc)
     return {
       utils: constructedDateUtils
@@ -75,7 +83,7 @@ export default {
      * Returns an array of day names
      * @return {String[]}
      */
-    daysOfWeek () {
+    daysOfWeek() {
       if (this.mondayFirst) {
         const tempDays = this.translation.days.slice()
         tempDays.push(tempDays.shift())
@@ -88,10 +96,10 @@ export default {
      * Used to show amount of empty cells before the first in the day calendar layout
      * @return {Array}
      */
-    prevDays () {
+    prevDays() {
       const days = []
       const d = this.pageDate
-      let dObj = this.useUtc
+      const dObj = this.useUtc
         ? new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1))
         : new Date(d.getFullYear(), d.getMonth(), 1, d.getHours(), d.getMinutes())
 
@@ -109,18 +117,18 @@ export default {
     /**
      * @return {Object[]}
      */
-    days () {
+    days() {
       const d = this.pageDate
-      let days = []
+      const days = []
       // set up a new date object to the beginning of the current 'page'
-      let dObj = this.useUtc
+      const dObj = this.useUtc
         ? new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1))
         : new Date(d.getFullYear(), d.getMonth(), 1, d.getHours(), d.getMinutes())
-      let prevDay = 0;
-      let daysInMonth = this.utils.daysInMonth(this.utils.getFullYear(dObj), this.utils.getMonth(dObj))
+      let prevDay = 0
+      const daysInMonth = this.utils.daysInMonth(this.utils.getFullYear(dObj), this.utils.getMonth(dObj))
       for (let i = 0; i < daysInMonth; i++) {
         days.push(this.formatDateObj(dObj))
-        prevDay = this.utils.getDay(dObj);
+        prevDay = this.utils.getDay(dObj)
         this.utils.setDate(dObj, this.utils.getDate(dObj) + 1)
       }
 
@@ -141,7 +149,7 @@ export default {
      * Gets the name of the month the current page is on
      * @return {String}
      */
-    currMonthName () {
+    currMonthName() {
       const monthName = this.fullMonthName ? this.translation.months : this.translation.monthsAbbr
       return this.utils.getMonthNameAbbr(this.utils.getMonth(this.pageDate), monthName)
     },
@@ -149,7 +157,7 @@ export default {
      * Gets the name of the year that current page is on
      * @return {Number}
      */
-    currYearName () {
+    currYearName() {
       const yearSuffix = this.translation.yearSuffix
       return `${this.utils.getFullYear(this.pageDate)}${yearSuffix}`
     },
@@ -157,14 +165,14 @@ export default {
      * Is this translation using year/month/day format?
      * @return {Boolean}
      */
-    isYmd () {
+    isYmd() {
       return this.translation.ymd && this.translation.ymd === true
     },
     /**
      * Is the left hand navigation button disabled?
      * @return {Boolean}
      */
-    isLeftNavDisabled () {
+    isLeftNavDisabled() {
       return this.isRtl
         ? this.isNextMonthDisabled(this.pageTimestamp)
         : this.isPreviousMonthDisabled(this.pageTimestamp)
@@ -173,18 +181,18 @@ export default {
      * Is the right hand navigation button disabled?
      * @return {Boolean}
      */
-    isRightNavDisabled () {
+    isRightNavDisabled() {
       return this.isRtl
         ? this.isPreviousMonthDisabled(this.pageTimestamp)
         : this.isNextMonthDisabled(this.pageTimestamp)
     }
   },
   methods: {
-    setDate (date) {
+    setDate(date) {
       this.$emit('setDate', date)
     },
 
-    selectDate (date) {
+    selectDate(date) {
       this.$emit('blurPickers')
       if (date.isDisabled) {
         this.$emit('selectedDisabled', date)
@@ -195,40 +203,40 @@ export default {
     /**
      * @return {Number}
      */
-    getPageMonth () {
+    getPageMonth() {
       return this.utils.getMonth(this.pageDate)
     },
     /**
      * Emit an event to show the month picker
      */
-    showMonthCalendar () {
+    showMonthCalendar() {
       this.$emit('showMonthCalendar')
     },
     /**
      * Emit an event to show the month picker
      */
-    showYearCalendar () {
+    showYearCalendar() {
       this.$emit('showYearCalendar')
     },
     /**
      * Emit an event to blur month & year pickers
      */
-    blurPickers () {
+    blurPickers() {
       this.$emit('blurPickers')
     },
     /**
      * Change the page month
      * @param {Number} incrementBy
      */
-    changeMonth (incrementBy) {
-      let date = this.pageDate
+    changeMonth(incrementBy) {
+      const date = this.pageDate
       this.utils.setMonth(date, this.utils.getMonth(date) + incrementBy)
       this.$emit('changedMonth', date)
     },
     /**
      * Decrement the page month
      */
-    previousMonth () {
+    previousMonth() {
       if (!this.isPreviousMonthDisabled()) {
         this.changeMonth(-1)
       }
@@ -237,21 +245,21 @@ export default {
      * Is the previous month disabled?
      * @return {Boolean}
      */
-    isPreviousMonthDisabled () {
+    isPreviousMonthDisabled() {
       // TODO: hardcoded false in order to not disable previous months in selector
       return false
 
       if (!this.disabledDates || !this.disabledDates.to) {
         return false
       }
-      let d = this.pageDate
+      const d = this.pageDate
       return this.utils.getMonth(this.disabledDates.to) >= this.utils.getMonth(d) &&
         this.utils.getFullYear(this.disabledDates.to) >= this.utils.getFullYear(d)
     },
     /**
      * Increment the current page month
      */
-    nextMonth () {
+    nextMonth() {
       if (!this.isNextMonthDisabled()) {
         this.changeMonth(+1)
       }
@@ -260,11 +268,11 @@ export default {
      * Is the next month disabled?
      * @return {Boolean}
      */
-    isNextMonthDisabled () {
+    isNextMonthDisabled() {
       if (!this.disabledDates || !this.disabledDates.from) {
         return false
       }
-      let d = this.pageDate
+      const d = this.pageDate
       return this.utils.getMonth(this.disabledDates.from) <= this.utils.getMonth(d) &&
         this.utils.getFullYear(this.disabledDates.from) <= this.utils.getFullYear(d)
     },
@@ -273,7 +281,7 @@ export default {
      * @param {Date}
      * @return {Boolean}
      */
-    isSelectedDate (dObj) {
+    isSelectedDate(dObj) {
       return this.selectedDate && this.utils.compareDates(this.selectedDate, dObj)
     },
     /**
@@ -281,7 +289,7 @@ export default {
      * @param {Date}
      * @return {Boolean}
      */
-    isDisabledDate (date) {
+    isDisabledDate(date) {
       let disabledDates = false
 
       if (typeof this.disabledDates === 'undefined') {
@@ -312,10 +320,10 @@ export default {
           }
         })
       }
-      if (typeof this.disabledDates.days !== 'undefined' && this.disabledDates.days.indexOf(this.utils.getDay(date)) !== -1) {
+      if (typeof this.disabledDates.days !== 'undefined' && this.disabledDates.days.includes(this.utils.getDay(date))) {
         disabledDates = true
       }
-      if (typeof this.disabledDates.daysOfMonth !== 'undefined' && this.disabledDates.daysOfMonth.indexOf(this.utils.getDate(date)) !== -1) {
+      if (typeof this.disabledDates.daysOfMonth !== 'undefined' && this.disabledDates.daysOfMonth.includes(this.utils.getDate(date))) {
         disabledDates = true
       }
       if (typeof this.disabledDates.customPredictor === 'function' && this.disabledDates.customPredictor(date)) {
@@ -328,7 +336,7 @@ export default {
      * @param {Date}
      * @return {Boolean}
      */
-    isHighlightedDate (date) {
+    isHighlightedDate(date) {
       if (!(this.highlighted && this.highlighted.includeDisabled) && this.isDisabledDate(date)) {
         return false
       }
@@ -352,11 +360,11 @@ export default {
         highlighted = date >= this.highlighted.from && date <= this.highlighted.to
       }
 
-      if (typeof this.highlighted.days !== 'undefined' && this.highlighted.days.indexOf(this.utils.getDay(date)) !== -1) {
+      if (typeof this.highlighted.days !== 'undefined' && this.highlighted.days.includes(this.utils.getDay(date))) {
         highlighted = true
       }
 
-      if (typeof this.highlighted.daysOfMonth !== 'undefined' && this.highlighted.daysOfMonth.indexOf(this.utils.getDate(date)) !== -1) {
+      if (typeof this.highlighted.daysOfMonth !== 'undefined' && this.highlighted.daysOfMonth.includes(this.utils.getDate(date))) {
         highlighted = true
       }
 
@@ -366,18 +374,18 @@ export default {
 
       return highlighted
     },
-    dayClasses (day) {
+    dayClasses(day) {
       return {
-        'selected': day.isSelected,
-        'disabled': day.isDisabled,
-        'highlighted': day.isHighlighted,
-        'today': day.isToday,
-        'weekend': day.isWeekend,
-        'sat': day.isSaturday,
-        'sun': day.isSunday,
+        selected: day.isSelected,
+        disabled: day.isDisabled,
+        highlighted: day.isHighlighted,
+        today: day.isToday,
+        weekend: day.isWeekend,
+        sat: day.isSaturday,
+        sun: day.isSunday,
         'highlight-start': day.isHighlightStart,
         'highlight-end': day.isHighlightEnd,
-        'grey': day.isInCurrentMonth === false,
+        grey: day.isInCurrentMonth === false
       }
     },
     /**
@@ -386,7 +394,7 @@ export default {
      * @param {Date}
      * @return {Boolean}
      */
-    isHighlightStart (date) {
+    isHighlightStart(date) {
       return this.isHighlightedDate(date) &&
         (this.highlighted.from instanceof Date) &&
         (this.utils.getFullYear(this.highlighted.from) === this.utils.getFullYear(date)) &&
@@ -399,7 +407,7 @@ export default {
      * @param {Date}
      * @return {Boolean}
      */
-    isHighlightEnd (date) {
+    isHighlightEnd(date) {
       return this.isHighlightedDate(date) &&
         (this.highlighted.to instanceof Date) &&
         (this.utils.getFullYear(this.highlighted.to) === this.utils.getFullYear(date)) &&
@@ -411,7 +419,7 @@ export default {
      * @param  {mixed}  prop
      * @return {Boolean}
      */
-    isDefined (prop) {
+    isDefined(prop) {
       return typeof prop !== 'undefined' && prop
     },
     /**
@@ -419,7 +427,7 @@ export default {
      * @param extra
      * @returns {*&{date: number, isHighlighted: Boolean, isSaturday: boolean, isHighlightEnd: Boolean, isSunday: boolean, isHighlightStart: Boolean, isSelected: Boolean, isToday: boolean, isDisabled: Boolean, isWeekend: boolean, timestamp: number}}
      */
-    formatDateObj (dObj, extra) {
+    formatDateObj(dObj, extra) {
       return {
         date: this.utils.getDate(dObj),
         timestamp: dObj.getTime(),
@@ -434,7 +442,7 @@ export default {
         isSunday: this.utils.getDay(dObj) === 0,
         ...extra
       }
-    },
+    }
   }
 }
 // eslint-disable-next-line

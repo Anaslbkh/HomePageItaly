@@ -11,7 +11,8 @@
                 width="36"
                 height="36"
                 class="w-9 h-9"
-                loading="lazy">
+                loading="lazy"
+              >
             </a>
           </li>
         </ul>
@@ -39,12 +40,12 @@ export default {
 
   async fetch() {
     const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/',
-    });
+      baseURL: 'https://parkos.com/api/v1/'
+    })
 
-    const languages = await api.getLanguages();
-    const currentLanguage = await Array.prototype.find.call(languages, (language) => language.domain === this.$paths.langHost);
-    this.language = currentLanguage;
+    const languages = await api.getLanguages()
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    this.language = currentLanguage
   }
 }
 </script>

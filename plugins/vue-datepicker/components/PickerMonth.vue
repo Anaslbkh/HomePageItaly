@@ -6,24 +6,26 @@
     :style="calendarStyle"
     @mousedown.prevent
   >
-    <slot name="beforeCalendarHeader"></slot>
-<!--    <header>-->
-<!--      <span-->
-<!--        @click="isRtl ? nextYear() : previousYear()"-->
-<!--        class="prev"-->
-<!--        :class="{'disabled': isLeftNavDisabled}">&lt;</span>-->
-<!--      <span class="month__year_btn" @click="showYearCalendar" :class="allowedToShowView('year') ? 'up' : ''">{{ pageYearName }}</span>-->
-<!--      <span-->
-<!--        @click="isRtl ? previousYear() : nextYear()"-->
-<!--        class="next"-->
-<!--        :class="{'disabled': isRightNavDisabled}">&gt;</span>-->
-<!--    </header>-->
-    <span class="cell month"
+    <slot name="beforeCalendarHeader" />
+    <!--    <header>-->
+    <!--      <span-->
+    <!--        @click="isRtl ? nextYear() : previousYear()"-->
+    <!--        class="prev"-->
+    <!--        :class="{'disabled': isLeftNavDisabled}">&lt;</span>-->
+    <!--      <span class="month__year_btn" @click="showYearCalendar" :class="allowedToShowView('year') ? 'up' : ''">{{ pageYearName }}</span>-->
+    <!--      <span-->
+    <!--        @click="isRtl ? previousYear() : nextYear()"-->
+    <!--        class="next"-->
+    <!--        :class="{'disabled': isRightNavDisabled}">&gt;</span>-->
+    <!--    </header>-->
+    <span
       v-for="month in months"
       :key="month.timestamp"
       :ref="(month.isSelected ? 'selected' : month.timestamp)"
+      class="cell month"
       :class="{'selected': month.isSelected, 'disabled': month.isDisabled}"
-      @click.stop="selectMonth(month)">{{ month.month }}</span>
+      @click.stop="selectMonth(month)"
+    >{{ month.month }}</span>
   </div>
 </template>
 <script>
@@ -42,25 +44,18 @@ export default {
     allowedToShowView: Function,
     useUtc: Boolean
   },
-  data () {
+  data() {
     const constructedDateUtils = makeDateUtils(this.useUtc)
     return {
-      utils: constructedDateUtils,
-    }
-  },
-  watch: {
-    showMonthView: function () {
-      setTimeout(() => {
-        this.$refs.monthPicker.scrollTo({top: this.$refs.selected[0].offsetTop})
-      }, 0)
+      utils: constructedDateUtils
     }
   },
   computed: {
-    months () {
+    months() {
       const d = this.pageDate
-      let months = []
+      const months = []
       // set up a new date object to the beginning of the current 'page'
-      let dObj = this.useUtc
+      const dObj = this.useUtc
         ? new Date(Date.UTC(d.getUTCFullYear(), 0, d.getUTCDate()))
         : new Date(d.getFullYear(), 0, d.getDate(), d.getHours(), d.getMinutes())
       for (let i = 0; i < 12; i++) {
@@ -78,7 +73,7 @@ export default {
      * Get year name on current page.
      * @return {String}
      */
-    pageYearName () {
+    pageYearName() {
       const yearSuffix = this.translation.yearSuffix
       return `${this.utils.getFullYear(this.pageDate)}${yearSuffix}`
     },
@@ -86,7 +81,7 @@ export default {
      * Is the left hand navigation disabled
      * @return {Boolean}
      */
-    isLeftNavDisabled () {
+    isLeftNavDisabled() {
       return this.isRtl
         ? this.isNextYearDisabled(this.pageTimestamp)
         : this.isPreviousYearDisabled(this.pageTimestamp)
@@ -95,10 +90,17 @@ export default {
      * Is the right hand navigation disabled
      * @return {Boolean}
      */
-    isRightNavDisabled () {
+    isRightNavDisabled() {
       return this.isRtl
         ? this.isPreviousYearDisabled(this.pageTimestamp)
         : this.isNextYearDisabled(this.pageTimestamp)
+    }
+  },
+  watch: {
+    showMonthView() {
+      setTimeout(() => {
+        this.$refs.monthPicker.scrollTo({ top: this.$refs.selected[0].offsetTop })
+      }, 0)
     }
   },
   methods: {
@@ -106,7 +108,7 @@ export default {
      * Emits a selectMonth event
      * @param {Object} month
      */
-    selectMonth (month) {
+    selectMonth(month) {
       if (month.isDisabled) {
         return false
       }
@@ -118,15 +120,15 @@ export default {
      * Changes the year up or down
      * @param {Number} incrementBy
      */
-    changeYear (incrementBy) {
-      let date = this.pageDate
+    changeYear(incrementBy) {
+      const date = this.pageDate
       this.utils.setFullYear(date, this.utils.getFullYear(date) + incrementBy)
       this.$emit('changedYear', date)
     },
     /**
      * Decrements the year
      */
-    previousYear () {
+    previousYear() {
       if (!this.isPreviousYearDisabled()) {
         this.changeYear(-1)
       }
@@ -135,7 +137,7 @@ export default {
      * Checks if the previous year is disabled or not
      * @return {Boolean}
      */
-    isPreviousYearDisabled () {
+    isPreviousYearDisabled() {
       if (!this.disabledDates || !this.disabledDates.to) {
         return false
       }
@@ -144,7 +146,7 @@ export default {
     /**
      * Increments the year
      */
-    nextYear () {
+    nextYear() {
       if (!this.isNextYearDisabled()) {
         this.changeYear(1)
       }
@@ -153,7 +155,7 @@ export default {
      * Checks if the next year is disabled or not
      * @return {Boolean}
      */
-    isNextYearDisabled () {
+    isNextYearDisabled() {
       if (!this.disabledDates || !this.disabledDates.from) {
         return false
       }
@@ -162,7 +164,7 @@ export default {
     /**
      * Emits an event that shows the year calendar
      */
-    showYearCalendar () {
+    showYearCalendar() {
       this.$emit('showYearCalendar')
     },
     /**
@@ -170,7 +172,7 @@ export default {
      * @param {Date}
      * @return {Boolean}
      */
-    isSelectedMonth (date) {
+    isSelectedMonth(date) {
       return (this.selectedDate &&
         this.utils.getFullYear(this.selectedDate) === this.utils.getFullYear(date) &&
         this.utils.getMonth(this.selectedDate) === this.utils.getMonth(date))
@@ -180,7 +182,7 @@ export default {
      * @param {Date}
      * @return {Boolean}
      */
-    isDisabledMonth (date) {
+    isDisabledMonth(date) {
       // TODO: hardcoded false in order to not disable previous months in selector
       return false
 
