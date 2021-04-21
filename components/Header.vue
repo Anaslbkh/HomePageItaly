@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-blue-500 gradient" :class="{ 'skew -mt-8 pt-8': navOpen }">
+  <header class="bg-blue-500 gradient" :class="{ 'skew -mt-8 pt-8': navOpen, 'pb-4': !showSearch }">
     <section class="w-full" :class="{ unskew: navOpen, 'fixed z-50': navShown }">
       <div class="container mx-auto flex justify-between h-16 items-center">
         <a href="/">
@@ -65,7 +65,7 @@
         </nav>
       </div>
 
-      <section id="search">
+      <section v-if="showSearch" id="search">
         <div class="container mx-auto">
           <SearchForm />
 
@@ -102,6 +102,13 @@ export default Vue.extend({
     Languages,
     Logo,
     SearchForm
+  },
+
+  props: {
+    showSearch: {
+      default: true,
+      type: Boolean,
+    },
   },
 
   data(): {

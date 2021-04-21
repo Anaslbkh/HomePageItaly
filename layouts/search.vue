@@ -29,6 +29,17 @@ export default Vue.extend({
     LegalFooter
   },
 
+  // async validate({params, $paths, isHMR}) {
+  //   console.log('testasdfasf')
+  //   if (isHMR) return true;
+
+  //   const languages = await api.getLanguages();
+  //   const currentLanguage = Array.prototype.find.call(languages, (language) => language.domain === $paths.langHost);
+  //   const airport = await api.getAirport(params.airport, currentLanguage.lang);
+    
+  //   console.log(airport);
+  // },
+
   data() {
     return {
       navShown: false,
