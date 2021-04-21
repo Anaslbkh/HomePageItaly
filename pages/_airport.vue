@@ -47,7 +47,7 @@
     <div class="container mx-auto">
       <div class="border-b border-gray-500" />
     </div>
-    <section v-if="reviews.length > 3" id="reviews" class="pt-10 pb-24 overflow-hidden">
+    <section v-if="reviews && reviews.length > 3" id="reviews" class="pt-10 pb-24 overflow-hidden">
       <div class="container mx-auto mb-16">
         <div class="w-full lg:w-3/5">
           <ReviewSummary :meta="reviewsMeta" />
@@ -80,7 +80,7 @@
       </div>
     </section>
 
-    <Faq v-if="faq.length > 0" :items="faq" />
+    <Faq v-if="faq && faq.length > 0" :items="faq" />
 
     <section id="map" class="bg-gray-200 border-t border-b border-gray-500 py-24">
       <div class="container mx-auto">
@@ -131,6 +131,8 @@ export default {
   },
 
   layout: 'search',
+
+  middleware: ['airportCheck'],
 
   computed: {
     date() {
