@@ -17,12 +17,28 @@ declare module '@nuxt/types' {
 }
 
 const pathsPlugin: Plugin = ({
-  req
+  req,
+  isDev
 }, inject) => {
-  const host: string | undefined = process.server ? req.headers.host : window.location.host
+  let host: string | undefined = process.server ? req.headers.host : window.location.host
+  let langHost: string = 'parkos.it'
+
+  if (host?.includes('localhost') || host?.includes('appspot')) {
+    let params: URLSearchParams|undefined;
+
+    if (process.server) {
+      params = new URLSearchParams(req.url?.split('?').pop())
+    } else {
+      params = new URLSearchParams(window.location.search)
+    }
+
+    if (params.has('domain')) {
+      langHost = params.get('domain')!;
+    }
+  }
 
   const paths = {
-    langHost: 'parkos.it',
+    langHost,
     protocol: 'https',
     host: host || 'parkos.it',
     url: (trailingSlash: boolean = true) => {
@@ -30,6 +46,7 @@ const pathsPlugin: Plugin = ({
     },
     assetsUrl: 'https://assets.parkos.com/assets/'
   }
+
   if (!paths.host.includes('localhost')) {
     paths.langHost = paths.host.replace(/\.?test|staging\.?|:[0-9]+/, '')
   }
