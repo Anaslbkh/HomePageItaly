@@ -16,7 +16,7 @@
       itemtype="http://schema.org/AggregateOffer"
     >
       <meta itemprop="priceCurrency" content="EUR">
-      <meta itemprop="lowPrice" :content="airportData.airport.from_price / 8">
+      <meta itemprop="lowPrice" :content="(airportData.airport.from_price / 8).toFixed(2)">
     </div>
     <div
       itemprop="aggregateRating"
