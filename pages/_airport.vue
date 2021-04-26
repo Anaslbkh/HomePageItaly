@@ -102,6 +102,7 @@
       v-if="[
         'nl-be', 'nl', 'de', 'de-at', 'es', 'it', 'fr-be', 'fr', 'sv-se'
       ].includes(language.lang)"
+      :language="language.lang"
     />
   </div>
 </template>

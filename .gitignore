@@ -92,3 +92,4 @@ sw.*
 
 # App YAML
 app.yaml.staging
+app.yaml.production
