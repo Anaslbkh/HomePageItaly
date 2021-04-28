@@ -1,25 +1,75 @@
 <template>
-    <section id="cookie-notice">
-        <div class="cookie-message">
-            <p class="sm:hidden">{{ $i18n('templates.cookie-notification-mobile', { url }) }}</p>
-            <p class="hidden sm:block">{{ $i18n('templates.cookie-notification-desktop', { url }) }}</p>
+    <section
+        v-if="!hasConsented"
+        ref="cookieBar"
+        id="cookie-notice"
+        class="cookie-notice absolute max-w-5xl z-10 top-0 flex bg-blue-100 text-sm sm:bottom-0 
+        sm:top-auto sm:left-1/2 transform sm:-translate-x-1/2"
+    >
+        <div class="cookie-message py-4 px-6">
+            {{ cookieString }}
+            <p class="sm:hidden" v-html="$i18n('templates.cookie-notification-mobile', { url })"></p>
+            <p class="hidden sm:block" v-html="$i18n('templates.cookie-notification-desktop', { url })"></p>
         </div>
-        <button @click="accept" class="cookie-close">
-            <span class="hidden sm:inline">Close</span>
-        </button>
+        <div class="flex border-l px-6 items-center border-gray-500">
+            <button class="cookie-close flex items-center mr-6" @click="giveConsent">
+                <span id="cookieCloseLabel" class="hidden sm:inline text-blue-700 underline">{{ $i18n('templates.close') }}</span>
+                <img src="~/static/icons/close.svg" alt="Close" aria-hidden="true" aria-labelledby="cookieCloseLabel" width="24" height="24" class="ml-2">
+            </button>
+        </div>
     </section>
 </template>
 
 <script>
 export default {
-    mounted() {
+    data() {
+        return {
+            hasConsented: true,
+        }
+    },
 
+    mounted() {
+        this.checkConsent();
+    },
+
+    methods: {
+        checkConsent() {
+            this.hasConsented = document.cookie.indexOf('parkos_consent') !== -1 || 
+                (
+                    document.querySelectorAll('input[name="inFrame"]').length > 0 && 
+                    document.querySelectorAll('input[name="inFrame"]')[0].value === 'true'
+                );
+        },
+
+        giveConsent() {
+            this.hasConsented = true;
+            document.cookie = this.cookieString;
+        }
     },
 
     computed: {
         url() {
             return '#'
+        },
+        
+        cookieString() {
+            const expiryDate = new Date()
+            expiryDate.setFullYear(expiryDate.getFullYear() + 1)
+            let security = 'SameSite=lax'
+            if (window.location.protocol === 'https') {
+                security = 'SameSite=none; Secure'
+            }
+            return `parkos_consent= ${encodeURIComponent(new Date().toUTCString())}; expires=${expiryDate.toUTCString()}; path=/; ${security}`
         }
     }
 }
 </script>
+
+<style scoped>
+.cookie-notice {
+    width: 1000px;
+}
+.cookie-close {
+    
+}
+</style>

@@ -1,8 +1,8 @@
 import { getInstance } from '~/services/apiService';
 
-export default function ({route, isHMR, params, $paths, error, $sentry}) {
+export default function ({route, isHMR, isDev, params, $paths, error, $sentry}) {
     return new Promise( async function(resolve, reject) {
-        if (route.name !== 'airport' || isHMR) resolve()
+        if (route.name !== 'airport' || isHMR || isDev) resolve()
 
         const api = getInstance('parkos', {
             baseURL: 'https://parkos.com/api/v1/',
@@ -19,6 +19,7 @@ export default function ({route, isHMR, params, $paths, error, $sentry}) {
                 description: 'Purtroppo la pagina che stai cercando non è disponibile, siamo spiacenti. Dal menu sottostante puoi consultare le nostre destinazioni.',
                 language: currentLanguage
             })
+            reject()
         }
 
         resolve(airport)

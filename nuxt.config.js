@@ -46,15 +46,7 @@ export default {
     { src: '@/plugins/paths.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     // @see https://www.npmjs.com/package/vuejs-datepicker v1.6.2
     { src: '@/plugins/vue-datepicker/', mode: 'all' },
-    { src: '@/plugins/i18n.ts', mode: (function() {
-      if (process.env.NODE_ENV === 'production') {
-        console.log('Nuxt.js running in production mode, $i18n is only running in server mode')
-        return 'server'
-      }
-
-      console.log('Nuxt.js running in dev mode, $i18n is only running in server AND CLIENT mode')
-      return 'all'
-    })() }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
+    { src: '@/plugins/i18n.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     '@/plugins/axios',
     // { src: '@/plugins/domain.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     { src: '@/plugins/zendesk.ts', mode: 'all' }
@@ -101,7 +93,8 @@ export default {
   },
 
   sentry: {
-    dsn: process.env.SENTRY_DSN
+    dsn: process.env.SENTRY_DSN,
+    disabled: process.env.NODE_ENV !== 'production'
   },
 
   server: {
