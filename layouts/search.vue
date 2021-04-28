@@ -63,7 +63,8 @@ export default Vue.extend({
 
   methods: {
     loadGTM() {
-      const gtmKey = this.$gtmKey
+      const gtmKey = this.gtmKey;
+
       if (gtmKey) {
         /* eslint-disable */
         // @ts-ignore

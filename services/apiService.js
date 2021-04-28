@@ -41,7 +41,6 @@ class ApiService {
 
         const fetch = new Promise(function(resolve, reject) {
           self.axiosInstance.get('languages').then(function(response) {
-            console.log('FETCHING LANGUAGES')
             self.languages = response.data.data
             resolve(self.languages)
           }).catch((e) => {
@@ -72,7 +71,6 @@ class ApiService {
         const fetch = new Promise(function(resolve, reject) {
           self.axiosInstance.get(`translations/${languageId}/airport`)
             .then(function({ data }) {
-              console.log('FETCHING TRANSLATIONS')
               self.translations[languageId] = data
               resolve(self.translations[languageId])
             }).catch((e) => {
@@ -289,7 +287,6 @@ function getInstance(name, config) {
     apiInstances[name] = new ApiService(config)
 
     setInterval(function() {
-      console.log('REFRESHING DATA', new Date().toString())
       apiInstances[name].refresh()
     }, 60000)
   }

@@ -6,8 +6,8 @@ f<template>
       @click="show()"
     >
       <img
-        v-if="isLoading"
-        src="~/static/icons/loop.svg"
+        v-if="!isLoading"
+        src="~/static/icons/help.svg"
         width="24"
         height="24"
         aria-hidden="true"
@@ -17,7 +17,7 @@ f<template>
       >
       <img
         v-else
-        src="~/static/icons/help.svg"
+        src="~/static/icons/loop.svg"
         width="24"
         height="24"
         aria-hidden="true"
@@ -35,33 +35,25 @@ f<template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { getInstance } from '~/services/apiService'
-import { Language as LanguageType } from '~/types/Language'
 
 export default Vue.extend({
   data(): {
     isLoading: boolean,
     isLoaded: boolean,
     isMounted: boolean,
-    language?: LanguageType
     } {
     return {
-      isLoading: true,
+      isLoading: false,
       isLoaded: false,
       isMounted: false,
-      language: undefined
     }
   },
 
-  async fetch() {
-    const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/'
-    })
-
-    const languages = await api.getLanguages()
-
-    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
-    this.language = currentLanguage
+  props: {
+    language: {
+      type: String,
+      required: true,
+    }
   },
 
   mounted() {
@@ -70,9 +62,8 @@ export default Vue.extend({
 
   methods: {
     show() {
-      this.isLoading = true
-
       if (!this.isLoaded) {
+        this.isLoading = true;
         this.load()
         return
       }
@@ -83,23 +74,21 @@ export default Vue.extend({
     open() {
       this.$zendesk.show()
       this.$zendesk.open()
-
-      setTimeout(() => {
-        this.isLoading = false
-      }, 400)
+      
+      if (!this.isLoaded) {
+        this.isLoaded = true;
+      }
     },
 
     load() {
       this.$zendesk.load()
 
       this.$zendesk.$on('loaded', () => {
-        this.$zendesk.setLocale(this.language!.lang)
+        this.$zendesk.setLocale(this.language)
 
         this.open()
-
-        setTimeout(() => {
-          this.isLoaded = true
-        }, 300)
+        this.isLoading = false;
+        
       })
     }
   }
