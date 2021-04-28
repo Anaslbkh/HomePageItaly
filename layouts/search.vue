@@ -1,5 +1,6 @@
 <template>
   <div class="overflow-x-hidden" :class="{ fixed: navShown }">
+    <CookieBar />
     <Header
       @toggle="navToggle"
     />
@@ -20,13 +21,15 @@ import Vue from 'vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import LegalFooter from '@/components/LegalFooter.vue'
+import CookieBar from '@/components/CookieBar.vue'
 import { getInstance } from '~/services/apiService'
 
 export default Vue.extend({
   components: {
     Header,
     Footer,
-    LegalFooter
+    LegalFooter,
+    CookieBar
   },
 
   // async validate({params, $paths, isHMR}) {
