@@ -65,7 +65,7 @@
             :open-date="datePickerParameters.startDate"
             :disabled-dates="datePickerParameters.disableDates"
             :show-on-select-only="datePickerParameters.showOnSelectOnly"
-            :pre-selected-date="datePickerParameters.startDate"
+            :pre-selected-date="datePickerParameters.defaultStartDate"
             :value="formData.arrival"
             input-class="p-3 py-3.5 w-full shadow-input border border-r-0 border-gray-500 focus:outline-none text-gray-800 text-sm"
             @selected="onDateSelected($event, 'arrival')"
@@ -174,6 +174,7 @@ type DatePickerParameters = {
   showOnSelectOnly: boolean,
   fullMonthName: boolean,
   disableDates: Object,
+  defaultStartDate: Date,
 }
 
 export default Vue.extend({
@@ -209,7 +210,12 @@ export default Vue.extend({
         fullMonthName: true,
         disableDates: {
           to: (new Date()).setDate((new Date()).getDate() - 1)
-        }
+        },
+        defaultStartDate: (function() {
+          let now = new Date();
+          now.setDate(now.getDate() + 7);
+          return now;
+        })(),
       },
       language: undefined,
       airport: undefined,
@@ -238,7 +244,7 @@ export default Vue.extend({
   computed: {
     preSelectedDateDeparture(): Date {
       const date = new Date()
-      date.setDate(this.datePickerParameters.startDate.getDate() + 7)
+      date.setDate(this.datePickerParameters.startDate.getDate() + 14)
 
       return date
     },
