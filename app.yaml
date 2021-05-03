@@ -3,16 +3,16 @@ env: flex
 service: mpl
 
 automatic_scaling:
-  min_num_instances: 1
-  max_num_instances: 4
-
+  min_num_instances: %%AUTOMATIC_SCALING_MIN_NUM_INSTANCES%%
+  max_num_instances: %%AUTOMATIC_SCALING_MAX_NUM_INSTANCES%%
+  
 resources:
-  cpu: 2
-  memory_gb: 2
+  cpu: %%RESOURCES_CPU%%
+  memory_gb: %%RESOURCES_MEMORY_GB%%
 
 env_variables:
-  NODE_ENV: "production"
-  API_BASE_URL: "https://parkos.com/api/v1/"
-  GOOGLE_MAPS_API_KEY: "AIzaSyDTlDjkPhINXUcc_f_Za3Xd7-hE7GXXzd0"
-  SENTRY_DSN: "https://0e3735aa960a4212bcbfdd70bae9f66e@o109164.ingest.sentry.io/5699581"
-  ZENDESK_KEY: "2a147e2d-9a66-4262-92ee-9e02607930a7"
+  NODE_ENV: %%NODE_ENV%%
+  API_BASE_URL: "%%API_BASE_URL%%"
+  GOOGLE_MAPS_API_KEY: "%%GOOGLE_MAPS_API_KEY%%"
+  SENTRY_DSN: "%%SENTRY_DSN%%"
+  ZENDESK_KEY: "%%ZENDESK_KEY%%"
