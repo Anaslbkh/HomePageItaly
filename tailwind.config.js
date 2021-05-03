@@ -63,6 +63,9 @@ module.exports = {
       transformOrigin: {
         navTop: '10% 10%',
         navBottom: '10% 90%'
+      },
+      width: {
+        1000: '1000px'
       }
     },
     fontFamily: {

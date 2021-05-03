@@ -3,18 +3,17 @@
         v-if="!hasConsented"
         ref="cookieBar"
         id="cookie-notice"
-        class="cookie-notice absolute max-w-5xl z-10 top-0 flex bg-blue-100 text-sm sm:bottom-0 
-        sm:top-auto sm:left-1/2 transform sm:-translate-x-1/2"
+        class="w-screen sm:w-1000 fixed z-50 bottom-0 flex bg-blue-100 text-sm
+        sm:left-1/2 transform sm:-translate-x-1/2"
     >
         <div class="cookie-message py-4 px-6">
-            {{ cookieString }}
             <p class="sm:hidden" v-html="$i18n('templates.cookie-notification-mobile', { url })"></p>
             <p class="hidden sm:block" v-html="$i18n('templates.cookie-notification-desktop', { url })"></p>
         </div>
         <div class="flex border-l px-6 items-center border-gray-500">
-            <button class="cookie-close flex items-center mr-6" @click="giveConsent">
+            <button class="cookie-close flex items-center" @click="giveConsent">
                 <span id="cookieCloseLabel" class="hidden sm:inline text-blue-700 underline">{{ $i18n('templates.close') }}</span>
-                <img src="~/static/icons/close.svg" alt="Close" aria-hidden="true" aria-labelledby="cookieCloseLabel" width="24" height="24" class="ml-2">
+                <img src="~/static/icons/close.svg" alt="Close" aria-hidden="true" aria-labelledby="cookieCloseLabel" width="26" height="26" class="max-w-none sm:ml-2">
             </button>
         </div>
     </section>
@@ -66,10 +65,4 @@ export default {
 </script>
 
 <style scoped>
-.cookie-notice {
-    width: 1000px;
-}
-.cookie-close {
-    
-}
 </style>
