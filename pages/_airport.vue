@@ -89,7 +89,7 @@
           {{ $i18n('templates.map-parkinglots', { location: airport.name }) }}
         </h2>
         <p>
-          {{ $i18n('templates.more-info-marker') }} <a :href="`${$paths.url(false)}${$route.path}${$i18n('additional.map-slug')}`" class="text-blue-700 hover:text-blue-900 hover:underline">{{ $i18n('reservation.directions-to', {
+          {{ $i18n('templates.more-info-marker') }} <a :href="`${$paths.url(false)}${$route.path}${$i18n('additional.map-slug')}/`" class="text-blue-700 hover:text-blue-900 hover:underline">{{ $i18n('reservation.directions-to', {
             location: airport.name
           }) }}</a>
         </p>

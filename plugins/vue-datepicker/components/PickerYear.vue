@@ -57,10 +57,10 @@ export default {
       const years = []
       // set up a new date object to the beginning of the current 'page'
       const dObj = this.useUtc
-        ? new Date(Date.UTC(d.getUTCFullYear() - 100, d.getUTCMonth(), d.getUTCDate()))
-        : new Date(d.getFullYear() - 100, d.getMonth(), d.getDate(), d.getHours(), d.getMinutes())
+        ? new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()))
+        : new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes())
 
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < 50; i++) {
         years.push({
           year: this.utils.getFullYear(dObj),
           timestamp: dObj.getTime(),
