@@ -91,5 +91,5 @@ sw.*
 *.swp
 
 # App YAML
-app.yaml.staging
-app.yaml.production
+app.staging.yaml
+app.production.yaml

@@ -1,7 +1,7 @@
 f<template>
   <div>
     <div
-      class="help-btn transition-bg-ease opacity-0 fixed right-2 inline-flex bottom-0 text-white bg-blue-500 z-50 py-3.5 px-3.5 rounded-full mb-3 hover:bg-blue-550 cursor-pointer"
+      class="help-btn transition-bg-ease opacity-0 fixed right-2 inline-flex bottom-0 text-white bg-blue-500 z-40 py-3.5 px-3.5 rounded-full mb-3 hover:bg-blue-550 cursor-pointer"
       :class="{ 'opacity-100': isMounted, 'disabled': isLoading }"
       @click="show()"
     >

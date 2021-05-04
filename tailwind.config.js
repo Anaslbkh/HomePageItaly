@@ -38,6 +38,7 @@ module.exports = {
           800: '#9f3207'
         },
         blue: {
+          100: '#e4f5ff',
           300: '#23b0fd',
           500: '#0983f0',
           550: '#0876d7',
@@ -62,6 +63,9 @@ module.exports = {
       transformOrigin: {
         navTop: '10% 10%',
         navBottom: '10% 90%'
+      },
+      width: {
+        1000: '1000px'
       }
     },
     fontFamily: {

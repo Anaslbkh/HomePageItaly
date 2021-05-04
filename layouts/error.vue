@@ -64,7 +64,7 @@ export default {
       baseURL: 'https://parkos.com/api/v1/',
     });
     
-    this.airports = await api.getAirports(this.error.language.lang);
+    //this.airports = await api.getAirports(this.error.language.lang);
   },
 
   methods: {

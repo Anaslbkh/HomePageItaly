@@ -5,7 +5,6 @@ service: mpl
 automatic_scaling:
   min_num_instances: %%AUTOMATIC_SCALING_MIN_NUM_INSTANCES%%
   max_num_instances: %%AUTOMATIC_SCALING_MAX_NUM_INSTANCES%%
-
 resources:
   cpu: %%RESOURCES_CPU%%
   memory_gb: %%RESOURCES_MEMORY_GB%%
