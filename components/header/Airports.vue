@@ -51,7 +51,7 @@ export default {
     const languages = await api.getLanguages()
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
 
-    this.airports = []
+    this.airports = await api.getAirports(currentLanguage.lang)
   }
 }
 </script>
