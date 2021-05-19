@@ -158,6 +158,7 @@ import { Language as LanguageType } from '../../types/Language'
 import IconInfo from '~/components/icons/IconInfo.vue'
 import IconCalendar from '~/components/icons/IconCalendar.vue'
 import IconPin from '~/components/icons/IconPin.vue'
+import DatePicker from '~/plugins/vue-datepicker/components/Datepicker.vue'
 
 import { getInstance } from '~/services/apiService'
 
@@ -181,7 +182,8 @@ export default Vue.extend({
   components: {
     IconPin,
     IconCalendar,
-    IconInfo
+    IconInfo,
+    DatePicker
   },
 
   data(): {

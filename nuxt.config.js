@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+const TerserPlugin = require('terser-webpack-plugin');
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -17,6 +19,7 @@ export default {
       { name: 'msapplication-TileConfig', content: 'https://assets.parkos.com/assets/favicon/browserconfig.xml' }
     ],
     link: [
+      { rel: 'dns-prefetch', href: '//asssets.parkos.com' },
       { rel: 'icon', type: 'image/x-icon', href: 'https://assets.parkos.com/assets/favicon/favicon.ico' },
       { rel: 'apple-touch-icon', href: 'https://assets.parkos.com/assets/favicon/apple-icon.png' },
       { rel: 'apple-touch-icon', sizes: '57x57', href: 'https://assets.parkos.com/assets/favicon/apple-icon-57x57.png' },
@@ -32,7 +35,6 @@ export default {
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: 'https://assets.parkos.com/assets/favicon/android-icon-32x32.png' },
       { rel: 'icon', type: 'image/png', sizes: '96x96', href: 'https://assets.parkos.com/assets/favicon/android-icon-96x96.png' },
       { rel: 'icon', type: 'image/png', sizes: '192x192', href: 'https://assets.parkos.com/assets/favicon/android-icon-192x192.png' },
-      { rel: 'manifest', href: '/manifest.json' }
     ]
   },
 
@@ -45,7 +47,7 @@ export default {
   plugins: [
     { src: '@/plugins/paths.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     // @see https://www.npmjs.com/package/vuejs-datepicker v1.6.2
-    { src: '@/plugins/vue-datepicker/', mode: 'all' },
+    // { src: '@/plugins/vue-datepicker/', mode: 'all' },
     { src: '@/plugins/i18n.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
     '@/plugins/axios',
     // { src: '@/plugins/domain.ts', mode: 'all' }, // mode: process.env.NODE_ENV === 'production' ? 'server' : 'all' }, @TODO review/move function server side
@@ -73,6 +75,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extractCSS: true,
+    extend(config) {
+      config.devtool = 'source-map';
+    }
   },
 
   // Available options: https://axios.nuxtjs.org/options
@@ -113,6 +119,26 @@ export default {
           theme: '#0a83ef'
         }
       }
+    }
+  },
+
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+        sourceMap: true, // Must be set to true if using source-maps in production
+        terserOptions: {
+          // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+        },
+      }),
+      // optimize-css-assets-webpack-plugin
+    ],
+    splitChunks: {
+      chunks: 'all',
+      automaticNameDelimiter: '.',
+      name: undefined,
+      cacheGroups: {}
     }
   }
 }
