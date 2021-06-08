@@ -20,8 +20,9 @@ const pathsPlugin: Plugin = ({
   req,
   isDev
 }, inject) => {
+  const domain = 'parkos.fr';
   let host: string | undefined = process.server ? req.headers.host : window.location.host
-  let langHost: string = 'parkos.it'
+  let langHost: string = domain
 
   if (host?.includes('localhost') || host?.includes('appspot')) {
     let params: URLSearchParams|undefined;
@@ -40,7 +41,7 @@ const pathsPlugin: Plugin = ({
   const paths = {
     langHost,
     protocol: 'https',
-    host: host || 'parkos.it',
+    host: host || domain,
     url: (trailingSlash: boolean = true) => {
       return paths.protocol + '://' + paths.host + (trailingSlash ? '/' : '')
     },

@@ -9,6 +9,7 @@ class ApiService {
     this.airportReviews = {}
     this.airportFaq = {}
     this.parkings = {}
+    this.pageTemplates = {}
     this.axiosInstance = axios.create({
       baseURL: config.baseURL
     })
@@ -19,7 +20,8 @@ class ApiService {
       airportData: false,
       airportFaq: false,
       airportReviews: false,
-      airportParkings: false
+      airportParkings: false,
+      pageTemplates: false,
     }
   }
 
@@ -31,6 +33,7 @@ class ApiService {
       this.refreshes.airportFaq = true
       this.refreshes.airportReviews = true
       this.refreshes.airportParkings = true
+      this.refreshes.pageTemplates = true;
     }
 
     getLanguages = async function() {
@@ -276,6 +279,40 @@ class ApiService {
 
       return new Promise(function(resolve) {
         resolve(self.parkings[slug])
+      })
+    }
+
+    getPageTemplate = async function(slug, lang) {
+      const self = this
+
+      if (!(slug in self.pageTemplates) || self.refreshes.pageTemplates === true) {
+        self.refreshes.pageTemplates = false
+
+        const fetch = new Promise(function(resolve, reject) {
+          self.axiosInstance.get('page_template', {
+            params: {
+              lang,
+              slug,
+            }
+          }).then(function(response) {
+            self.pageTemplates[slug] = response.data;
+            resolve(self.pageTemplates[slug])
+          }).catch((e) => {
+            if (slug in self.pageTemplates) {
+              resolve(self.pageTemplates[slug])
+            } else {
+              reject(e)
+            }
+          })
+        })
+
+        if (!(slug in self.pageTemplates)) {
+          return fetch
+        }
+      }
+
+      return new Promise(function(resolve) {
+        resolve(self.pageTemplates[slug])
       })
     }
 }
