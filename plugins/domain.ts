@@ -64,8 +64,6 @@ const domainPlugin: Plugin = async({
 
   const airportSlug: string = isDev ? params.airport : route.path.split('/').filter(Boolean).pop()!
   if (airportSlug && airportSlug !== 'client') {
-    console.log(`Airport: ${airportSlug}`)
-
     const airports: Array<AirportType> = await api.getAirports(currentLanguage.lang)
 
     inject('airports', airports)

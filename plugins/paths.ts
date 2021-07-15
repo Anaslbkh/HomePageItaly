@@ -20,9 +20,13 @@ const pathsPlugin: Plugin = ({
   req,
   isDev
 }, inject) => {
-  const domain = 'parkos.fr';
-  let host: string | undefined = process.server ? req.headers.host : window.location.host
-  let langHost: string = domain
+  const domain = 'parkos.it';
+  const headers = (req && req.headers) ? Object.assign({}, req.headers) : {}
+  const xForwardedServer = (headers['x-forwarded-server'] as string);
+  let host: string | undefined = process.server ? xForwardedServer : window.location.host
+
+  if (isDev) host = domain
+  let langHost: string = host
 
   if (host?.includes('localhost') || host?.includes('appspot')) {
     let params: URLSearchParams|undefined;
@@ -38,18 +42,18 @@ const pathsPlugin: Plugin = ({
     }
   }
 
+  if (!host.includes('localhost')) {
+    langHost = host.replace(/\.?test|staging\.?|:[0-9]+/, '')
+  }
+
   const paths = {
     langHost,
     protocol: 'https',
-    host: host || domain,
+    host,
     url: (trailingSlash: boolean = true) => {
       return paths.protocol + '://' + paths.host + (trailingSlash ? '/' : '')
     },
     assetsUrl: 'https://assets.parkos.com/assets/'
-  }
-
-  if (!paths.host.includes('localhost')) {
-    paths.langHost = paths.host.replace(/\.?test|staging\.?|:[0-9]+/, '')
   }
 
   inject('paths', paths)

@@ -9,25 +9,23 @@ export default {
   data() {
     return {
       block: undefined,
-      languages: undefined,
     }
   },
 
   props: {
     slug: undefined,
+    language: undefined,
   },
 
   async fetch() {
-    const api = getInstance('parkos-test', {
-      baseURL: 'http://parkos.test/api/v1/'
-    })
+    if (process.server) {
+      const api = getInstance('parkos', {
+        baseURL: 'https://parkos.com/api/v1/'
+      })
 
-    const languages = await api.getLanguages()
-    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
-    this.language = currentLanguage;
-
-    const block = await api.getPageTemplate(this.slug, this.language.lang);
-    this.block = block.data;
+      const block = await api.getPageTemplate(this.slug, this.language.lang);
+      this.block = block.data;
+    }
   },
 
   computed: {

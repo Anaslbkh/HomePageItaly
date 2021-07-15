@@ -3,7 +3,7 @@
     <div class="container unskew mx-auto">
       <section class="grid grid-cols-1 md:grid-cols-4 border-b border-gray-500">
         <template v-for="slug in ['footer_airports', 'footer_information', 'footer_about']">
-          <PageTemplate :slug="slug" :key="slug" class="text-white leading-loose" />
+          <PageTemplate :slug="slug" :key="slug" class="text-white leading-loose" :language="language" />
         </template>
         <article>
           <figure class="flex justify-center">
@@ -18,19 +18,37 @@
         </article>
       </section>
       <section class="flex justify-center items-center flex-wrap">
-        <PageTemplate slug="footer_icons" />
+        <PageTemplate slug="footer_icons" :language="language" />
       </section>
     </div>
   </footer>
 </template>
 
 <script>
+import { getInstance } from '~/services/apiService'
 import PageTemplate from './PageTemplate.vue';
 
 export default {
+  data() {
+    return {
+      language: {}
+    }
+  },
+
   components: {
     PageTemplate,
-  }  
+  },
+
+  async fetch() {
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/'
+    })
+
+    const languages = await api.getLanguages()
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    console.log(currentLanguage);
+    this.language = currentLanguage;
+  }
 }
 </script>
 
