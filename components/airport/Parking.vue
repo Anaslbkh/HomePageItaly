@@ -52,7 +52,7 @@ export default {
 
       return new Intl.NumberFormat(this.language.lang, {
         style: 'currency',
-        currency: this.language.currency.iso_code || 'EUR'
+        currency: this.language.currency.iso_code ?? 'EUR'
       }).format(this.parking.from_price)
     }
   }
