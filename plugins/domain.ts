@@ -48,9 +48,7 @@ const domainPlugin: Plugin = async({
   params,
   route
 }, inject) => {
-  const api = getInstance('parkos', {
-    baseURL: 'https://parkos.com/api/v1/',
-  });
+  const api = getInstance('parkos');
   const languages: Array<LanguageType> = await api.getLanguages()
   inject('languages', languages)
 

@@ -19,19 +19,29 @@ export default {
 
   async fetch() {
     if (process.server) {
-      const api = getInstance('parkos', {
-        baseURL: 'https://parkos.com/api/v1/'
-      })
+      const api = getInstance('parkos')
 
       const block = await api.getPageTemplate(this.slug, this.language.lang);
-      this.block = block.data;
+      this.block = block;
+      console.log(this.block);
     }
   },
 
   computed: {
     blockContent() {
-      return this.block[this.language.lang]['page_content']
+      return this.block['page_content']
     }
   }
 }
 </script>
+
+<style scoped>
+.text-white a,
+.text-white a:hover {
+  color: inherit;
+}
+
+.strong {
+  font-weight: bolder;
+}
+</style>

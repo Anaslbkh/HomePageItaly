@@ -3,10 +3,10 @@
     <div class="container unskew mx-auto">
       <section class="grid grid-cols-1 md:grid-cols-4 border-b border-gray-500">
         <template v-for="slug in ['footer_airports', 'footer_information', 'footer_about']">
-          <PageTemplate :slug="slug" :key="slug" class="text-white leading-loose" :language="language" />
+          <PageTemplate :slug="slug" :key="slug" class="text-white leading-loose pb-8" :language="language" />
         </template>
-        <article>
-          <figure class="flex justify-center">
+        <article class="flex justify-center items-end">
+          <figure>
             <img
               :src="`${$paths.assetsUrl}img/static/parkos-employees-en-eu.png`"
               width="300"
@@ -17,7 +17,7 @@
           </figure>
         </article>
       </section>
-      <section class="flex justify-center items-center flex-wrap">
+      <section class="flex justify-center items-center flex-wrap pt-8">
         <PageTemplate slug="footer_icons" :language="language" />
       </section>
     </div>
@@ -40,13 +40,10 @@ export default {
   },
 
   async fetch() {
-    const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/'
-    })
+    const api = getInstance('parkos')
 
     const languages = await api.getLanguages()
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
-    console.log(currentLanguage);
     this.language = currentLanguage;
   }
 }

@@ -152,9 +152,7 @@ export default {
 
   async fetch() {
     const slug = this.$route.params.airport
-    const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/'
-    })
+    const api = getInstance('parkos')
     this.languages = await api.getLanguages()
 
     const currentLanguage = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
@@ -242,5 +240,8 @@ export default {
 <style>
 .grey-text {
   @apply text-gray-700;
+}
+.list-decimal {
+  list-style: decimal;
 }
 </style>

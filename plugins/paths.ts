@@ -20,12 +20,12 @@ const pathsPlugin: Plugin = ({
   req,
   isDev
 }, inject) => {
-  const domain = 'parkos.it';
+  const domain = 'parkos.co.uk';
   const headers = (req && req.headers) ? Object.assign({}, req.headers) : {}
   const xForwardedServer = (headers['x-forwarded-server'] as string);
   let host: string | undefined = process.server ? xForwardedServer : window.location.host
 
-  if (isDev) host = domain
+  if (isDev || typeof host === 'undefined') host = domain
   let langHost: string = host
 
   if (host?.includes('localhost') || host?.includes('appspot')) {
@@ -44,6 +44,10 @@ const pathsPlugin: Plugin = ({
 
   if (!host.includes('localhost')) {
     langHost = host.replace(/\.?test|staging\.?|:[0-9]+/, '')
+  }
+
+  if (langHost.includes('localhost')) {
+    langHost = domain;
   }
 
   const paths = {

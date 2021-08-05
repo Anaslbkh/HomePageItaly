@@ -11,7 +11,7 @@ class ApiService {
         this.parkings = {}
         this.pageTemplates = {}
         this.axiosInstance = axios.create({
-            baseURL: config.baseURL
+            baseURL: config?.baseURL ?? 'https://staging.parkos.com/api/v1/'
         })
         this.refreshes = {
             languages: false,
@@ -65,37 +65,37 @@ class ApiService {
         })
     }
 
-    getTranslations = async function(languageId) {
+    getTranslations = async function(language) {
         const self = this
 
-        if (!(languageId in self.translations) || self.refreshes.translations === true) {
+        if (!(language in self.translations) || self.refreshes.translations === true) {
             self.refreshes.translations = false
 
             const fetch = new Promise(function(resolve, reject) {
-                self.axiosInstance.get(`translations/${languageId}/airport`)
+                self.axiosInstance.get(`translations/${language}/airport`)
                     .then(function({ data }) {
-                        self.translations[languageId] = data
-                        resolve(self.translations[languageId])
+                        self.translations[language] = data
+                        resolve(self.translations[language])
                     }).catch((e) => {
-                        if (languageId in self.translations) {
-                            resolve(self.translations[languageId])
+                        if (language in self.translations) {
+                            resolve(self.translations[language])
                         } else {
                             reject(e)
                         }
                     })
             })
 
-            if (!(languageId in self.translations)) {
+            if (!(language in self.translations)) {
                 return fetch
             }
         }
 
         return new Promise(function(resolve) {
-            resolve(self.translations[languageId])
+            resolve(self.translations[language])
         })
     }
 
-    getAirports = async function(lang, limit = 50, orderBy = 'locations_content.maintitle') {
+    getAirports = async function(lang, limit = 250, orderBy = 'locations_content.maintitle') {
         const self = this
 
         if (!(lang in self.airports) || self.refreshes.airports === true) {
@@ -133,33 +133,35 @@ class ApiService {
 
     getAirport = async function(slug, lang) {
         const airports = await this.getAirports(lang)
-        console.log(airports.map((airport) => airport.slug));
-        // console.log(Array.prototype.find.call(airports, airport => airport.slug === slug));
+            // console.log(Array.prototype.find.call(airports, airport => airport.slug === slug));
         return Array.prototype.find.call(airports, airport => airport.slug === slug)
     }
 
     getAirportData = async function(slug, lang) {
         const self = this
+
+        if (!(lang in self.airportData)) {
+            self.airportData[lang] = {}
+        }
+
         if (!(slug in self.airportData) || self.refreshes.airportData === true) {
             self.refreshes.airportData = false
 
             const airport = await self.getAirport(slug, lang)
 
             const fetch = new Promise(function(resolve, reject) {
-                console.log('FETCHING AIRPORT DETAILS', slug, lang)
                 self.axiosInstance.get(`airports/${airport.id}/details`)
                     .then(function(response) {
-                        self.airportData[slug] = {
+                        self.airportData[lang][slug] = {
                             airport,
                             content: response.data.content
                         }
 
-                        resolve(self.airportData[slug])
+                        resolve(self.airportData[lang][slug])
                     }).catch((e) => {
-                        console.log('Airport data')
                         reject(e)
                         if (slug in self.airportData) {
-                            resolve(self.airportData[slug])
+                            resolve(self.airportData[lang][slug])
                         } else {
                             reject(e)
                         }
@@ -172,19 +174,22 @@ class ApiService {
         }
 
         return new Promise(function(resolve) {
-            resolve(self.airportData[slug])
+            resolve(self.airportData[lang][slug])
         })
     }
 
     getAirportReviews = async function(slug, lang, limit = 4) {
         const self = this
 
+        if (!(lang in self.airportReviews)) {
+            self.airportReviews[lang] = {}
+        }
+
         if (!(slug in self.airportReviews) || self.refreshes.airportReviews === true) {
             self.refreshes.airportReviews = false
             const airport = await self.getAirport(slug, lang)
 
             const fetch = new Promise(function(resolve, reject) {
-                console.log('FETCHING AIRPORT REVIEWS', slug, lang)
                 self.axiosInstance.get('reviews', {
                     params: {
                         airport: airport.id,
@@ -192,11 +197,11 @@ class ApiService {
                         limit
                     }
                 }).then(function(response) {
-                    self.airportReviews[slug] = response.data
-                    resolve(self.airportReviews[slug])
+                    self.airportReviews[lang][slug] = response.data
+                    resolve(self.airportReviews[lang][slug])
                 }).catch((e) => {
                     if (slug in self.airportReviews) {
-                        resolve(self.airportReviews[slug])
+                        resolve(self.airportReviews[lang][slug])
                     } else {
                         reject(e)
                     }
@@ -209,29 +214,32 @@ class ApiService {
         }
 
         return new Promise(function(resolve) {
-            resolve(self.airportReviews[slug])
+            resolve(self.airportReviews[lang][slug])
         })
     }
 
     getAirportFaq = async function(slug, lang) {
         const self = this
 
+        if (!(lang in self.airportFaq)) {
+            self.airportFaq[lang] = {}
+        }
+
         if (!(slug in self.airportFaq) || self.refreshes.airportFaq === true) {
             self.refreshes.airportFaq = false
             const airport = await self.getAirport(slug, lang)
 
             const fetch = new Promise(function(resolve, reject) {
-                console.log('FETCHING AIRPORT FAQ', slug, lang)
                 self.axiosInstance.get(`airports/${airport.id}/faq`, {
                     params: {
                         lang
                     }
                 }).then(function(response) {
-                    self.airportFaq[slug] = response.data
-                    resolve(self.airportFaq[slug])
+                    self.airportFaq[lang][slug] = response.data
+                    resolve(self.airportFaq[lang][slug])
                 }).catch((e) => {
                     if (slug in self.airportFaq) {
-                        resolve(self.airportFaq[slug])
+                        resolve(self.airportFaq[lang][slug])
                     } else {
                         reject(e)
                     }
@@ -244,31 +252,33 @@ class ApiService {
         }
 
         return new Promise(function(resolve) {
-            resolve(self.airportFaq[slug])
+            resolve(self.airportFaq[lang][slug])
         })
     }
 
     getAirportParkings = async function(slug, lang) {
         const self = this
 
+        if (!(lang in self.parkings)) {
+            self.parkings[lang] = {}
+        }
+
         if (!(slug in self.parkings) || self.refreshes.airportParkings === true) {
             self.refreshes.airportParkings = false
             const airport = await self.getAirport(slug, lang)
 
             const fetch = new Promise(function(resolve, reject) {
-                console.log('FETCHING AIRPORT PARKINGS', slug, lang)
                 self.axiosInstance.get('parkings', {
                     params: {
                         lang,
                         airport: airport.id
                     }
                 }).then(function(response) {
-                    console.log(response.data);
-                    self.parkings[slug] = response.data.data
-                    resolve(self.parkings[slug])
+                    self.parkings[lang][slug] = response.data.data
+                    resolve(self.parkings[lang][slug])
                 }).catch((e) => {
                     if (slug in self.parkings) {
-                        resolve(self.parkings[slug])
+                        resolve(self.parkings[lang][slug])
                     } else {
                         reject(e)
                     }
@@ -281,43 +291,48 @@ class ApiService {
         }
 
         return new Promise(function(resolve) {
-            resolve(self.parkings[slug])
+            resolve(self.parkings[lang][slug])
         })
     }
 
     getPageTemplate = async function(slug, lang) {
-        const self = this
+        const self = this;
 
-        if (!(slug in self.pageTemplates) || self.refreshes.pageTemplates === true) {
+        if (!(lang in self.pageTemplates)) {
+            self.pageTemplates[lang] = {}
+        }
+
+        if (!(slug in self.pageTemplates[lang]) || self.refreshes.pageTemplates === true) {
             self.refreshes.pageTemplates = false
 
             const fetch = new Promise(function(resolve, reject) {
-                console.log('FETCHING PAGE TEMPALTE', slug, lang)
+                console.log('FETCHING PAGE TEMPLATE', slug, lang)
                 self.axiosInstance.get('page_template', {
                     params: {
                         slug,
                         lang,
                     }
                 }).then(function(response) {
-                    self.pageTemplates[slug] = response.data
+                    console.log(response.data);
+                    self.pageTemplates[lang][slug] = response.data.data[lang];
                     console.log(self.pageTemplates)
-                    resolve(self.pageTemplates[slug])
+                    resolve(self.pageTemplates[lang][slug])
                 }).catch((e) => {
                     if (slug in self.pageTemplates) {
-                        resolve(self.pageTemplates[slug])
+                        resolve(self.pageTemplates[lang][slug])
                     } else {
                         reject(e)
                     }
                 })
             })
 
-            if (!(slug in self.pageTemplates)) {
+            if (!(slug in self.pageTemplates[lang])) {
                 return fetch
             }
         }
 
         return new Promise(function(resolve) {
-            resolve('test')
+            resolve(self.pageTemplates[lang][slug])
         })
     }
 }

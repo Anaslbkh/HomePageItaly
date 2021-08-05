@@ -173,6 +173,10 @@ module.exports = {
                 'py-12',
                 'pt-12',
                 'pb-12',
+                'pl-8',
+
+                'list-decimal',
+                'list-disc',
 
                 'md:pt-12',
                 'md:py-24',
@@ -185,6 +189,8 @@ module.exports = {
                 'flex-wrap',
 
                 'md:float-left',
+
+                'md:block',
 
                 // other
                 'focus:bg-primary-700',
