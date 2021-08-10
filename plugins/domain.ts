@@ -48,7 +48,9 @@ const domainPlugin: Plugin = async({
   params,
   route
 }, inject) => {
-  const api = getInstance('parkos');
+  const api = getInstance('parkos', {
+    baseURL: 'https://parkos.com/api/v1/',
+  });
   const languages: Array<LanguageType> = await api.getLanguages()
   inject('languages', languages)
 
@@ -62,6 +64,8 @@ const domainPlugin: Plugin = async({
 
   const airportSlug: string = isDev ? params.airport : route.path.split('/').filter(Boolean).pop()!
   if (airportSlug && airportSlug !== 'client') {
+    console.log(`Airport: ${airportSlug}`)
+
     const airports: Array<AirportType> = await api.getAirports(currentLanguage.lang)
 
     inject('airports', airports)

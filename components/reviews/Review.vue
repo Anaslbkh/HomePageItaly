@@ -51,7 +51,9 @@ export default Vue.extend({
 
   async fetch() {
     const slug = this.$route.params.airport
-    const api = getInstance('parkos')
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/'
+    })
 
     const languages = await api.getLanguages()
 

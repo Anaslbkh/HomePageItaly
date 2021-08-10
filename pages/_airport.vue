@@ -69,7 +69,7 @@
     <section class="bg-gray-200 border-t border-b border-gray-500 py-24">
       <div v-html="airportData.content[language.lang].content" />
     </section>
-    <section v-if="parkings && parkings.length" id="parkings" class="pt-24">
+    <section id="parkings" class="py-24">
       <div class="container mx-auto mb-16">
         <h2 class="text-3xl text-blue-900 font-heading mb-24">
           {{ $i18n('templates.merchants-at-airport', { location: airport.name }) }}
@@ -81,7 +81,7 @@
       </div>
     </section>
 
-    <Faq v-if="faq && faq.length > 0" :items="faq" class="pt-24" />
+    <Faq v-if="faq && faq.length > 0" :items="faq" />
 
     <section id="map" class="bg-gray-200 border-t border-b border-gray-500 py-24">
       <div class="container mx-auto">
@@ -152,7 +152,9 @@ export default {
 
   async fetch() {
     const slug = this.$route.params.airport
-    const api = getInstance('parkos')
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/'
+    })
     this.languages = await api.getLanguages()
 
     const currentLanguage = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
@@ -233,6 +235,13 @@ export default {
     date() {
       return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date())
     },
+    alternateLinks() {
+      return [
+        { en: 'https://eu.parkos.com/parking-linate-airport/' },
+        { fr: 'https://parkos.fr/parking-linate/' },
+        { it: 'https://parkos.it/parcheggio-linate/' }
+      ]
+    }
   }
 }
 </script>
@@ -240,8 +249,5 @@ export default {
 <style>
 .grey-text {
   @apply text-gray-700;
-}
-.list-decimal {
-  list-style: decimal;
 }
 </style>

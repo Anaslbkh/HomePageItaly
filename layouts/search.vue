@@ -40,7 +40,9 @@ export default Vue.extend({
   },
 
   async fetch() {
-    const api = getInstance('parkos')
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/'
+    })
     this.languages = await api.getLanguages()
 
     const currentLanguage = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)

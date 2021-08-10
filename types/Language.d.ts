@@ -1,7 +1,5 @@
 import { Socials } from './Socials'
 import { Country } from './Country'
-import { Currency } from './Currency'
-
 
 export type Language = {
   id: number;
@@ -14,6 +12,5 @@ export type Language = {
   // eslint-disable-next-line camelcase
   gtm_key?: string;
   socials: Socials;
-  country: Country;
-  currency: Currency;
+  country: Country
 }
