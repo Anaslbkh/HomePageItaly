@@ -18,9 +18,7 @@ declare module '@nuxt/types' {
 }
 
 const i18nPlugin: Plugin = async({ app, $paths }, inject) => {
-  const api = getInstance('parkos', {
-    baseURL: 'https://parkos.com/api/v1/',
-  });
+  const api = getInstance('parkos');
   const languages: Array<LanguageType> = await api.getLanguages();
 
   const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === $paths.langHost)
