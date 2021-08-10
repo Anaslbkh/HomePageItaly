@@ -60,7 +60,9 @@ export default {
   },
 
   async fetch() {
-    const api = getInstance('parkos');
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/',
+    });
     
     //this.airports = await api.getAirports(this.error.language.lang);
   },

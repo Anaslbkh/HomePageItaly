@@ -39,7 +39,9 @@ export default {
   },
 
   async fetch() {
-    const api = getInstance('parkos')
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/'
+    })
 
     const languages = await api.getLanguages()
     this.language = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
@@ -52,7 +54,7 @@ export default {
 
       return new Intl.NumberFormat(this.language.lang, {
         style: 'currency',
-        currency: this.language.currency.iso_code ?? 'EUR'
+        currency: 'EUR'
       }).format(this.parking.from_price)
     }
   }
