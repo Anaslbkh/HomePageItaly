@@ -123,7 +123,7 @@
         <div class="flex w-2/5 relative right-0.5">
           <select
             v-model="formData.departureTime"
-            name="arrivalTime"
+            name="departureTime"
             class="px-4 table-cell w-full shadow-input rounded-r border-l border-b border-t border-gray-500 bg-white focus:outline-none appearance-none text-gray-800 text-sm"
           >
             <option
