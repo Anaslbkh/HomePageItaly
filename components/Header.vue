@@ -16,8 +16,8 @@
           <ul class="flex flex-col sm:flex-row sm:inline-flex text-lg sm:text-base">
             <Airports />
 
-            <li>
-              <a href="https://parkos.zendesk.com/hc/it" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+            <li v-if="zenDeskLangCode">
+              <a :href="`https://parkos.zendesk.com/hc/${zenDeskLangCode}`" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <img
                   src="~/static/icons/customerservice.svg"
                   width="16"
@@ -95,6 +95,8 @@ import SearchForm from '../components/search/index.vue'
 import Logo from './Logo.vue'
 import Languages from '~/components/header/Languages.vue'
 import Airports from '~/components/header/Airports.vue'
+import { Language as LanguageType } from '../../types/Language'
+import { getInstance } from '~/services/apiService'
 
 export default Vue.extend({
   components: {
@@ -114,10 +116,34 @@ export default Vue.extend({
   data(): {
     navOpen: boolean,
     navShown: boolean,
+    language?: LanguageType
     } {
     return {
       navOpen: true,
-      navShown: false
+      navShown: false,
+      language: undefined
+    }
+  },
+
+  async fetch() {
+    const slug = this.$route.params.airport
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/'
+    })
+
+    const languages = await api.getLanguages()
+
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    this.language = currentLanguage
+  },
+
+  computed: {
+    zenDeskLangCode() {
+      if(this.language) {
+        const langCode = this.language.lang;
+        if(langCode == 'en-eu') return 'en-150';
+        return langCode;
+      }
     }
   },
 
