@@ -46,7 +46,7 @@
               </a>
             </li>
             <li>
-              <a :href="`${$paths.url()}chi-siamo.html`" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a :href="aboutPageLink" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <img
                   src="~/static/icons/globe.svg"
                   width="16"
@@ -56,7 +56,7 @@
                   loading="lazy"
                   class="mr-1 -top-0.5 relative"
                 >
-                Chi siamo
+                {{ $i18n('general.about-us') }}
               </a>
             </li>
 
@@ -97,6 +97,7 @@ import Languages from '~/components/header/Languages.vue'
 import Airports from '~/components/header/Airports.vue'
 import { Language as LanguageType } from '../../types/Language'
 import { getInstance } from '~/services/apiService'
+import { getBFF } from '~/services/bffService'
 
 export default Vue.extend({
   components: {
@@ -116,12 +117,14 @@ export default Vue.extend({
   data(): {
     navOpen: boolean,
     navShown: boolean,
-    language?: LanguageType
+    language?: LanguageType,
+    aboutPageContent: Object
     } {
     return {
       navOpen: true,
       navShown: false,
-      language: undefined
+      language: undefined,
+      aboutPageContent: null
     }
   },
 
@@ -135,6 +138,12 @@ export default Vue.extend({
 
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
     this.language = currentLanguage
+
+    const bff = getBFF({
+      baseURL: 'http://localhost:3001/'
+    })
+
+    this.aboutPageContent = await bff.getPageContent(140);
   },
 
   computed: {
@@ -143,6 +152,17 @@ export default Vue.extend({
         const langCode = this.language.lang;
         if(langCode == 'en-eu') return 'en-150';
         return langCode;
+      }
+
+      return null;
+    },
+    aboutPageLink() {
+      if (this.aboutPageContent && this.language) {
+        const langCode = this.language.lang;
+        const currentContent = this.aboutPageContent['nl'];
+        return `${this.$paths.url()}${currentContent.slug}.html`;
+      } else {
+        return `${this.$paths.url()}chi-siamo.html`;
       }
     }
   },
