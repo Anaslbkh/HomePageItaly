@@ -21,8 +21,8 @@
         <p class="mx-4 font-bold">
           &copy; Parkos
         </p>
-        <a :href="`${$paths.url()}termini-e-condizioni.html`" class="mx-4 text-white hover:text-white">Termini e condizioni</a>
-        <a :href="`${$paths.url()}privacy-policy.html`" class="mx-4 text-white hover:text-white">Privacy Policy</a>
+        <a :href="termsConditionsPageContent.url" class="mx-4 text-white hover:text-white">{{termsConditionsPageContent.title}}</a>
+        <a :href="privacyPolicyPageContent.url" class="mx-4 text-white hover:text-white">{{privacyPolicyPageContent.title}}</a>
       </div>
     </div>
   </section>
@@ -30,6 +30,7 @@
 
 <script>
 import { getInstance } from '~/services/apiService'
+import { getInstance as getBffInstance } from '~/services/bffService'
 
 export default {
   data() {
@@ -46,6 +47,32 @@ export default {
     const languages = await api.getLanguages()
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
     this.language = currentLanguage
+
+    const bff = getBffInstance({
+      baseURL: 'http://localhost:3001/'
+    })
+
+    this.termsConditionsContent = await bff.getPageContent(72)
+    this.privacyPolicyContent = await bff.getPageContent(98)
+  },
+
+  computed: {
+    termsConditionsPageContent() {
+      if (this.termsConditionsContent && this.language) {
+        const currentContent = this.termsConditionsContent[this.language.lang];
+        return {title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html`}
+      } else {
+        return {title: 'Termini e condizioni', url: `${this.$paths.url()}termini-e-condizioni.html`}
+      }
+    },
+    privacyPolicyPageContent() {
+      if (this.privacyPolicyContent && this.language) {
+        const currentContent = this.privacyPolicyContent[this.language.lang];
+        return {title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html`}
+      } else {
+        return {title: 'Politique de confidentialité de Parkos', url: `${this.$paths.url()}privacy-policy.html`}
+      }
+    }
   }
 }
 </script>

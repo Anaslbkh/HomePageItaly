@@ -97,7 +97,7 @@ import Languages from '~/components/header/Languages.vue'
 import Airports from '~/components/header/Airports.vue'
 import { Language as LanguageType } from '../../types/Language'
 import { getInstance } from '~/services/apiService'
-import { getBFF } from '~/services/bffService'
+import { getInstance as getBffInstance } from '~/services/bffService'
 
 export default Vue.extend({
   components: {
@@ -139,7 +139,7 @@ export default Vue.extend({
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
     this.language = currentLanguage
 
-    const bff = getBFF({
+    const bff = getBffInstance({
       baseURL: 'http://localhost:3001/'
     })
 
@@ -158,8 +158,7 @@ export default Vue.extend({
     },
     aboutPageLink() {
       if (this.aboutPageContent && this.language) {
-        const langCode = this.language.lang;
-        const currentContent = this.aboutPageContent['nl'];
+        const currentContent = this.aboutPageContent[this.language.lang];
         return `${this.$paths.url()}${currentContent.slug}.html`;
       } else {
         return `${this.$paths.url()}chi-siamo.html`;

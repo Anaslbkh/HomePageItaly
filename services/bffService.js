@@ -56,10 +56,10 @@ class BffService {
   // })
 }
 
-function getBFF(config) {
+function getInstance(config) {
   const bff = new BffService(config);
 
   return bff;
 }
 
-export { getBFF };
+export { getInstance };
