@@ -1,6 +1,6 @@
 runtime: custom
 env: flex
-service: mpl
+service: mpl-airport-page
 
 automatic_scaling:
   min_num_instances: %%AUTOMATIC_SCALING_MIN_NUM_INSTANCES%%
