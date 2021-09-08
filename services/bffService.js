@@ -7,22 +7,31 @@ class BffService {
     this.axiosInstance = axios.create({
       baseURL: config.baseURL
     });
+    this.refreshes = {
+      pageContent: false
+    };
   }
 
-  getPageContent = async function(pageId) {
+  refresh = function() {
+    this.refreshes.pageContent = true;
+  };
+
+  getPageContent = async function(devtitle) {
     const self = this;
 
-    if (!self.pageContent[pageId]) {
+    if (!self.pageContent[devtitle] || self.refreshes.pageContent === true) {
+      self.refreshes.pageContent = false;
+
       const fetch = new Promise(function(resolve, reject) {
         self.axiosInstance
-          .get(`pages/${pageId}/content.json`)
+          .get(`pages/${devtitle}/content.json`)
           .then(response => {
-            self.pageContent[pageId] = response.data;
-            resolve(self.pageContent[pageId]);
+            self.pageContent[devtitle] = response.data;
+            resolve(self.pageContent[devtitle]);
           })
           .catch(e => {
-            if (self.pageContent[pageId] !== null) {
-              resolve(self.pageContent[pageId]);
+            if (self.pageContent[devtitle] !== null) {
+              resolve(self.pageContent[devtitle]);
             } else {
               reject(e);
             }
@@ -33,33 +42,23 @@ class BffService {
     }
 
     return new Promise(function(resolve) {
-      resolve(self.pageContent[pageId]);
+      resolve(self.pageContent[devtitle]);
     });
   };
-  // const fetch = new Promise(function(resolve, reject) {
-  //   console.log('FETCHING AIRPORT PARKINGS', slug, lang)
-  //   self.axiosInstance.get('parkings', {
-  //     params: {
-  //       lang,
-  //       airport: airport.id
-  //     }
-  //   }).then(function(response) {
-  //     self.parkings[slug] = response.data.data
-  //     resolve(self.parkings[slug])
-  //   }).catch((e) => {
-  //     if (slug in self.parkings) {
-  //       resolve(self.parkings[slug])
-  //     } else {
-  //       reject(e)
-  //     }
-  //   })
-  // })
 }
 
-function getInstance(config) {
-  const bff = new BffService(config);
+const bffInstances = {};
 
-  return bff;
+function getInstance(name, config) {
+  if (!(name in bffInstances)) {
+    bffInstances[name] = new BffService(config);
+
+    setInterval(function() {
+      bffInstances[name].refresh();
+    }, 60000);
+  }
+
+  return bffInstances[name];
 }
 
 export { getInstance };

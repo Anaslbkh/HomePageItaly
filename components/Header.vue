@@ -139,11 +139,11 @@ export default Vue.extend({
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
     this.language = currentLanguage
 
-    const bff = getBffInstance({
+    const bff = getBffInstance('parkos', {
       baseURL: 'http://localhost:3001/'
     })
 
-    this.aboutPageContent = await bff.getPageContent(140);
+    this.aboutPageContent = await bff.getPageContent('about-us');
   },
 
   computed: {
@@ -161,7 +161,7 @@ export default Vue.extend({
         const currentContent = this.aboutPageContent[this.language.lang];
         return `${this.$paths.url()}${currentContent.slug}.html`;
       } else {
-        return `${this.$paths.url()}chi-siamo.html`;
+        return null;
       }
     }
   },

@@ -21,8 +21,8 @@
         <p class="mx-4 font-bold">
           &copy; Parkos
         </p>
-        <a :href="termsConditionsPageContent.url" class="mx-4 text-white hover:text-white">{{termsConditionsPageContent.title}}</a>
-        <a :href="privacyPolicyPageContent.url" class="mx-4 text-white hover:text-white">{{privacyPolicyPageContent.title}}</a>
+        <a v-if="termsConditionsPageContent.url" :href="termsConditionsPageContent.url" class="mx-4 text-white hover:text-white">{{termsConditionsPageContent.title}}</a>
+        <a v-if="privacyPolicyPageContent.url" :href="privacyPolicyPageContent.url" class="mx-4 text-white hover:text-white">{{privacyPolicyPageContent.title}}</a>
       </div>
     </div>
   </section>
@@ -48,30 +48,30 @@ export default {
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
     this.language = currentLanguage
 
-    const bff = getBffInstance({
+    const bff = getBffInstance('parkos', {
       baseURL: 'http://localhost:3001/'
     })
 
-    this.termsConditionsContent = await bff.getPageContent(72)
-    this.privacyPolicyContent = await bff.getPageContent(98)
+    this.termsConditionsContent = await bff.getPageContent('terms-conditions')
+    this.privacyPolicyContent = await bff.getPageContent('privacy-policy')
   },
 
   computed: {
     termsConditionsPageContent() {
       if (this.termsConditionsContent && this.language) {
         const currentContent = this.termsConditionsContent[this.language.lang];
-        return {title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html`}
-      } else {
-        return {title: 'Termini e condizioni', url: `${this.$paths.url()}termini-e-condizioni.html`}
+        return { title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html` }
       }
+
+      return { title: '', url: '' };
     },
     privacyPolicyPageContent() {
       if (this.privacyPolicyContent && this.language) {
         const currentContent = this.privacyPolicyContent[this.language.lang];
-        return {title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html`}
-      } else {
-        return {title: 'Politique de confidentialité de Parkos', url: `${this.$paths.url()}privacy-policy.html`}
+        return { title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html` }
       }
+
+      return { title: '', url: '' };
     }
   }
 }
