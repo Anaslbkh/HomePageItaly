@@ -89,17 +89,15 @@
   </header>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
 import SearchForm from '../components/search/index.vue'
 import Logo from './Logo.vue'
 import Languages from '~/components/header/Languages.vue'
 import Airports from '~/components/header/Airports.vue'
-import { Language as LanguageType } from '../../types/Language'
 import { getInstance } from '~/services/apiService'
 import { getInstance as getBffInstance } from '~/services/bffService'
 
-export default Vue.extend({
+export default {
   components: {
     Airports,
     Languages,
@@ -110,26 +108,20 @@ export default Vue.extend({
   props: {
     showSearch: {
       default: true,
-      type: Boolean,
-    },
+      type: Boolean
+    }
   },
 
-  data(): {
-    navOpen: boolean,
-    navShown: boolean,
-    language?: LanguageType,
-    aboutPageContent: Object
-    } {
+  data: () => {
     return {
       navOpen: true,
       navShown: false,
-      language: undefined,
+      language: null,
       aboutPageContent: null
     }
   },
 
   async fetch() {
-    const slug = this.$route.params.airport
     const api = getInstance('parkos', {
       baseURL: 'https://parkos.com/api/v1/'
     })
@@ -143,37 +135,39 @@ export default Vue.extend({
       baseURL: 'http://localhost:3001/'
     })
 
-    this.aboutPageContent = await bff.getPageContent('about-us');
+    this.aboutPageContent = await bff.getPageContent('about-us')
   },
 
   computed: {
     zenDeskLangCode() {
-      if(this.language) {
-        const langCode = this.language.lang;
-        if(langCode == 'en-eu') return 'en-150';
-        return langCode;
+      if (this.language) {
+        const langCode = this.language.lang
+        if (langCode === 'en-eu') {
+          return 'en-150'
+        }
+        return langCode
       }
 
-      return null;
+      return null
     },
     aboutPageLink() {
       if (this.aboutPageContent && this.language) {
-        const currentContent = this.aboutPageContent[this.language.lang];
-        return `${this.$paths.url()}${currentContent.slug}.html`;
+        const currentContent = this.aboutPageContent[this.language.lang]
+        return `${this.$paths.url()}${currentContent.slug}.html`
       } else {
-        return null;
+        return null
       }
     }
   },
 
   methods: {
-    toggleMenu(): void {
+    toggleMenu() {
       this.navShown = !this.navShown
 
       this.$emit('toggle', this.navShown)
     }
   }
-})
+}
 </script>
 
 <style>
