@@ -55,9 +55,7 @@ export default {
 
   async fetch() {
     const slug = this.$route.params.airport
-    const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/'
-    })
+    const api = getInstance('parkos')
 
     this.languages = await api.getLanguages()
     const currentLanguage = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
@@ -71,11 +69,14 @@ export default {
 
       for (const language in this.airportData.content) {
         const _language = this.languages.find(_language => _language.lang === language)
-        availableLanguages.push({
-          lang: language,
-          name: _language?.native_name || _language.name,
-          url: this.airportData.content[language].url
-        })
+
+        if (_language) {
+          availableLanguages.push({
+            lang: language,
+            name: _language?.native_name || _language.name,
+            url: this.airportData.content[language].url
+          })
+        }
       }
 
       return availableLanguages.sort((a, b) => {

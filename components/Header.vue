@@ -56,7 +56,7 @@
                   loading="lazy"
                   class="mr-1 -top-0.5 relative"
                 >
-                Chi siamo
+                {{ $i18n('general.about-us') }}
               </a>
             </li>
 
