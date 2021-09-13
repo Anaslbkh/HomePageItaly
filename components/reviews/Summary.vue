@@ -69,9 +69,7 @@ export default {
 
   async fetch() {
     const slug = this.$route.params.airport
-    const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/'
-    })
+    const api = getInstance('parkos')
 
     const languages = await api.getLanguages()
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
