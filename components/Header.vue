@@ -140,7 +140,7 @@ export default {
 
   computed: {
     zenDeskLangCode() {
-      if (this.language) {
+      if (this.language && this.language.lang) {
         const langCode = this.language.lang
         if (langCode === 'en-eu') {
           return 'en-150'
@@ -151,7 +151,7 @@ export default {
       return null
     },
     aboutPageLink() {
-      if (this.aboutPageContent && this.language) {
+      if (this.aboutPageContent && this.language && this.language.lang) {
         const currentContent = this.aboutPageContent[this.language.lang]
         return `${this.$paths.url()}${currentContent.slug}.html`
       } else {

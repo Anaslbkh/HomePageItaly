@@ -21,8 +21,8 @@
         <p class="mx-4 font-bold">
           &copy; Parkos
         </p>
-        <a v-if="termsConditionsPageContent.url" :href="termsConditionsPageContent.url" class="mx-4 text-white hover:text-white">{{termsConditionsPageContent.title}}</a>
-        <a v-if="privacyPolicyPageContent.url" :href="privacyPolicyPageContent.url" class="mx-4 text-white hover:text-white">{{privacyPolicyPageContent.title}}</a>
+        <a v-if="termsConditionsPageContent.url" :href="termsConditionsPageContent.url" class="mx-4 text-white hover:text-white">{{ termsConditionsPageContent.title }}</a>
+        <a v-if="privacyPolicyPageContent.url" :href="privacyPolicyPageContent.url" class="mx-4 text-white hover:text-white">{{ privacyPolicyPageContent.title }}</a>
       </div>
     </div>
   </section>
@@ -35,7 +35,9 @@ import { getInstance as getBffInstance } from '~/services/bffService'
 export default {
   data() {
     return {
-      language: {}
+      language: null,
+      termsConditionsContent: null,
+      privacyPolicyContent: null
     }
   },
 
@@ -58,7 +60,7 @@ export default {
 
   computed: {
     termsConditionsPageContent() {
-      if (this.termsConditionsContent && this.language) {
+      if (this.termsConditionsContent && this.language && this.language.lang) {
         const currentContent = this.termsConditionsContent[this.language.lang];
         return { title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html` }
       }
@@ -66,7 +68,7 @@ export default {
       return { title: '', url: '' };
     },
     privacyPolicyPageContent() {
-      if (this.privacyPolicyContent && this.language) {
+      if (this.privacyPolicyContent && this.language && this.language.lang) {
         const currentContent = this.privacyPolicyContent[this.language.lang];
         return { title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html` }
       }
