@@ -1,17 +1,16 @@
 runtime: custom
 env: flex
 service: mpl-airport-page
+manual_scaling:
+  instances: 1
 
-automatic_scaling:
-  min_num_instances: %%AUTOMATIC_SCALING_MIN_NUM_INSTANCES%%
-  max_num_instances: %%AUTOMATIC_SCALING_MAX_NUM_INSTANCES%%
 resources:
-  cpu: %%RESOURCES_CPU%%
-  memory_gb: %%RESOURCES_MEMORY_GB%%
+  cpu: 1
+  memory_gb: 0.9
 
 env_variables:
-  NODE_ENV: %%NODE_ENV%%
-  API_BASE_URL: "%%API_BASE_URL%%"
-  GOOGLE_MAPS_API_KEY: "%%GOOGLE_MAPS_API_KEY%%"
-  SENTRY_DSN: "%%SENTRY_DSN%%"
-  ZENDESK_KEY: "%%ZENDESK_KEY%%"
+  NODE_ENV: production
+  API_BASE_URL: "https://parkos.com/api/v1/"
+  GOOGLE_MAPS_API_KEY: AIzaSyDTlDjkPhINXUcc_f_Za3Xd7
+  SENTRY_DSN: https://0e3735aa960a4212bcbfdd70bae9f66e@o109164.ingest.sentry.io/5699581
+  ZENDESK_KEY: 2a147e2d-9a66-4262-92ee-9e02607930a7
