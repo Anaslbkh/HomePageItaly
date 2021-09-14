@@ -64,6 +64,11 @@ export default {
         '@nuxtjs/dotenv'
     ],
 
+    // Build Configuration: https://go.nuxtjs.dev/config-build
+    build: {
+      publicPath: '_nuxt_airport_page',
+    },
+  
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [
         '@nuxtjs/axios',
