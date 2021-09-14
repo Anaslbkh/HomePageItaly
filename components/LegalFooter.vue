@@ -42,7 +42,7 @@ export default {
     const api = getInstance('parkos', {
       baseURL: 'https://parkos.com/api/v1/'
     })
-console.log(this.$paths.langHost);
+
     const languages = await api.getLanguages()
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === 'parkos.at')
 
