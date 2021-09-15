@@ -1,0 +1,35 @@
+name: JIRA
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  build:
+    if: github.event.review.state == 'approved'
+    name: Set issue status to 'Ready for QA'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add 'Ready for QA' label
+        uses: buildsville/add-remove-label@v1
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          label: Ready for QA
+          type: add
+      - name: JIRA Login
+        uses: atlassian/gajira-login@master
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+      - name: Find issue key
+        id: find_issue_key
+        uses: atlassian/gajira-find-issue-key@master
+        with:
+          string: ${{ github.event.pull_request.title }}
+          from: ""
+      - name: Set issue status
+        uses: atlassian/gajira-transition@master
+        with:
+          issue: ${{ steps.find_issue_key.outputs.issue }}
+          transition: "Ready for QA"

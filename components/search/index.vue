@@ -123,7 +123,7 @@
         <div class="flex w-2/5 relative right-0.5">
           <select
             v-model="formData.departureTime"
-            name="arrivalTime"
+            name="departureTime"
             class="px-4 table-cell w-full shadow-input rounded-r border-l border-b border-t border-gray-500 bg-white focus:outline-none appearance-none text-gray-800 text-sm"
           >
             <option
@@ -228,9 +228,7 @@ export default Vue.extend({
 
   async fetch() {
     const slug = this.$route.params.airport
-    const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/'
-    })
+    const api = getInstance('parkos')
 
     const languages = await api.getLanguages()
 
@@ -292,7 +290,7 @@ export default Vue.extend({
     pricePerDay(): string {
       return new Intl.NumberFormat(this.language!.lang, {
         style: 'currency',
-        currency: 'EUR'
+        currency: this.language!.currency!.iso_code ?? 'EUR'
       }).format(this.airport!.from_price / 8)
     }
   },
