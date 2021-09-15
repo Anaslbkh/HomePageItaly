@@ -21,8 +21,8 @@
         <p class="mx-4 font-bold">
           &copy; Parkos
         </p>
-        <a :href="`${$paths.url()}termini-e-condizioni.html`" class="mx-4 text-white hover:text-white">Termini e condizioni</a>
-        <a :href="`${$paths.url()}privacy-policy.html`" class="mx-4 text-white hover:text-white">Privacy Policy</a>
+        <a v-if="termsConditionsPageContent.url" :href="termsConditionsPageContent.url" class="mx-4 text-white hover:text-white">{{ termsConditionsPageContent.title }}</a>
+        <a v-if="privacyPolicyPageContent.url" :href="privacyPolicyPageContent.url" class="mx-4 text-white hover:text-white">{{ privacyPolicyPageContent.title }}</a>
       </div>
     </div>
   </section>
@@ -30,11 +30,14 @@
 
 <script>
 import { getInstance } from '~/services/apiService'
+import { getInstance as getBffInstance } from '~/services/bffService'
 
 export default {
   data() {
     return {
-      language: {}
+      language: null,
+      termsConditionsContent: null,
+      privacyPolicyContent: null
     }
   },
 
@@ -46,6 +49,32 @@ export default {
     const languages = await api.getLanguages()
     const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
     this.language = currentLanguage
+
+    const bff = getBffInstance('parkos', {
+      baseURL: 'http://localhost:3001/'
+    })
+
+    this.termsConditionsContent = await bff.getPageContent('terms-conditions')
+    this.privacyPolicyContent = await bff.getPageContent('privacy-policy')
+  },
+
+  computed: {
+    termsConditionsPageContent() {
+      if (this.termsConditionsContent && this.language && this.language.lang) {
+        const currentContent = this.termsConditionsContent[this.language.lang];
+        return { title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html` }
+      }
+
+      return { title: '', url: '' };
+    },
+    privacyPolicyPageContent() {
+      if (this.privacyPolicyContent && this.language && this.language.lang) {
+        const currentContent = this.privacyPolicyContent[this.language.lang];
+        return { title: currentContent.title, url: `${this.$paths.url()}${currentContent.slug}.html` }
+      }
+
+      return { title: '', url: '' };
+    }
   }
 }
 </script>

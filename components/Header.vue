@@ -16,8 +16,8 @@
           <ul class="flex flex-col sm:flex-row sm:inline-flex text-lg sm:text-base">
             <Airports />
 
-            <li>
-              <a href="https://parkos.zendesk.com/hc/it" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+            <li v-if="zenDeskLangCode">
+              <a :href="`https://parkos.zendesk.com/hc/${zenDeskLangCode}`" rel="nofollow" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <img
                   src="~/static/icons/customerservice.svg"
                   width="16"
@@ -46,7 +46,7 @@
               </a>
             </li>
             <li>
-              <a :href="`${$paths.url()}chi-siamo.html`" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
+              <a :href="aboutPageLink" class="flex text-white hover:text-white hover:no-underline sm:inline-flex items-center px-3 py-6 sm:py-0 border-b border-white border-opacity-20 sm:border-b-0">
                 <img
                   src="~/static/icons/globe.svg"
                   width="16"
@@ -89,14 +89,15 @@
   </header>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
 import SearchForm from '../components/search/index.vue'
 import Logo from './Logo.vue'
 import Languages from '~/components/header/Languages.vue'
 import Airports from '~/components/header/Airports.vue'
+import { getInstance } from '~/services/apiService'
+import { getInstance as getBffInstance } from '~/services/bffService'
 
-export default Vue.extend({
+export default {
   components: {
     Airports,
     Languages,
@@ -107,28 +108,66 @@ export default Vue.extend({
   props: {
     showSearch: {
       default: true,
-      type: Boolean,
-    },
+      type: Boolean
+    }
   },
 
-  data(): {
-    navOpen: boolean,
-    navShown: boolean,
-    } {
+  data: () => {
     return {
       navOpen: true,
-      navShown: false
+      navShown: false,
+      language: null,
+      aboutPageContent: null
+    }
+  },
+
+  async fetch() {
+    const api = getInstance('parkos', {
+      baseURL: 'https://parkos.com/api/v1/'
+    })
+
+    const languages = await api.getLanguages()
+
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    this.language = currentLanguage
+
+    const bff = getBffInstance('parkos', {
+      baseURL: 'http://localhost:3001/'
+    })
+
+    this.aboutPageContent = await bff.getPageContent('about-us')
+  },
+
+  computed: {
+    zenDeskLangCode() {
+      if (this.language && this.language.lang) {
+        const langCode = this.language.lang
+        if (langCode === 'en-eu') {
+          return 'en-150'
+        }
+        return langCode
+      }
+
+      return null
+    },
+    aboutPageLink() {
+      if (this.aboutPageContent && this.language && this.language.lang) {
+        const currentContent = this.aboutPageContent[this.language.lang]
+        return `${this.$paths.url()}${currentContent.slug}.html`
+      } else {
+        return null
+      }
     }
   },
 
   methods: {
-    toggleMenu(): void {
+    toggleMenu() {
       this.navShown = !this.navShown
 
       this.$emit('toggle', this.navShown)
     }
   }
-})
+}
 </script>
 
 <style>
