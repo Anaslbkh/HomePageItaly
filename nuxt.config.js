@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
@@ -35,7 +35,7 @@ export default {
             { rel: 'manifest', href: '/manifest.json' }
         ]
     },
-
+  
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         '~/assets/css/fonts.css'
@@ -54,6 +54,7 @@ export default {
 
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: true,
+
 
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
     buildModules: [

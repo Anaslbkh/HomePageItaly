@@ -47,7 +47,21 @@ export default {
     })
 
     const languages = await api.getLanguages()
-    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === 'parkos.at')
+
+    if (!currentLanguage.socials.facebook) {
+      delete currentLanguage.socials.facebook
+    }
+
+    if (!currentLanguage.socials.twitter) {
+      delete currentLanguage.socials.twitter
+    }
+
+    // If no YouTube link is set in the socials fallback to the default
+    if (!currentLanguage.socials.youtube) {
+      currentLanguage.socials.youtube = 'https://www.youtube.com/parkosnl'
+    }
+
     this.language = currentLanguage
 
     const bff = getBffInstance('parkos', {
