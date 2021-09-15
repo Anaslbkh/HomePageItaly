@@ -226,9 +226,7 @@ export default Vue.extend({
 
   async fetch() {
     const slug = this.$route.params.airport
-    const api = getInstance('parkos', {
-      baseURL: 'https://parkos.com/api/v1/'
-    })
+    const api = getInstance('parkos')
 
     const languages = await api.getLanguages()
 
@@ -290,7 +288,7 @@ export default Vue.extend({
     pricePerDay(): string {
       return new Intl.NumberFormat(this.language!.lang, {
         style: 'currency',
-        currency: 'EUR'
+        currency: this.language!.currency!.iso_code ?? 'EUR'
       }).format(this.airport!.from_price / 8)
     }
   },
