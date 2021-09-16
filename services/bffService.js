@@ -5,7 +5,7 @@ class BffService {
     this.pages = []
     this.pageContent = []
     this.axiosInstance = axios.create({
-      baseURL: config.baseURL
+      baseURL: config?.baseURL ?? 'https://mpl-bff-dot-parkos-production.appspot.com/'
     })
     this.refreshes = {
       pageContent: false

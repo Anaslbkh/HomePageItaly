@@ -22,6 +22,7 @@ const pathsPlugin: Plugin = ({
 }, inject) => {
   const domain = 'parkos.co.uk';
   const headers = (req && req.headers) ? Object.assign({}, req.headers) : {}
+  console.log(headers);
   const xForwardedServer = (headers['x-forwarded-server'] as string);
   let host: string | undefined = process.server ? xForwardedServer : window.location.host
 

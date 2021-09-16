@@ -65,7 +65,7 @@ export default {
     this.language = currentLanguage
 
     const bff = getBffInstance('parkos', {
-      baseURL: 'http://localhost:3001/'
+      baseURL: 'https://mpl-bff-dot-parkos-production.appspot.com/'
     })
 
     this.termsConditionsContent = await bff.getPageContent('terms-conditions')
