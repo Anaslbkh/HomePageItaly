@@ -44,7 +44,7 @@ export default {
     })
 
     const languages = await api.getLanguages()
-    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === 'parkos.at')
+    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
 
     if (!currentLanguage.socials.facebook) {
       delete currentLanguage.socials.facebook
