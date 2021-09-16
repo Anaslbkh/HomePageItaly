@@ -1,5 +1,5 @@
 <template>
-  <Dropdown key="languages-dropdown" class="border-b-0">
+  <Dropdown v-if="contentLanguages.length > 1" key="languages-dropdown" class="border-b-0">
     <template #button>
       <img
         src="~/static/icons/flag.svg"
