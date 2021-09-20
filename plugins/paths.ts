@@ -24,11 +24,9 @@ const pathsPlugin: Plugin = ({
   const headers = (req && req.headers) ? Object.assign({}, req.headers) : {}
   const xForwardedServer = (headers['x-forwarded-server'] as string);
   let host: string | undefined = process.server ? xForwardedServer : window.location.host
-
-  if (isDev || typeof host === 'undefined') host = domain
   let langHost: string = host
 
-  if (host?.includes('localhost') || host?.includes('appspot')) {
+  if (host?.includes('localhost') || host?.includes('appspot') || typeof host === 'undefined') {
     let params: URLSearchParams|undefined;
 
     if (process.server) {
@@ -39,16 +37,16 @@ const pathsPlugin: Plugin = ({
 
     if (params.has('domain')) {
       langHost = params.get('domain')!;
+    } else {
+      langHost = domain;
     }
   }
 
-  if (!host.includes('localhost')) {
+  if (typeof host !== 'undefined' && !host.includes('localhost')) {
     langHost = host.replace(/\.?test|staging\.?|:[0-9]+/, '')
   }
 
-  if (langHost.includes('localhost')) {
-    langHost = domain;
-  }
+  if (isDev || typeof host === 'undefined') host = domain
 
   const paths = {
     langHost,
