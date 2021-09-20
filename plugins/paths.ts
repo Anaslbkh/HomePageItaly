@@ -51,7 +51,7 @@ const pathsPlugin: Plugin = ({
   }
 
   const paths = {
-    langHost: 'parkos.it',
+    langHost,
     protocol: 'https',
     host,
     url: (trailingSlash: boolean = true) => {

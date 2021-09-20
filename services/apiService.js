@@ -11,7 +11,7 @@ class ApiService {
         this.parkings = {}
         this.pageTemplates = {}
         this.axiosInstance = axios.create({
-            baseURL: config?.baseURL ?? 'https://staging.parkos.com/api/v1/'
+            baseURL: config?.baseURL ?? 'https://parkos.com/api/v1/'
         })
         this.refreshes = {
             languages: false,
@@ -102,7 +102,6 @@ class ApiService {
             self.refreshes.airports = false
 
             const fetch = new Promise(function(resolve, reject) {
-                console.trace('FETCHING AIRPORTS', lang)
                 self.axiosInstance.get('airports', {
                     params: {
                         lang,
@@ -306,16 +305,13 @@ class ApiService {
             self.refreshes.pageTemplates = false
 
             const fetch = new Promise(function(resolve, reject) {
-                console.log('FETCHING PAGE TEMPLATE', slug, lang)
                 self.axiosInstance.get('page_template', {
                     params: {
                         slug,
                         lang,
                     }
                 }).then(function(response) {
-                    console.log(response.data);
                     self.pageTemplates[lang][slug] = response.data.data[lang];
-                    console.log(self.pageTemplates)
                     resolve(self.pageTemplates[lang][slug])
                 }).catch((e) => {
                     if (slug in self.pageTemplates) {
