@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const TerserPlugin = require('terser-webpack-plugin');
+
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
@@ -35,7 +37,7 @@ export default {
             { rel: 'manifest', href: '/manifest.json' }
         ]
     },
-  
+
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         '~/assets/css/fonts.css'
@@ -67,9 +69,13 @@ export default {
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
-      publicPath: '_nuxt_airport_page',
+        extractCSS: true,
+        extend(config) {
+            config.devtool = 'source-map';
+        },
+        publicPath: '_nuxt_airport_page',
     },
-  
+
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [
         '@nuxtjs/axios',
