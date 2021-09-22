@@ -23,7 +23,6 @@ export default {
 
       const block = await api.getPageTemplate(this.slug, this.language.lang);
       this.block = block;
-      // console.log(this.block);
     }
   },
 

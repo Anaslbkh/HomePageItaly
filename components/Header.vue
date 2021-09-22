@@ -56,7 +56,7 @@
                   loading="lazy"
                   class="mr-1 -top-0.5 relative"
                 >
-                {{ $i18n('general.about-us') }}
+                {{ aboutPageTitle }}
               </a>
             </li>
 
@@ -150,13 +150,23 @@ export default {
 
       return null
     },
+
     aboutPageLink() {
       if (this.aboutPageContent && this.language && this.language.lang) {
         const currentContent = this.aboutPageContent[this.language.lang]
         return `${this.$paths.url()}${currentContent.slug}.html`
-      } else {
-        return null
       }
+
+      return null
+    },
+
+    aboutPageTitle() {
+      if (this.aboutPageContent && this.language && this.language.lang) {
+        const currentContent = this.aboutPageContent[this.language.lang]
+        return currentContent.title
+      }
+
+      return null
     }
   },
 
