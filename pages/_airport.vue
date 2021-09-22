@@ -184,7 +184,11 @@ export default {
 
     return {
       title: this.airportData.content[this.language.lang].meta.title,
+      htmlAttrs: {
+        lang: this.language.lang
+      },
       meta: [
+        { 'http-equiv': 'content-language', content: this.language.lang },
         { property: 'og:title', content: this.airportData.content[this.language.lang].meta.title },
         { name: 'description', content: this.airportData.content[this.language.lang].meta.description },
         { property: 'og:description', content: this.airportData.content[this.language.lang].meta.description },
