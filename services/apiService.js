@@ -131,8 +131,7 @@ class ApiService {
     }
 
     getAirport = async function(slug, lang) {
-        const airports = await this.getAirports(lang)
-            // console.log(Array.prototype.find.call(airports, airport => airport.slug === slug));
+        const airports = await this.getAirports(lang);
         return Array.prototype.find.call(airports, airport => airport.slug === slug)
     }
 
