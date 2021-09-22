@@ -6,14 +6,10 @@ export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         title: 'Parkos',
-        htmlAttrs: {
-            lang: 'it'
-        },
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
             { name: 'theme-color', content: '#0983F0' },
-            { 'http-equiv': 'content-language', content: 'it' },
             { name: 'msapplication-TileColor', content: '#0983F0' },
             { name: 'msapplication-TileImage', content: 'https://assets.parkos.com/assets/favicon/ms-icon-144x144.png' },
             { name: 'msapplication-TileConfig', content: 'https://assets.parkos.com/assets/favicon/browserconfig.xml' }
@@ -70,8 +66,7 @@ export default {
     build: {
         extend(config) {
             config.devtool = 'source-map';
-        },
-        publicPath: '_nuxt_airport_page',
+        }
     },
 
     // Modules: https://go.nuxtjs.dev/config-modules
