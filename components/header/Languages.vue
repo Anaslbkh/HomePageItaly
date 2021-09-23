@@ -1,5 +1,5 @@
 <template>
-  <Dropdown v-if="contentLanguages.length > 1" key="languages-dropdown" class="border-b-0">
+  <Dropdown v-if="!$fetchState.pending" key="languages-dropdown" class="border-b-0">
     <template #button>
       <img
         src="~/static/icons/flag.svg"
@@ -11,7 +11,7 @@
         class="mr-1 -top-0.5 relative"
       >
       {{ language.lang | uppercase }}
-      <span class="caret" />
+      <span class="caret"/>
     </template>
     <template #content>
       <ul class="py-2 pt-0 sm:pt-2 -ml-2 sm:ml-0">
@@ -33,56 +33,55 @@
 </template>
 
 <script>
-import Dropdown from '~/components/header/Dropdown.vue'
-import { getInstance } from '~/services/apiService'
+  import Dropdown from '~/components/header/Dropdown.vue'
+  import {getInstance} from '~/services/apiService'
 
-export default {
+  export default {
 
-  filters: {
-    uppercase: value => value.toUpperCase()
-  },
+    filters: {
+      uppercase: value => value.toUpperCase()
+    },
 
-  components: {
-    Dropdown
-  },
-  data() {
-    return {
-      languages: [],
-      language: undefined,
-      airportData: {}
-    }
-  },
-
-  async fetch() {
-    const slug = this.$route.params.airport
-    const api = getInstance('parkos')
-
-    this.languages = await api.getLanguages()
-    const currentLanguage = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
-    this.language = currentLanguage
-    this.airportData = await api.getAirportData(slug, this.language.lang)
-  },
-
-  computed: {
-    contentLanguages() {
-      const availableLanguages = []
-
-      for (const language in this.airportData.content) {
-        const _language = this.languages.find(_language => _language.lang === language)
-
-        if (_language) {
-          availableLanguages.push({
-            lang: language,
-            name: _language?.native_name || _language.name,
-            url: this.airportData.content[language].url
-          })
-        }
+    components: {
+      Dropdown
+    },
+    data() {
+      return {
+        languages: [],
+        language: undefined,
+        airportData: {}
       }
+    },
 
-      return availableLanguages.sort((a, b) => {
-        return a.name > b.name ? 1 : -1
-      })
+    async fetch() {
+      const slug = this.$route.params.airport
+      const api = getInstance('parkos')
+
+      this.languages = await api.getLanguages()
+      this.language = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
+      this.airportData = await api.getAirportData(slug, this.language.lang)
+    },
+
+    computed: {
+      contentLanguages() {
+        const availableLanguages = []
+
+        for (const language in this.airportData.content) {
+          const _language = this.languages.find(_language => _language.lang === language)
+
+          if (_language) {
+            availableLanguages.push({
+              lang: language,
+              name: _language?.native_name || _language.name,
+              url: this.airportData.content[language].url
+            })
+          }
+        }
+
+        return availableLanguages.sort((a, b) => {
+          return a.name > b.name ? 1 : -1
+        })
+      }
     }
   }
-}
 </script>
