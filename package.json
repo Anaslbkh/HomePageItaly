@@ -19,6 +19,7 @@
     "@nuxt/ufo": "^0.5.4",
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/component-cache": "^1.1.6",
+    "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/sentry": "^5.0.3",
     "core-js": "^3.8.2",
     "jquery": "^3.6.0",

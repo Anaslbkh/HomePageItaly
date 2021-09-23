@@ -4,27 +4,23 @@ class BffService {
   constructor(config) {
     this.pages = []
     this.pageContent = []
-    this.axiosInstance = axios.create({
-      baseURL: config?.baseURL ?? 'https://mpl-bff-dot-parkos-production.appspot.com/'
-    })
     this.refreshes = {
       pageContent: false
     }
   }
 
-  refresh = function() {
+  refresh = function () {
     this.refreshes.pageContent = true
   }
 
-  getPageContent = async function(devtitle) {
+  getPageContent = async function (devtitle) {
     const self = this
 
     if (!self.pageContent[devtitle] || self.refreshes.pageContent === true) {
       self.refreshes.pageContent = false
 
-      const fetch = new Promise(function(resolve, reject) {
-        self.axiosInstance
-          .get(`pages/${devtitle}/content.json`)
+      return new Promise(function (resolve, reject) {
+        axios.get(`/api/pages/${devtitle}/content.json`)
           .then((response) => {
             self.pageContent[devtitle] = response.data
             resolve(self.pageContent[devtitle])
@@ -37,11 +33,9 @@ class BffService {
             }
           })
       })
-
-      return fetch
     }
 
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       resolve(self.pageContent[devtitle])
     })
   }
@@ -53,7 +47,7 @@ function getInstance(name, config) {
   if (!(name in bffInstances)) {
     bffInstances[name] = new BffService(config)
 
-    setInterval(function() {
+    setInterval(function () {
       bffInstances[name].refresh()
     }, 60000)
   }
@@ -61,4 +55,4 @@ function getInstance(name, config) {
   return bffInstances[name]
 }
 
-export { getInstance }
+export {getInstance}
