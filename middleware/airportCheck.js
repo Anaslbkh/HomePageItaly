@@ -10,6 +10,10 @@ export default async function({ route, isHMR, params, $paths, error, $i18n }) {
         return airports.map( (airport) => airport.slug)
     });
 
+    // console.log(airports);
+    // console.log(currentLanguage);
+    // console.log(params.airport);
+
     if (airports.length === 0 || !airports.includes(params.airport)) {
         error({
             statusCode: 404,
@@ -17,6 +21,7 @@ export default async function({ route, isHMR, params, $paths, error, $i18n }) {
             description: 'description',
             language: currentLanguage
         })
+        return false
     }
 
     return true

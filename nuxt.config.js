@@ -12,7 +12,8 @@ export default {
             { name: 'theme-color', content: '#0983F0' },
             { name: 'msapplication-TileColor', content: '#0983F0' },
             { name: 'msapplication-TileImage', content: 'https://assets.parkos.com/assets/favicon/ms-icon-144x144.png' },
-            { name: 'msapplication-TileConfig', content: 'https://assets.parkos.com/assets/favicon/browserconfig.xml' }
+            { name: 'msapplication-TileConfig', content: 'https://assets.parkos.com/assets/favicon/browserconfig.xml' },
+            { 'http-equiv': 'Cache-Control', content: 'private,max-age=1440' },
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: 'https://assets.parkos.com/assets/favicon/favicon.ico' },
@@ -33,6 +34,10 @@ export default {
             { rel: 'manifest', href: '/manifest.json' }
         ]
     },
+
+    serverMiddleware: [
+        '~/middleware/airportCheckServer.js'
+    ],
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
