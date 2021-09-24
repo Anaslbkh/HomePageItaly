@@ -1,5 +1,5 @@
 <template>
-  <div itemscope itemtype="http://schema.org/Product">
+  <div v-if="!$fetchState.pending" itemscope itemtype="http://schema.org/Product">
     <meta
       itemprop="description"
       :content="airportData.content[language.lang].meta.description"

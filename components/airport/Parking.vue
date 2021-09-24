@@ -1,5 +1,5 @@
 <template>
-  <a :href="`${$paths.url()}${airport.slug}/${parking.slug}.html`" class="text-black hover:no-underline hover:text-blue-300">
+  <a v-if="!$fetchState.pending" :href="`${$paths.url()}${airport.slug}/${parking.slug}.html`" class="text-black hover:no-underline hover:text-blue-300">
     <article class="bg-white border border-gray-500 rounded">
       <div class="flex items-center justify-center p-12">
         <img
