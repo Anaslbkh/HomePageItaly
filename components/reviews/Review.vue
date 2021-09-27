@@ -1,5 +1,5 @@
 <template>
-  <article class="px-4 py-3 border border-gray-500 rounded">
+  <article v-if="!$fetchState.pending" class="px-4 py-3 border border-gray-500 rounded">
     <div class="flex justify-between items-center mb-1">
       <div>
         <p class="text-sm font-semibold text-gray-700">

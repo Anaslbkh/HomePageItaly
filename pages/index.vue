@@ -14,7 +14,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  data(): { links: Array<String> } {
+  data(): { links: Array<string> } {
     return {
       links: [
         '/parcheggio-orio-al-serio',

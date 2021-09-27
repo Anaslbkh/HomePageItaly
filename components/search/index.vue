@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!$fetchState.pending">
     <div class="flex justify-center flex-wrap text-white mb-8">
       <h1 v-if="airportData" class="w-full text-4xl md:text-6xl text-center font-heading mb-4">
         {{ airportData.content[language.lang].title }}
@@ -152,17 +152,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Airport as AirportType } from '../../types/Airport'
-import { Language as LanguageType } from '../../types/Language'
-import IconInfo from '~/components/icons/IconInfo.vue'
-import IconCalendar from '~/components/icons/IconCalendar.vue'
-import IconPin from '~/components/icons/IconPin.vue'
-import DatePicker from '~/plugins/vue-datepicker/components/Datepicker.vue'
+  import Vue from 'vue'
+  import {Airport as AirportType} from '../../types/Airport'
+  import {Language as LanguageType} from '../../types/Language'
+  import IconInfo from '~/components/icons/IconInfo.vue'
+  import IconCalendar from '~/components/icons/IconCalendar.vue'
+  import IconPin from '~/components/icons/IconPin.vue'
+  import DatePicker from '~/plugins/vue-datepicker/components/Datepicker.vue'
 
-import { getInstance } from '~/services/apiService'
+  import {getInstance} from '~/services/apiService'
 
-type SearchParameters = {
+  type SearchParameters = {
   airport: string|undefined;
   arrival: string|Date|undefined;
   departure: string|Date|undefined;
@@ -232,8 +232,7 @@ export default Vue.extend({
 
     const languages = await api.getLanguages()
 
-    const currentLanguage = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
-    this.language = currentLanguage
+    this.language = await Array.prototype.find.call(languages, language => language.domain === this.$paths.langHost)
 
     this.airports = await api.getAirports(this.language!.lang)
     this.airport = await api.getAirport(slug, this.language!.lang)
