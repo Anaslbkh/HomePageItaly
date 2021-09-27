@@ -172,79 +172,79 @@
       this.faq = faq?.data[this.language.lang]
     },
 
-    // head() {
-    //   if (this.airport === null) return {}
-    //   console.log(this.airportData.content)
-    //   const links = [{rel: 'canonical', href: this.$paths.url(false) + this.$route.path}]
-    //
-    //   // add alternate language links
-    //   Object.entries(this.airportData.content).forEach(([lang, content]) => {
-    //     // @ts-ignore @todo fix types
-    //     links.push({rel: 'alternate', hreflang: lang, href: String(content.url)})
-    //   })
-    //
-    //   return {
-    //     title: this.airportData.content[this.language.lang].meta.title,
-    //     htmlAttrs: {
-    //       lang: this.language.lang
-    //     },
-    //     meta: [
-    //       {'http-equiv': 'content-language', content: this.language.lang},
-    //       {property: 'og:title', content: this.airportData.content[this.language.lang].meta.title},
-    //       {name: 'description', content: this.airportData.content[this.language.lang].meta.description},
-    //       {property: 'og:description', content: this.airportData.content[this.language.lang].meta.description},
-    //       {name: 'twitter:card', content: 'summary'},
-    //       {name: 'twitter:title', content: this.airportData.content[this.language.lang].meta.title},
-    //       {
-    //         name: 'twitter:site',
-    //         content: this.language.socials.twitter ? `@${this.language.socials.twitter.split('/').pop()}` : ''
-    //       },
-    //       {
-    //         name: 'twitter:creator',
-    //         content: this.language.socials.twitter ? `@${this.language.socials.twitter.split('/').pop()}` : ''
-    //       },
-    //       {name: 'twitter:description', content: this.airportData.content[this.language.lang].meta.description},
-    //       {name: 'twitter:image', content: `${this.$paths.assetsUrl}img/locations/${this.airport.devtitle}.jpg`},
-    //       {property: 'og:type', content: 'place'},
-    //       {property: 'og:locale', content: 'it'},
-    //       {property: 'place:location:latitude', content: String(this.airport.address.latitude)},
-    //       {property: 'place:location:longitude', content: String(this.airport.address.longitude)},
-    //       {property: 'og:image', content: `${this.$paths.assetsUrl}/img/locations/${this.airport.devtitle}.jpg`},
-    //       {property: 'og:url', content: this.$paths.url(false) + this.$route.path}
-    //     ],
-    //     link: links,
-    //     script: [
-    //       {
-    //         hid: 'datalayer',
-    //         innerHTML: `
-    //         var dataLayer = [{
-    //           airportDevTitle: '${this.airport.devtitle}',
-    //           airportSlug: '${this.airport.slug}',
-    //           airportName: '${this.airport.name}',
-    //           pageType: 'locations',
-    //           domainName: '${this.$paths.host}',
-    //           token: '504Z8p2vH6TtWX7BJC0rYaArFl9sYKdAHfisTESx',
-    //         }];
-    //         var cId = document.cookie.match(/cId=([^ ;]*);?/);
-    //         var ul = 0; var ps = '[]';
-    //         if (!(cId === null && typeof cId === "object")) {
-    //             dataLayer[0].cId = cId[1];
-    //         }
-    //       `,
-    //         type: 'text/javascript'
-    //       }
-    //     ],
-    //     __dangerouslyDisableSanitizersByTagID: {
-    //       datalayer: ['innerHTML']
-    //     }
-    //   }
-    // },
+    head() {
+      if (this.airport === null) return {}
+      console.log(this.airportData.content)
+      const links = [{rel: 'canonical', href: this.$paths.url(false) + this.$route.path}]
+    
+      // add alternate language links
+      Object.entries(this.airportData.content).forEach(([lang, content]) => {
+        // @ts-ignore @todo fix types
+        links.push({rel: 'alternate', hreflang: lang, href: String(content.url)})
+      })
+    
+      return {
+        title: this.airportData.content[this.language.lang].meta.title,
+        htmlAttrs: {
+          lang: this.language.lang
+        },
+        meta: [
+          {'http-equiv': 'content-language', content: this.language.lang},
+          {property: 'og:title', content: this.airportData.content[this.language.lang].meta.title},
+          {name: 'description', content: this.airportData.content[this.language.lang].meta.description},
+          {property: 'og:description', content: this.airportData.content[this.language.lang].meta.description},
+          {name: 'twitter:card', content: 'summary'},
+          {name: 'twitter:title', content: this.airportData.content[this.language.lang].meta.title},
+          {
+            name: 'twitter:site',
+            content: this.language.socials.twitter ? `@${this.language.socials.twitter.split('/').pop()}` : ''
+          },
+          {
+            name: 'twitter:creator',
+            content: this.language.socials.twitter ? `@${this.language.socials.twitter.split('/').pop()}` : ''
+          },
+          {name: 'twitter:description', content: this.airportData.content[this.language.lang].meta.description},
+          {name: 'twitter:image', content: `${this.$paths.assetsUrl}img/locations/${this.airport.devtitle}.jpg`},
+          {property: 'og:type', content: 'place'},
+          {property: 'og:locale', content: 'it'},
+          {property: 'place:location:latitude', content: String(this.airport.address.latitude)},
+          {property: 'place:location:longitude', content: String(this.airport.address.longitude)},
+          {property: 'og:image', content: `${this.$paths.assetsUrl}/img/locations/${this.airport.devtitle}.jpg`},
+          {property: 'og:url', content: this.$paths.url(false) + this.$route.path}
+        ],
+        link: links,
+        script: [
+          {
+            hid: 'datalayer',
+            innerHTML: `
+            var dataLayer = [{
+              airportDevTitle: '${this.airport.devtitle}',
+              airportSlug: '${this.airport.slug}',
+              airportName: '${this.airport.name}',
+              pageType: 'locations',
+              domainName: '${this.$paths.host}',
+              token: '504Z8p2vH6TtWX7BJC0rYaArFl9sYKdAHfisTESx',
+            }];
+            var cId = document.cookie.match(/cId=([^ ;]*);?/);
+            var ul = 0; var ps = '[]';
+            if (!(cId === null && typeof cId === "object")) {
+                dataLayer[0].cId = cId[1];
+            }
+          `,
+            type: 'text/javascript'
+          }
+        ],
+        __dangerouslyDisableSanitizersByTagID: {
+          datalayer: ['innerHTML']
+        }
+      }
+    },
 
-    // computed: {
-    //   date() {
-    //     return new Intl.DateTimeFormat('en-US', {dateStyle: 'full'}).format(new Date())
-    //   },
-    // }
+    computed: {
+      date() {
+        return new Intl.DateTimeFormat('en-US', {dateStyle: 'full'}).format(new Date())
+      },
+    }
   }
 </script>
 

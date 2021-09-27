@@ -106,7 +106,8 @@ export default {
   build: {
     extend(config) {
       config.devtool = 'source-map';
-    }
+    },
+    publicPath: process.env.NODE_ENV !== 'production' ? '/_nuxt/' : '_nuxt_airport_page'
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
