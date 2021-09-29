@@ -4,6 +4,9 @@ class BffService {
   constructor(config) {
     this.pages = []
     this.pageContent = []
+    this.axiosInstance = axios.create({
+      baseURL: config?.baseURL ?? 'https://mpl-bff-dot-parkos-production.appspot.com/'
+    })
     this.refreshes = {
       pageContent: false
     }
@@ -19,8 +22,9 @@ class BffService {
     if (!self.pageContent[devtitle] || self.refreshes.pageContent === true) {
       self.refreshes.pageContent = false
 
-      return new Promise(function (resolve, reject) {
-        axios.get(`/api/pages/${devtitle}/content.json`)
+      const fetch = new Promise(function(resolve, reject) {
+        self.axiosInstance
+          .get(`pages/${devtitle}/content.json`)
           .then((response) => {
             self.pageContent[devtitle] = response.data
             resolve(self.pageContent[devtitle])
@@ -33,6 +37,8 @@ class BffService {
             }
           })
       })
+
+      return fetch;
     }
 
     return new Promise(function (resolve) {

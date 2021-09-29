@@ -47,8 +47,6 @@ const pathsPlugin: Plugin = ({
     langHost = host.replace(/\.?test|staging\.?|www\.?|:[0-9]+/g, '')
   }
 
-  console.log(langHost)
-
   const paths = {
     langHost,
     protocol: 'https',

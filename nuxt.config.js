@@ -136,9 +136,6 @@ export default {
     }
   },
 
-  proxy: {
-    '/api/': {target: 'https://mpl-bff-dot-parkos-production.appspot.com/', pathRewrite: {'^/api/': ''}}
-  },
   privateRuntimeConfig: {
     axios: {
       baseURL: process.env.API_BASE_URL

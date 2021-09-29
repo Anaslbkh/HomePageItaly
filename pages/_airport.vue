@@ -185,7 +185,6 @@
 
     head() {
       if (this.airport === null) return {}
-      console.log(this.airportData.content)
       const links = [{rel: 'canonical', href: this.$paths.url(false) + this.$route.path}]
     
       // add alternate language links
