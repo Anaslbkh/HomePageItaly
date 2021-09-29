@@ -11,7 +11,7 @@ class ApiService {
         this.parkings = {}
         this.pageTemplates = {}
         this.axiosInstance = axios.create({
-            baseURL: config?.baseURL ?? 'https://parkos.com/api/v1/'
+            baseURL: config?.baseURL ?? process.env.API_BASE_URL
         })
         this.refreshes = {
             languages: false,

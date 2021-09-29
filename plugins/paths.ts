@@ -43,9 +43,11 @@ const pathsPlugin: Plugin = ({
   }
 
   if (typeof host !== 'undefined' && !host.includes('localhost')) {
-    console.log(host)
+    
     langHost = host.replace(/\.?test|staging\.?|www\.?|:[0-9]+/g, '')
   }
+
+  console.log(langHost)
 
   const paths = {
     langHost,
