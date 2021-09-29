@@ -135,6 +135,7 @@ export default {
       browserBaseURL: process.env.API_BASE_URL
     }
   },
+
   proxy: {
     '/api/': {target: 'https://mpl-bff-dot-parkos-production.appspot.com/', pathRewrite: {'^/api/': ''}}
   },

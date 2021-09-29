@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!$fetchState.pending">
+  <div>
     <div class="container mx-auto">
       <p
         class="py-10 sm:py-24 text-2xl md:text-3xl text-blue-900 sm:text-center font-heading"
@@ -152,24 +152,35 @@
       }
     },
 
-    async fetch() {
-      const slug = this.$route.params.airport
+    async asyncData({ params, $paths }) {
       const api = getInstance('parkos')
-      this.languages = await api.getLanguages()
 
-      this.language = await Array.prototype.find.call(this.languages, language => language.domain === this.$paths.langHost)
+      const slug = params.airport
+      const languages = await api.getLanguages()
+      const language = await Array.prototype.find.call(languages, language => language.domain === $paths.langHost)
 
-      //this.airports = await api.getAirports(this.language.lang)
-      this.airport = await api.getAirport(slug, this.language.lang)
-      this.airportData = await api.getAirportData(slug, this.language.lang)
+      const airport = await api.getAirport(slug, language.lang)
+      const airportData = await api.getAirportData(slug, language.lang)
 
-      this.parkings = await api.getAirportParkings(slug, this.language.lang)
+      const parkings = await api.getAirportParkings(slug, language.lang)
 
-      const reviewData = await api.getAirportReviews(slug, this.language.lang)
-      this.reviews = reviewData.data[this.language.lang]
-      this.reviewsMeta = reviewData.meta
-      const faq = await api.getAirportFaq(slug, this.language.lang)
-      this.faq = faq?.data[this.language.lang]
+      const reviewData = await api.getAirportReviews(slug, language.lang)
+      const reviews = reviewData.data[language.lang]
+      const reviewsMeta = reviewData.meta
+
+      let faq = await api.getAirportFaq(slug, language.lang)
+      faq = faq?.data[language.lang]
+
+      return {
+        languages,
+        language,
+        airport,
+        airportData,
+        parkings,
+        reviews,
+        reviewsMeta,
+        faq
+      }
     },
 
     head() {
