@@ -21,9 +21,6 @@ const i18nPlugin: Plugin = async({ app, $paths }, inject) => {
   const api = getInstance('parkos');
   const languages: Array<LanguageType> = await api.getLanguages();
 
-  console.log(languages);
-  console.log($paths.langHost)
-
   const currentLanguage: LanguageType = Array.prototype.find.call(languages, (language: LanguageType) => language.domain === $paths.langHost)
   const translations: object = await api.getTranslations(currentLanguage.lang);
 

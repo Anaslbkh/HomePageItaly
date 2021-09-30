@@ -36,7 +36,7 @@ class ApiService {
         this.refreshes.pageTemplates = true
     }
 
-    getLanguages = async function(limit = 25) {
+    getLanguages = async function(limit = 50) {
         const self = this
 
         if (self.languages === null || self.refreshes.languages === true) {
