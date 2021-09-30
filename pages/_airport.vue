@@ -216,7 +216,7 @@
           {name: 'twitter:description', content: this.airportData.content[this.language.lang].meta.description},
           {name: 'twitter:image', content: `${this.$paths.assetsUrl}img/locations/${this.airport.devtitle}.jpg`},
           {property: 'og:type', content: 'place'},
-          {property: 'og:locale', content: 'it'},
+          {property: 'og:locale', content: this.language.lang },
           {property: 'place:location:latitude', content: String(this.airport.address.latitude)},
           {property: 'place:location:longitude', content: String(this.airport.address.longitude)},
           {property: 'og:image', content: `${this.$paths.assetsUrl}/img/locations/${this.airport.devtitle}.jpg`},

@@ -36,14 +36,18 @@ class ApiService {
         this.refreshes.pageTemplates = true
     }
 
-    getLanguages = async function() {
+    getLanguages = async function(limit = 50) {
         const self = this
 
         if (self.languages === null || self.refreshes.languages === true) {
             self.refreshes.languages = false
 
             const fetch = new Promise(function(resolve, reject) {
-                self.axiosInstance.get('languages').then(function(response) {
+                self.axiosInstance.get('languages', {
+                    params: {
+                        limit,
+                    }
+                }).then(function(response) {
                     self.languages = response.data.data
                     resolve(self.languages)
                 }).catch((e) => {
