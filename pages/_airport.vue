@@ -162,16 +162,10 @@ export default {
       api.getAirportFaq(slug, language.lang)
     ]
 
-    return await Promise.all(promises).then((results) => {
-      const airport = results[0]
-      const airportData = results[1]
-      const parkings = results[2]
-      const reviewData = results[3]
-      let faq = results[4]
+    return await Promise.all(promises).then(([airport, airportData, parkings, reviewData, faq]) => {
       const reviews = reviewData.data[language.lang]
       const reviewsMeta = reviewData.meta
       faq = faq?.data[language.lang]
-
       console.timeEnd('await timer')
 
       return {
