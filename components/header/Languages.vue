@@ -10,7 +10,7 @@
         loading="lazy"
         class="mr-1 -top-0.5 relative"
       >
-      {{ language.lang | uppercase }}
+      {{ language.lang.split('-')[0] | uppercase }}
       <span class="caret"/>
     </template>
     <template #content>
@@ -52,7 +52,7 @@
         airportData: {}
       }
     },
-
+    
     async fetch() {
       const slug = this.$route.params.airport
       const api = getInstance('parkos')
