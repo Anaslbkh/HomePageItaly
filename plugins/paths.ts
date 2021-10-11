@@ -33,7 +33,7 @@ const pathsPlugin: Plugin = ({
   let langHost: string = host
 
   if (host?.includes('localhost') || host?.includes('appspot') || typeof host === 'undefined') {
-    let params: URLSearchParams|undefined;
+    let params: URLSearchParams | undefined;
 
     if (process.server) {
       params = new URLSearchParams(req.url?.split('?').pop())
@@ -43,12 +43,12 @@ const pathsPlugin: Plugin = ({
   }
 
   if (typeof host !== 'undefined' && !host.includes('localhost')) {
-    
+
     langHost = host.replace(/\.?test|staging\.?|www\.?|:[0-9]+/g, '')
   }
 
   const paths = {
-    langHost,
+    langHost: 'parkos.it',
     protocol: 'https',
     host,
     url: (trailingSlash: boolean = true) => {

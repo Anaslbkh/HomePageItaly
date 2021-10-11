@@ -91,7 +91,7 @@
           >
             <Airports />
 
-            <li v-if="zenDeskLangCode">
+            <li>
               <a
                 :href="`https://parkos.zendesk.com/hc/${zenDeskLangCode}`"
                 rel="nofollow"
@@ -177,10 +177,9 @@
                   loading="lazy"
                   class="mr-1 -top-0.5 relative"
                 />
-                {{ aboutPageTitle }}
+                {{ $i18n("general.about-us") }}
               </a>
             </li>
-
             <Languages />
           </ul>
         </nav>
@@ -189,29 +188,6 @@
       <section v-if="showSearch" id="search">
         <div class="container mx-auto">
           <SearchForm />
-
-          <section
-            class="grid grid-cols-1 sm:grid-cols-3 text-white border-t py-7"
-          >
-            <article
-              v-for="i in 3"
-              :key="`header-usp-${i}`"
-              class="flex items-center justify-center mb-2"
-            >
-              <img
-                :src="`${$paths.assetsUrl}images/checkmark.svg`"
-                width="16"
-                height="16"
-                class="h-4 mr-1 -top-0.5 relative"
-                aria-hidden="true"
-                alt="check"
-                loading="lazy"
-              />
-              <span class="text-md md:text-base">{{
-                $i18n(`templates.header-usp-${i}`)
-              }}</span>
-            </article>
-          </section>
         </div>
       </section>
     </section>
@@ -219,29 +195,19 @@
 </template>
 
 <script>
-import SearchForm from "../components/search/index.vue";
-import Logo from "./Logo.vue";
-import Languages from "~/components/header/Languages.vue";
+import Vue from "vue";
 import Airports from "~/components/header/Airports.vue";
-import { getInstance } from "~/services/apiService";
-import { getInstance as getBffInstance } from "~/services/bffService";
-
-export default {
-  components: {
-    Airports,
-    Languages,
-    Logo,
-    SearchForm,
-  },
-
+import LOGO from "~/components/Logo.vue";
+import Languages from "~/components/header/LanguageB.vue";
+import SearchForm from "../components/search/indexB.vue";
+export default Vue.extend({
   props: {
     showSearch: {
       default: true,
       type: Boolean,
     },
   },
-
-  data: () => {
+  data() {
     return {
       navOpen: true,
       navShown: false,
@@ -249,21 +215,7 @@ export default {
       aboutPageContent: null,
     };
   },
-
-  async fetch() {
-    const api = getInstance("parkos");
-
-    const languages = await api.getLanguages();
-
-    this.language = await Array.prototype.find.call(
-      languages,
-      (language) => language.domain === this.$paths.langHost
-    );
-    const bff = getBffInstance("parkos");
-
-    this.aboutPageContent = await bff.getPageContent("about-us");
-  },
-
+  components: { Airports, Languages, LOGO, SearchForm },
   computed: {
     zenDeskLangCode() {
       if (this.language && this.language.lang) {
@@ -303,12 +255,13 @@ export default {
       this.$emit("toggle", this.navShown);
     },
   },
-};
+});
 </script>
 
-<style scoped>
-.gradient {
-  background-image: url(https://assets.parkos.com/assets/images/pattern.png),
+<style>
+header {
+  background-image: url(https://assets.parkos.com/assets/images/pattern.png?c01a783…);
+  background-image: url(https://assets.parkos.com/assets/images/pattern.png?c01a783…),
     linear-gradient(0deg, rgba(35, 176, 253, 0.4), rgba(9, 131, 240, 0.4));
 }
 </style>

@@ -1,22 +1,37 @@
 <template>
-  <div class="overflow-x-hidden">
+  <div class="overflow-x-hidden" :class="{ fixed: navShown }">
+    <CookieBar />
+    <Header @toggle="navToggle" />
     <main>
       <Nuxt />
     </main>
+    <Footer />
+    <LegalFooter />
   </div>
 </template>
 
-<script lang="ts">
+<script >
 import Vue from "vue";
-import Header from "../components/Header.vue";
+import Header from "../components/HeaderB.vue";
 import Footer from "../components/Footer.vue";
 import LegalFooter from "../components/LegalFooter.vue";
 
 export default Vue.extend({
+  data() {
+    return {
+      navShown: false,
+      gtmKey: undefined,
+    };
+  },
   components: {
     Header,
     Footer,
     LegalFooter,
+  },
+  methods: {
+    navToggle(value) {
+      this.navShown = value;
+    },
   },
 });
 </script>

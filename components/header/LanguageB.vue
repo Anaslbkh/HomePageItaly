@@ -1,6 +1,6 @@
 <template>
   <Dropdown
-    v-if="!$fetchState.pending && contentLanguages.length > 1"
+    v-if="!$fetchState.pending && languages.length > 1"
     key="languages-dropdown"
     class="border-b-0"
   >
@@ -20,12 +20,12 @@
     <template #content>
       <ul class="py-2 pt-0 sm:pt-2 -ml-2 sm:ml-0">
         <li
-          v-for="item in contentLanguages"
+          v-for="item in languages"
           v-show="item.lang !== language.lang"
           :key="`lang-${item.lang}`"
         >
           <a
-            :href="item.url"
+            :href="item.domain"
             class="
               text-gray-600 text-base
               sm:text-black
@@ -70,18 +70,21 @@ export default {
   },
 
   async fetch() {
-    const slug = this.$route.params.airport;
     const api = getInstance("parkos");
     this.languages = await api.getLanguages();
     this.language = await Array.prototype.find.call(
       this.languages,
       (language) => language.domain === this.$paths.langHost
     );
+    /*console.log(slug);
 
-    this.airportData = await api.getAirportData(slug, this.language.lang);
+    console.log(this.languages);
+    console.log(this.$paths.langHost);
+    console.log(this.language);*/
+    //this.airportData = await api.getAirportData(slug, this.language.lang);
   },
 
-  computed: {
+  /* computed: {
     contentLanguages() {
       const availableLanguages = [];
 
@@ -103,6 +106,6 @@ export default {
         return a.name > b.name ? 1 : -1;
       });
     },
-  },
+  },*/
 };
 </script>
